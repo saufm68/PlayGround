@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS posts;
-DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS ratings;
-DROP TABLE IF EXISTS tags;
+-- DROP TABLE IF EXISTS comments;
+-- DROP TABLE IF EXISTS ratings;
+-- DROP TABLE IF EXISTS tags;
 
 CREATE TABLE IF NOT EXISTS users (
 
@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS posts (
 	displayImage TEXT,
 	link TEXT,
 	author_id INTEGER,
-	dt TEXT
+	dt TEXT,
+	rating INTEGER
 
 );
 

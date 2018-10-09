@@ -35,10 +35,61 @@ module.exports = (dbPool) => {
                 callback(error, result.rows[0]);
             }
         });
-    }
+    };
+
+    const homepage = (callback) => {
+
+        let text = `SELECT * FROM posts WHERE author_id='1';`;
+
+        dbPool.query(text, (error, result) => {
+
+            var games = {};
+            games['pro'] = result.rows;
+
+            let text2 = `SELECT * FROM posts WHERE author_id!='1';`;
+
+            dbPool.query(text, (error, result) => {
+
+                games['amateur'] = result.rows;
+
+                callback(error, games);
+            });
+
+        });
+    };
+
+    const searchProNameRating = (searchby, value, callback) => {
+        let text = `SELECT * FROM posts WHERE ${searchby}='${value}';`;
+
+        dbPool.query(text, (error, result) => {
+            callback(error, result.rows);
+        });
+    };
+
+    const searchAmateur = (searchby, value, callback) => {
+        let text = `SELECT * FROM posts WHERE ${searchby}!='${value}';`;
+
+        dbPool.query(text, (error, result) => {
+            callback(error, result.rows);
+        });
+    };
+
+
+    const searchTags = (value, callback) => {
+
+        let text = `SELECT posts.* FROM posts INNER JOIN tags ON (tags.post_id = posts.id) WHERE tags.tag='${value}';`;
+
+        dbPool.query = (text, (error, result) => {
+            callback(error, result.rows);
+        });
+    };
 
     return {
         register,
-        login
+        login,
+        homepage,
+        searchProNameRating,
+        searchAmateur,
+        searchTags
     };
 };

@@ -33,15 +33,15 @@ class Default extends React.Component {
                             <div className='login'>{login}</div>
                         </div>
                         <div className='bottom-header'>
-                            <a href='/pro'><button>Pro Games</button></a>
-                            <a href='/amateur'><button>Amateur Games</button></a>
-                            <form method='GET' action='/' className='search'>
+                            <a href='/search?show=pro'><button>Pro Games</button></a>
+                            <a href='/search?show=amateur'><button>Amateur Games</button></a>
+                            <form method='GET' action='/search' className='search'>
                                 <select className='search-topic' name='topic'>
                                     <option value='tags'>Tags</option>
                                     <option value='name'>Name</option>
                                     <option value='rating'>Rating</option>
                                 </select>
-                                <input type='text' name='search'/>
+                                <input type='text' name='show'/>
                                 <input type='submit' value='search' />
                             </form>
                         </div>
@@ -51,6 +51,7 @@ class Default extends React.Component {
                     </main>
                     <footer>
                     </footer>
+                    <script src='/script.js'></script>
                 </body>
             </html>
     )};
