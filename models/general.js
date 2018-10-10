@@ -28,10 +28,8 @@ module.exports = (dbPool) => {
 
         dbPool.query(text, (error, result) => {
             if(result.rows.length === 0) {
-                console.log('if')
                 callback(error);
             } else {
-                console.log('else')
                 callback(error, result.rows[0]);
             }
         });
@@ -79,7 +77,8 @@ module.exports = (dbPool) => {
 
         let text = `SELECT posts.* FROM posts INNER JOIN tags ON (tags.post_id = posts.id) WHERE tags.tag='${value}';`;
 
-        dbPool.query = (text, (error, result) => {
+        dbPool.query(text, (error, result) => {
+
             callback(error, result.rows);
         });
     };

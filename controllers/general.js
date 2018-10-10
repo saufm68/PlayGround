@@ -1,8 +1,6 @@
 const sha256 = require('js-sha256');
 const SALT = 'Project 2, Lets go.';
 
-
-
 module.exports = (db) => {
 
     const registerForm = (request, response) => {
@@ -107,6 +105,7 @@ module.exports = (db) => {
                 if(error) {
                     console.log("error in searching tag: ", error.message);
                     response.status(500).render('error/error500');
+                    return;
                 }
 
                 response.render('general/search', {show: `${request.query.show} Games`, result: result, cookie: cookie});

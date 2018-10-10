@@ -10,12 +10,12 @@ class Home extends React.Component {
 
         if (this.props.pro.length > 0 && this.props.pro.length > 0) {
 
-            pro = this.prop.pro.map((element) => {
+            pro = this.props.pro.map((element) => {
                 let link = `/games/${element.id}`;
                 return <a key={element.id} href={link}><img className='gameDisplay' src={element.displayimage} /></a>
             });
 
-            amateur = this.prop.amateur.map((element) => {
+            amateur = this.props.amateur.map((element) => {
                 let link = `/games/${element.id}`;
                 return <a key={element.id} href={link}><img className='gameDisplay' src={element.displayimage} /></a>
             });

@@ -6,10 +6,10 @@ class Default extends React.Component {
 
         if (this.props.cookie.loginStatus === this.props.cookie.check) {
 
-            let profile = `/profile/${this.props.cookie.userId}`;
+            let profile = `/users/${this.props.cookie.userId}`;
             let currentUser = this.props.cookie.username;
 
-            var uploadGame = <a href='/upload'><button>Upload Game</button></a>
+            var uploadGame = <a href='/games/new'><button>Upload Game</button></a>
             var login = <div><a href={profile}>{currentUser}</a><button className='drop-down'></button>
                 <span className='logout'>Log Out</span></div>
 
@@ -35,6 +35,7 @@ class Default extends React.Component {
                         <div className='bottom-header'>
                             <a href='/search?show=pro'><button>Pro Games</button></a>
                             <a href='/search?show=amateur'><button>Amateur Games</button></a>
+                            <a href='/'><button>Home</button></a>
                             <form method='GET' action='/search' className='search'>
                                 <select className='search-topic' name='topic'>
                                     <option value='tags'>Tags</option>

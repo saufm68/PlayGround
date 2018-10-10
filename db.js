@@ -1,5 +1,7 @@
 const pg = require('pg');
 const general = require('./models/general');
+const games = require('./models/games');
+const users = require('./models/users');
 
 var configs = {
 
@@ -19,6 +21,8 @@ pool.on('error', function(err) {
 module.exports = {
 
     general: general(pool),
+    games: games(pool),
+    users: users(pool),
     //to close the server @ the end
     pool:pool
 
