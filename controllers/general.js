@@ -145,12 +145,21 @@ module.exports = (db) => {
 
     };
 
+    const logout = (request, response) => {
+
+        response.clearCookie('loginStatus');
+        response.clearCookie('userId');
+        response.clearCookie('username');
+        response.redirect('/');
+    };
+
     return {
         registerForm,
         register,
         loginForm,
         login,
         homepage,
-        search
+        search,
+        logout
     }
 };

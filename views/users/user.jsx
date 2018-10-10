@@ -41,7 +41,7 @@ class User extends React.Component {
                     <h2>Biography</h2>
                     <p>Username: {this.props.user.username}</p>
                     <p>Age: {this.props.user.age}</p>
-                    <p>Description: {this.props.user.description}</p>
+                    <p>Description: {this.props.user.biography}</p>
                     {editButton}
                     {deleteButton}
                 </div>

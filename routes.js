@@ -18,9 +18,9 @@ module.exports = (app,db) => {
     /*=============================
     =          users              =
     =============================*/
-    // app.get('/users/:id/edit', users.editForm);
-    // app.put('/users/:id', users.edit);
-    // app.delete('/users/:id', users.deleteAccount);
+    app.get('/users/:id/edit', users.editForm);
+    app.put('/users/:id', users.edit);
+    app.delete('/users/:id', users.deleteAccount);
     app.get('/users/:id', users.showProfile);
 
     /*=============================
@@ -30,7 +30,7 @@ module.exports = (app,db) => {
     app.post('/register', general.register);
     app.get('/login', general.loginForm);
     app.post('/login', general.login);
-    //app.post('logout', general.logout);
+    app.post('/logout', general.logout);
     app.get('/search', general.search); //issue on searching by tags
     app.get('/', general.homepage);
 

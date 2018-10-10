@@ -11,7 +11,8 @@ class Default extends React.Component {
 
             var uploadGame = <a href='/games/new'><button>Upload Game</button></a>
             var login = <div><a href={profile}>{currentUser}</a><button className='drop-down'></button>
-                <span className='logout'>Log Out</span></div>
+                <form className='logout' method='POST' action='/logout'><input type='submit' value='Logout' /></form>
+                </div>
 
         } else {
 

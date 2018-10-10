@@ -1,12 +1,12 @@
 const React = require('react');
 const Default = require('../layout/Default');
 
-class EditForm extends Rect.Component {
+class EditForm extends React.Component {
 
     render() {
 
         let image = this.props.user.profilepic;
-        let editlink = `/users/${this.props.user.id}?_method=PUT`;
+        let editLink = `/users/${this.props.user.id}?_method=PUT`;
 
         return(
 
@@ -18,12 +18,12 @@ class EditForm extends Rect.Component {
                     <input type='submit' value='Change' />
                 </form>
                 <form className='edit-profile-form' method='POST' action={editLink}>
-                    <h2>Uername:</h2>
-                    <input type='text' name='username' defaultValue={this.props.user.username} readOnly/>
+                    <h2>Username:</h2>
+                    <input type='text' name='username' defaultValue={this.props.user.username} disabled/>
                     <h2>Age:</h2>
                     <input type='number' name='age' defaultValue={this.props.user.age} />
                     <h2>Description:</h2>
-                    <textarea className='description' name='description' defaultValue={this.props.user.description}></textarea>
+                    <textarea className='biography' name='biography' defaultValue={this.props.user.biography}></textarea>
                     <input type='hidden' name='profilepic' value={image} />
                     <input type='submit' value='Update' />
                 </form>
