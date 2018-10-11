@@ -14,7 +14,15 @@ module.exports = (db) => {
         };
 
         if (cookie.loginStatus === cookie.check && sha256(SALT + request.cookies['username'] + 'loggedin') === cookie.check) {
-            response.render('games/uploadForm', {cookie: cookie});
+            db.games.uploadGameForm((error, result) => {
+
+                if(error) {
+                    console.log("error showing tags: ", error.message);
+                    response.status(500).render('error/error500');
+                }
+
+                response.render('games/uploadForm', {cookie: cookie, tags: result});
+            })
         } else {
             response.status(403).render('error/error403');
         }
@@ -56,7 +64,7 @@ module.exports = (db) => {
 
     };
 
-    const comments = (request, response) => {
+    const commentsPage = (request, response) => {
 
         const cookie = {
 
@@ -66,14 +74,14 @@ module.exports = (db) => {
             username: request.cookies['username']
         };
 
-        db.games.comments(request.params.id, (error, result) => {
+        db.games.commentsPage(request.params.id, (error, result) => {
 
             if(error) {
                 console.log("error displaying comments: ", error.message);
                 response.status(500).render('error/error500');
             }
 
-            response.render('games/comments', {cookie: cookie, comments: result});
+            response.render('games/comments', {cookie: cookie, comments: result, currentPost: request.params.id});
         });
     };
 
@@ -125,10 +133,24 @@ module.exports = (db) => {
         });
     };
 
+    const comments = (request, response) => {
+
+        db.games.comments(request.body, (error) => {
+
+            if(error) {
+                console.log("error in posting comments: ", error.message);
+                response.status(500).render('error500');
+            }
+
+            response.redirect(`/games/${request.params.id}/comments`)
+        });
+    };
+
     return {
         uploadGameForm,
         uploadGames,
         display,
+        commentsPage,
         comments,
         deletePost,
         editForm,

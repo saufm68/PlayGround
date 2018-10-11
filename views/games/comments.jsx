@@ -7,18 +7,20 @@ class Comments extends React.Component {
 
         var comments;
 
+        let backUrl = `/games/${this.props.currentPost}`;
+
         if (this.props.comments.length > 0) {
 
             comments = this.props.comments.map((element) => {
 
-                let userLink = `/users/${this.props.comments.user_id}`;
+                let userLink = `/users/${element.user_id}`;
 
                 return <div key={element.id} className='comments-list'>
                     <div>
-                        <h3 className='comment-header'><a href={userLink}>{this.props.comments.username}</a></h3>
-                        <h3 className='comment-header'>{this.props.comments.dt}</h3>
+                        <h3 className='comment-header'><a href={userLink}>{element.username}</a></h3>
+                        <h3 className='comment-header'>{element.dt}</h3>
                     </div>
-                    <p className='comment-body'>{this.props.comments.message}</p>
+                    <p className='comment-body'>{element.message}</p>
                     </div>
             });
         }
@@ -30,6 +32,7 @@ class Comments extends React.Component {
                 <div className='overall-comments-container'>
                     <h2>Comments</h2>
                     {comments}
+                    <a href={backUrl}><button>Back</button></a>
                 </div>
             </Default>
     )};

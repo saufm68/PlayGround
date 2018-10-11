@@ -41,18 +41,20 @@ module.exports = (dbPool) => {
 
         dbPool.query(text, (error, result) => {
 
-            var games = {};
-            games['pro'] = result.rows;
+            var games = {
+                pro: [],
+                amateur: []
+            };
 
-            let text2 = `SELECT * FROM posts WHERE author_id!='1';`;
-
-            dbPool.query(text, (error, result) => {
-
-                games['amateur'] = result.rows;
-
-                callback(error, games);
+            result.rows.filter((element) => {
+                if(element.author_id === 1) {
+                    return games.pro.push(element);
+                } else {
+                    return games.amateur.push(element);
+                }
             });
 
+            callback(error, games);
         });
     };
 
@@ -75,7 +77,7 @@ module.exports = (dbPool) => {
 
     const searchTags = (value, callback) => {
 
-        let text = `SELECT posts.* FROM posts INNER JOIN tags ON (tags.post_id = posts.id) WHERE tags.tag='${value}';`;
+        let text = `SELECT posts.* FROM posts INNER JOIN tags_post ON (tags_post.post_id = posts.id) INNER JOIN tags ON (tags_post.tag_id = tags.id) WHERE tags.tag='${value}';`;
 
         dbPool.query(text, (error, result) => {
 

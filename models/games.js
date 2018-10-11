@@ -1,5 +1,14 @@
 module.exports = (dbPool) => {
 
+    const uploadGameForm = (callback) => {
+
+        let text = `SELECT * FROM tags;`;
+
+        dbPool.query(text, (error, result) => {
+            callback(error, result.rows);
+        });
+    };
+
     const uploadGames = (inputs, uploader, callback) => {
 
         const text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
@@ -9,35 +18,42 @@ module.exports = (dbPool) => {
 
             const resultId = result.rows[0];
 
-            if (inputs.tags !== '') {
+            if (inputs.tag !== undefined) {
 
-                let text2 = `INSERT INTO tags (tag, post_id) VALUES `;
-                let values = [];
-                let tags = inputs.tags.split('.');
-                let filteredTags = tags.filter((element) => {
-                    return element != '';
-                });
-                for (let i = 1; i <= filteredTags.length; i++) {
-                     if(i = (filteredTags.length -1)) {
-                        text2 += `($${i}, ${resultId}), `;
-                     } else {
-                        text2 += `($${i}, ${resultId});`;
-                     }
-                     values.push(filteredTags[i - 1]);
+                if(Array.isArray(inputs.tag)) {
+
+                    let text2 = `INSERT INTO tags_post (tag_id, post_id) VALUES `;
+
+                    for(let i = 0; i < inputs.tag.length; i++) {
+                        if(i === inputs.tag.length - 1) {
+                            text2 += `(${inputs.tag[i]}, ${resultId.id});`;
+                        } else {
+                            text2 += `(${inputs.tag[i]}, ${resultId.id}), `;
+                        }
+                    }
+
+                    dbPool.query(text2, (error, result) => {
+                        callback(error, resultId.id);
+                    });
+
+                } else {
+                    let text2 = `INSERT INTO tags_post (tag_id, post_id) VALUES (${inputs.tag}, ${resultId.id});`;
+
+                    dbPool.query(text2, (error, result) => {
+                        callback(error, resultId.id);
+                    })
                 }
 
-                dbPool.query(text, values, (error, result) => {
-                    callback(error, resultId);
-                });
             } else {
-                callback(error, resultId);
+
+                callback(error, resultId.id);
             }
         });
     };
 
     const selectedGame = (currentPost, callback) => {
 
-        let text = `SELECT tags.tag, tags.id FROM tags WHERE post_id='${currentPost}';`;
+        let text = `SELECT tags.tag, tags.id FROM tags INNER JOIN tags_post ON (tags_post.tag_id = tags.id) WHERE tags_post.post_id='${currentPost}';`;
 
         dbPool.query(text, (error, result) => {
 
@@ -82,7 +98,7 @@ module.exports = (dbPool) => {
         });
     };
 
-    const comments = (currentPost, callback) => {
+    const commentsPage = (currentPost, callback) => {
 
         let text = `SELECT comments.*, posts.title, users.username FROM comments INNER JOIN posts ON (comments.post_id = posts.id) INNER JOIN users ON (comments.user_id = users.id) WHERE post_id='${currentPost}';`;
 
@@ -94,7 +110,7 @@ module.exports = (dbPool) => {
     const deletePost = (currentPost, callback) => {
 
         let text = `DELETE FROM comments WHERE post_id='${currentPost}';`;
-        let text2 = `DELETE FROM tags WHERE post_id='${currentPost}';`;
+        let text2 = `DELETE FROM tags_post WHERE post_id='${currentPost}';`;
         let text3 = `DELETE FROM ratings WHERE post_id='${currentPost}';`;
         let text4 = `DELETE FROM posts WHERE id='${currentPost}';`;
 
@@ -131,9 +147,22 @@ module.exports = (dbPool) => {
         });
     };
 
+    const comments = (input, callback) => {
+
+        let text = `INSERT INTO comments (message, post_id, user_id, dt) VALUES ($1, $2, $3, $4);`;
+
+        let values = [input.message, input.post_id, input.user_id, input.dt];
+
+        dbPool.query(text, values, (error, result) => {
+            callback(error);
+        });
+    };
+
     return {
+        uploadGameForm,
         uploadGames,
         selectedGame,
+        commentsPage,
         comments,
         deletePost,
         editForm,

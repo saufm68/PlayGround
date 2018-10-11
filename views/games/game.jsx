@@ -20,13 +20,8 @@ class Game extends React.Component {
             });
         }
 
-        if(this.props.cookie.loginStatus === this.props.cookie.check && this.props.cookie.userId == this.props.game.author_id) {
-
+        if(this.props.cookie.loginStatus === this.props.cookie.check) {
             var disabled = <input type='submit' value='Rate' />
-            var editButton = <a href={editUrl}><button>Edit</button></a>
-            var deleteButton = <form className='deleteButton' method='POST' action={deleteUrl}>
-                <input type='submit' value='Delete' />
-                </form>
             var disableComment = <form method='POST' action={commentUrl}>
                 <textarea className='comments-text' name='message'></textarea>
                 <input type='hidden' name='post_id' value={this.props.currentPost} />
@@ -35,15 +30,23 @@ class Game extends React.Component {
                 <input type='submit' value='Submit' />
                 </form>
 
+            if(this.props.cookie.userId == this.props.game.author_id) {
+                var editButton = <a href={editUrl}><button>Edit</button></a>
+                var deleteButton = <form className='deleteButton' method='POST' action={deleteUrl}>
+                    <input type='submit' value='Delete' />
+                    </form>
+            } else {
+                var editButton;
+                var deleteButton;
+            }
         } else {
-
-            var editButton;
-            var deleteButton;
             var disabled = <input type='submit' value='Rate' disabled />
             var disableComment = <form method='POST' action={commentUrl}>
                 <textarea className='comments-text' name='message' disabled></textarea>
                 <input type='submit' value='Submit' disabled />
                 </form>
+            var editButton;
+            var deleteButton;
         }
 
         return (

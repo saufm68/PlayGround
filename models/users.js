@@ -35,7 +35,7 @@ module.exports = (dbPool) => {
 
                 let text3 = `DELETE FROM comments WHERE user_id='${id}'`;
 
-                for (let i = 0; i < deletedPostId.length; i++) {
+                    for (let i = 0; i < deletedPostId.length; i++) {
                     if(i === deletedPostId.length - 1) {
                         text3 += ` OR post_id='${deletedPostId[i]}';`;
                     } else {
@@ -53,24 +53,30 @@ module.exports = (dbPool) => {
                         } else {
                             text4 += ` OR post_id='${deletedPostId[i]}'`;
                         }
-                    };
+                    }
 
-                    dbPool.query(text4, (error, result) => {
+                    if(deletedPostId.length > 0) {
 
-                        let text5 = `DELETE FROM tags WHERE post_id='${deletedPostId[0]}'`;
+                        dbPool.query(text4, (error, result) => {
 
-                        for (let i = 1; i < deletedPostId.length; i++) {
-                            if(i === deletedPostId.length - 1) {
-                                text5 += ` OR post_id='${deletedPostId[i]}';`;
-                            } else {
-                                text5 += ` OR post_id='${deletedPostId[i]}'`;
+                            let text5 = `DELETE FROM tags_post WHERE post_id='${deletedPostId[0]}'`;
+
+                            for (let i = 1; i < deletedPostId.length; i++) {
+
+                                if(i === deletedPostId.length - 1) {
+                                    text5 += ` OR post_id='${deletedPostId[i]}';`;
+                                } else {
+                                    text5 += ` OR post_id='${deletedPostId[i]}'`;
+                                }
                             }
-                        };
 
-                        dbPool.query(text5, (error, result) => {
-                            callback(error);
+                            dbPool.query(text5, (error, result) => {
+                                callback(error);
+                            });
                         });
-                    })
+                    } else {
+                        callback(error);
+                    }
                 });
             });
         });

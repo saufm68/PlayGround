@@ -10,6 +10,10 @@ class UploadForm extends React.Component {
 
         let image = '/dp/defaultpic.png';
 
+        let tags = this.props.tags.map((element) => {
+            return <div key={element.id}><input type='checkbox' name='tag' value={element.id} />{element.tag}</div>
+        });
+
         return(
 
             <Default cookie={this.props.cookie} title='Upload'>
@@ -25,7 +29,7 @@ class UploadForm extends React.Component {
                     <h2>Summary:</h2>
                     <textarea className='summary' name='summary' placeholder='Enter A Short Summary Of The Game'></textarea>
                     <h2>Tags:</h2>
-                    <textarea className='tags' name='tags' placeholder='Enter the genre of the game. Seperate each tag with a period.'></textarea>
+                    {tags}
                     <h2>Link:</h2>
                     <input type='text' name='link' placeholder='Enter the link to the game' />
                     <input type='hidden' name='dt' value={date} />

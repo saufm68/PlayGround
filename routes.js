@@ -9,11 +9,12 @@ module.exports = (app,db) => {
     =============================*/
     app.get('/games/new', games.uploadGameForm);
     app.post('/games', games.uploadGames);
-    app.get('/games/:id/comments', games.comments);
+    app.get('/games/:id/comments', games.commentsPage);
+    app.post('/games/:id/comments', games.comments);
     app.get('/games/:id/edit', games.editForm);
     app.put('/games/:id', games.edit);
-    app.delete('/games/:id', games.deletePost)
-    app.get('/games/:id', games.display)
+    app.delete('/games/:id', games.deletePost);
+    app.get('/games/:id', games.display);
 
     /*=============================
     =          users              =
@@ -31,7 +32,7 @@ module.exports = (app,db) => {
     app.get('/login', general.loginForm);
     app.post('/login', general.login);
     app.post('/logout', general.logout);
-    app.get('/search', general.search); //issue on searching by tags
+    app.get('/search', general.search);
     app.get('/', general.homepage);
 
 };

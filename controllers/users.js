@@ -28,14 +28,15 @@ module.exports = (db) => {
 
         db.users.deleteAccount(request.params.id, (error) => {
 
+            response.clearCookie('loginStatus');
+            response.clearCookie('userId');
+            response.clearCookie('username');
+
             if(error) {
                 console.log("error in deleting account: ", error.message);
                 response.status(500).render('error/error500');
             };
 
-            response.clearCookie('loginStatus');
-            response.clearCookie('userId');
-            response.clearCookie('username');
             response.redirect('/');
         });
     };
