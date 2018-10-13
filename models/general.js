@@ -11,7 +11,7 @@ module.exports = (dbPool) => {
             if(result.rows.length === 0) {
 
                 let text2 = `INSERT INTO users (username, password, profilepic) VALUES ($1,$2,$3);`;
-                let values = [input.username, sha256(input.password), '/dp/defaultpic.png'];
+                let values = [input.username, sha256(input.password), '/pp/defaultpic.png'];
 
                 dbPool.query(text2, values, (error, result) => {
                     callback(error);

@@ -4,6 +4,7 @@ const Default = require('../layout/Default');
 class EditForm extends React.Component {
 
     render() {
+        //encType='multipart/form-data'
 
         let date = new Date();
         date = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}  ${date.getHours()}:${date.getMinutes()}`;
@@ -17,7 +18,7 @@ class EditForm extends React.Component {
             <Default cookie={this.props.cookie} title='Edit'>
                 <h1>EDIT GAME</h1>
                 <img src={image} />
-                <form id='changePic' method='POST' action={edit} encType='multipart/form-data'>
+                <form id='changePic' method='POST' action={edit} >
                     <input type='file' name='displayimage'  />
                     <input type='submit' value='Change' />
                 </form>
@@ -32,7 +33,7 @@ class EditForm extends React.Component {
                     <input type='hidden' name='displayimage' value={image} />
                     <input type='submit' value='Update' />
                 </form>
-                <script src='/upload.js'></script>
+                <script type="text/javascript" src='/js/upload.js'></script>
             </Default>
 
     )};

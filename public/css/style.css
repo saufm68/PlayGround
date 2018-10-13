@@ -1,0 +1,238 @@
+body {
+
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+
+}
+
+.container {
+
+	width: 1200px;
+	margin: auto;
+
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+header {
+
+	width: 100%;
+
+}
+
+
+/*==================================
+           TOP HEADER
+==================================*/
+
+.top-header {
+
+	position: relative;
+
+}
+
+.title {
+
+	margin: 0;
+	margin-top: 10px;
+	display: inline-block;
+	color: black;
+	font-size: 50px;
+	font-weight: 900;
+	color: #db9035;
+
+}
+
+.uploadGame, .login {
+
+	display: inline-block;
+	font-size: 25px;
+	background-color: #db9035;
+	position: absolute;
+	bottom: 2px;
+
+}
+
+.login {
+
+	height: 30px;
+	right: 0;
+
+}
+
+.user {
+
+	vertical-align: top;
+	margin-left: 10px;
+	color: white;
+
+}
+
+#drop-down {
+
+	height: 30px;
+	width: 23px;
+	padding: 0;
+	background-color: #db9035;
+	border-width: 0 0 0 2px;
+	border-style: solid;
+	border-color: white;
+	margin-left: 10px;
+
+
+}
+
+#logout {
+
+	visibility: hidden;
+	position: absolute;
+	color: white;
+	width: 112.5px;
+	bottom: -34px;
+	z-index: 10;
+
+}
+
+#logout input {
+
+	width: 100%;
+	height: 100%;
+	background-color: #db9035;
+	border-width: 2px 0 0 0;
+	border-color: white;
+	font-size: 25px;
+	color: white;
+
+}
+
+.uploadGame {
+
+	right: 130px;
+	height: 30px;
+
+}
+
+.upload {
+	height: 30px;
+	width: 140px;
+	padding: 0;
+	border-width: 0;
+	font-size: 18px;
+	font-weight: 500;
+	background-color: #db9035;
+	vertical-align: top;
+	color: white;
+}
+
+#login-register {
+	height: 32px;
+	width: 250px;
+	background-color: #db9035;
+	font-size: 25px;
+	color: white;
+	border: 0;
+}
+
+/*==================================
+           BOTTOM HEADER
+==================================*/
+
+.bottom-header {
+
+	margin-top: 5px;
+	position: relative;
+	background-color: #db9035;
+	width: 100%;
+	height: 50px;
+	z-index: 1;
+
+}
+
+.search {
+
+	display: inline-block;
+	float: right;
+
+}
+
+.linkButton {
+
+	height: 50px;
+	font-size: 25px;
+	border: 0;
+	color: white;
+	background-color: #db9035;
+	margin-right: 10px;
+	font-weight: 700;
+
+}
+
+.search {
+
+	height: 100%;
+	margin-right: 10px;
+}
+
+#search-text {
+
+	height: 30px;
+	margin-top: 7px;
+	width: 220px;
+	text-align: center;
+	font-size: 14px;
+	border-color: #db9035;
+
+}
+
+#submit {
+
+	height: 34px;
+	font-size: 17px;
+	background-color: white;
+
+}
+
+.search-topic {
+
+	height: 34px;
+	font-size: 18px;
+	padding: 3px 0;
+	border-color: #db9035;
+	background-color: white;
+
+}
+
+
+/*==================================
+           		FOOTER
+==================================*/
+
+footer {
+
+	margin-top: 40px;
+	width: 100%;
+	height: 60px;
+	background-color: #db9035;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

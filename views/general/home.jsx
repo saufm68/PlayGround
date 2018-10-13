@@ -25,9 +25,9 @@ class Home extends React.Component {
         return (
 
             <Default cookie={this.props.cookie} title='PlayGround'>
-                <h2>PROFESSIONAL GAMES</h2>
+                <h2 className='header'>PROFESSIONAL GAMES</h2>
                 <div className='wrapper'>{pro}</div>
-                <h2>AMATEUR GAMES</h2>
+                <h2 className='header'>AMATEUR GAMES</h2>
                 <div className='wrapper'>{amateur}</div>
             </Default>
     )};

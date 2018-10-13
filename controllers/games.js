@@ -146,6 +146,13 @@ module.exports = (db) => {
         });
     };
 
+    const changePic = (request, response) => {
+
+        console.log('working');
+        response.json(request.body);
+        console.log('response', request.body);
+    };
+
     return {
         uploadGameForm,
         uploadGames,
@@ -154,6 +161,7 @@ module.exports = (db) => {
         comments,
         deletePost,
         editForm,
-        edit
+        edit,
+        changePic
     };
 };

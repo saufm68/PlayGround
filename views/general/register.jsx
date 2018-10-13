@@ -8,7 +8,7 @@ class Register extends React.Component {
         let nope;
 
         if (this.props.check === 'true') {
-            nope = <div className='nope'>The Username Has Already Been Taken</div>
+            nope = <div className='nope-long'>The Username Has Already Been Taken</div>
         }
 
         return(
@@ -19,12 +19,12 @@ class Register extends React.Component {
                     {nope}
                     <form method='POST' action='/register'>
                         <h3>Username:</h3>
-                        <input type='text' name='username' />
+                        <input className='input' type='text' name='username' required autoComplete='off' />
                         <h3>Password:</h3>
-                        <input type='password' name='password' required /><br/>
-                        <input type='submit' value='Submit' required />
+                        <input className='input' type='password' name='password' required /><br/>
+                        <input className='submit' type='submit' value='Submit' />
                     </form>
-                    <a href='/login'>Already Have An Account?</a>
+                    <a href='/login' className='link'>Already Have An Account?</a>
                 </fieldset>
             </Structure>
     )};

@@ -17,7 +17,7 @@ class Search extends React.Component {
         return(
 
             <Default cookie={this.props.cookie} title='title'>
-                <h2>{this.props.show}</h2>
+                <h2 className='header'>{this.props.show}</h2>
                 <div className='full-wrapper'>{result}</div>
             </Default>
 

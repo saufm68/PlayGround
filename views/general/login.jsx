@@ -19,12 +19,12 @@ class Login extends React.Component {
                     {nope}
                     <form method='POST' action='/login'>
                         <h3>Username:</h3>
-                        <input type='text' name='username' required />
+                        <input className='input' type='text' name='username' required autoComplete='off' />
                         <h3>Password:</h3>
-                        <input type='password' name='password' required /><br/>
-                        <input type='submit' value='Submit' />
+                        <input className='input' type='password' name='password' required /><br/>
+                        <input className='submit' type='submit' value='Submit' />
                     </form>
-                    <a href='/register'>Don't Have An Account Yet?</a>
+                    <a href='/register' className='link'>Don't Have An Account Yet?</a>
                 </fieldset>
             </Structure>
     )};

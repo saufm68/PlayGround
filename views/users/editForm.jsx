@@ -27,7 +27,7 @@ class EditForm extends React.Component {
                     <input type='hidden' name='profilepic' value={image} />
                     <input type='submit' value='Update' />
                 </form>
-                <script src='/upload.js'></script>
+                <script type="text/javascript" src='/js/upload.js'></script>
             </Default>
     )};
 };

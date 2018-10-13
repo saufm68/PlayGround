@@ -8,7 +8,7 @@ class Structure extends React.Component {
 
             <html>
                 <head>
-                    <link rel="stylesheet" type="text/css" href="/structure.css" />
+                    <link rel="stylesheet" type="text/css" href="/css/structure.css" />
                     <title>{this.props.title}</title>
                 </head>
                 <body>
