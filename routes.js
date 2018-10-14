@@ -9,7 +9,8 @@ module.exports = (app,db) => {
     =============================*/
     app.get('/games/new', games.uploadGameForm);
     app.post('/games', games.uploadGames);
-    app.post('/games/new', games.changePic);
+    //app.post('/games/new', games.changePic);
+    app.get('/game-maker/creator', games.creator);
     app.get('/play/:id', games.play);
     app.get('/games/:id/comments', games.commentsPage);
     app.post('/games/:id/comments', games.comments);

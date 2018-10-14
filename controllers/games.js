@@ -174,6 +174,18 @@ module.exports = (db) => {
         });
     };
 
+    const creator = (request, response) => {
+
+        const cookie = {
+
+            check: sha256(SALT + request.cookies['username'] + 'loggedin'),
+            loginStatus: request.cookies['loginStatus'],
+            userId: request.cookies['userId'],
+            username: request.cookies['username']
+        };
+        response.render('games/create', {cookie: cookie});
+    };
+
     return {
         uploadGameForm,
         uploadGames,
@@ -184,6 +196,7 @@ module.exports = (db) => {
         editForm,
         edit,
         changePic,
-        play
+        play,
+        creator
     };
 };

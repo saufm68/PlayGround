@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS posts (
 	link TEXT,
 	author_id INTEGER,
 	dt TEXT,
-	rating INTEGER
+	rating INTEGER,
+	gameMaker BOOLEAN
 
 );
 
