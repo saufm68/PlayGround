@@ -8,32 +8,43 @@ class Game extends React.Component {
 
         let editUrl = `/games/${this.props.currentPost}/edit`;
         let deleteUrl = `/games/${this.props.currentPost}?_method=delete`;
-        let rateUrl = `/games/${this.props.currentPost}`
-        let commentUrl =`/games/${this.props.currentPost}/comments`
+        let rateUrl = `/games/${this.props.currentPost}`;
+        let commentUrl =`/games/${this.props.currentPost}/comments`;
+        let author = `/users/${this.props.game.author_id}`;
 
         let date = new Date();
         date = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}  ${date.getHours()}:${date.getMinutes()}`;
 
         if(this.props.game.tags.length > 0) {
             var tags = this.props.game.tags.map((element) => {
-                return <span key={element.id} className='single-tag'>{element.tag}</span>
+
+                const linkTag = `/search?topic=tags&show=${element.tag}`;
+
+                return <a key={element.id} href={linkTag}><span className='single-tag'>{element.tag}</span></a>
             });
+        }
+
+        if (this.props.game.author_id == 1) {
+            var admin = <a href={this.props.game.link}>Click To Purchase</a>
+        } else {
+            const playLink = `/play/${this.props.game.id}`;
+            var admin = <a href={playLink}>Click To Play</a>
         }
 
         if(this.props.cookie.loginStatus === this.props.cookie.check) {
             var disabled = <input id='rate-button' type='submit' value='Rate' />
-            var disableComment = <form method='POST' action={commentUrl}>
-                <textarea className='comments-text' name='message'></textarea>
+            var disableComment = <form className='comment-form' method='POST' action={commentUrl}>
+                <textarea className='comments-text' name='message' placeholder='Comment on the game'></textarea>
                 <input type='hidden' name='post_id' value={this.props.currentPost} />
                 <input type='hidden' name='user_id' value={this.props.cookie.userId} />
                 <input type='hidden' name='dt' value={date} />
-                <input type='submit' value='Submit' />
+                <input className='submit-comments' type='submit' value='Submit' />
                 </form>
 
             if(this.props.cookie.userId == this.props.game.author_id) {
-                var editButton = <a href={editUrl}><button>Edit</button></a>
-                var deleteButton = <form className='deleteButton' method='POST' action={deleteUrl}>
-                    <input type='submit' value='Delete' />
+                var editButton = <a href={editUrl}><button className='interactive-button'>Edit</button></a>
+                var deleteButton = <form  method='POST' action={deleteUrl}>
+                    <input className='interactive-button' type='submit' value='Delete' />
                     </form>
             } else {
                 var editButton;
@@ -41,9 +52,9 @@ class Game extends React.Component {
             }
         } else {
             var disabled = <input id='rate-button' type='submit' value='Rate' disabled />
-            var disableComment = <form method='POST' action={commentUrl}>
-                <textarea className='comments-text' name='message' disabled></textarea>
-                <input type='submit' value='Submit' disabled />
+            var disableComment = <form className='comment-form' method='POST' action={commentUrl}>
+                <textarea className='comments-text' name='message' placeholder='Comment on the game' disabled></textarea>
+                <input className='submit-comments' type='submit' value='Submit' disabled />
                 </form>
             var editButton;
             var deleteButton;
@@ -56,9 +67,9 @@ class Game extends React.Component {
                     <div className='information-container'>
                         <h2 className='header'>Information</h2>
                         <div className='info'>
-                            <p>Uploader: {this.props.game.username}</p>
+                            <p>Uploader: <a href={author}>{this.props.game.username}</a></p>
                             <p>Rated By: {this.props.game.rated} people</p>
-                            <a href={this.props.game.link}>Click To Purchase</a>
+                            {admin}
                         </div>
                     </div>
                     <div className='score-container'>
@@ -74,8 +85,10 @@ class Game extends React.Component {
                             <div className='summary'>
                                 <p>{this.props.game.summary}</p>
                                 <div className='tags-container'>{tags}</div>
-                                {editButton}
-                                {deleteButton}
+                                <div className='ui-button'>
+                                    {editButton}
+                                    {deleteButton}
+                                </div>
                             </div>
                     </div>
                     <div className='comments-link'><a href={commentUrl}>Comments</a></div>

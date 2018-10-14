@@ -158,6 +158,15 @@ module.exports = (dbPool) => {
         });
     };
 
+    const play = (gameId, callback) => {
+
+        let text = `SELECT * FROM posts WHERE id='${gameId}';`;
+
+        dbPool.query(text, (error, result) => {
+            callback(error, result.rows[0].link);
+        });
+    };
+
     return {
         uploadGameForm,
         uploadGames,
@@ -166,6 +175,7 @@ module.exports = (dbPool) => {
         comments,
         deletePost,
         editForm,
-        edit
+        edit,
+        play
     };
 };

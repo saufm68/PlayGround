@@ -153,6 +153,27 @@ module.exports = (db) => {
         console.log('response', request.body);
     };
 
+    const play = (request, response) => {
+
+        const cookie = {
+
+            check: sha256(SALT + request.cookies['username'] + 'loggedin'),
+            loginStatus: request.cookies['loginStatus'],
+            userId: request.cookies['userId'],
+            username: request.cookies['username']
+        };
+
+        db.games.play(request.params.id, (error, result) => {
+
+            if(error) {
+                console.log('error in rendering playPage: ', error.message);
+                response.status(500).render('error/error500');
+            }
+
+            response.render('games/play', {link: result , cookie: cookie});
+        });
+    };
+
     return {
         uploadGameForm,
         uploadGames,
@@ -162,6 +183,7 @@ module.exports = (db) => {
         deletePost,
         editForm,
         edit,
-        changePic
+        changePic,
+        play
     };
 };

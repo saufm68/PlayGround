@@ -77,8 +77,8 @@ main {
 	height: 200px;
 	width: 65%;
 	position: absolute;
-	border: 1px solid black;
-	margin-left: 70px;
+	border: 1px solid #db9035;
+	margin-left: 25px;
 	padding: 15px;
 
 }
@@ -104,8 +104,8 @@ main {
 	height: 90px;
 	width: 65%;
 	position: absolute;
-	border: 1px solid black;
-	margin-left: 70px;
+	border: 1px solid #db9035;
+	margin-left: 25px;
 	padding: 15px;
 	top: 275px;
 
@@ -139,6 +139,7 @@ main {
 	width: 200px;
 	font-size: 25px;
 	text-align: center;
+	border: 1px solid #db9035;
 
 }
 
@@ -147,19 +148,133 @@ main {
 	height: 86px;
 	width: 100px;
 	font-size: 25px;
+	border: 1px solid #db9035;
 
 }
 
 .summary-container {
 
-	width: 100%;
+	width: 96%;
 	min-height: 300px;
 	margin: 20px 0;
-	border: 1px solid black;
+	border: 1px solid #db9035;
 	padding: 10px;
+	position: relative;
 
 }
 
+.summary-container p {
+
+	margin-bottom: 45px;
+
+}
+
+.ui-button {
+
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+
+}
+
+.ui-button form {
+
+	display: inline-block;
+}
+
+.interactive-button {
+
+	display: inline-block;
+	margin-right: 5px;
+	font-size: 24px;
+	font-weight: 700;
+	border: 2px solid #db9035;
+	background-color: #db9035;
+	color: white;
+}
+
+.tags-container {
+
+	height: 35px;
+	width: 150px;
+	position: absolute;
+	bottom: 10px;
+	left: 50px;
+	overflow: auto;
+	white-space: nowrap;
+
+}
+
+.single-tag {
+
+	font-size: 18px;
+	font-weight: 700;
+	border: 1px solid #db9035;
+	padding: 4px;
+	margin-right: 7px;
+	border-radius: 5px;
+	position: relative;
+	top: 5px;
+	background-color: #db9035;
+	color: white;
+
+}
+
+.comments-link {
+
+	height: 40px;
+	width: 200px;
+	background-color: #db9035;
+	text-align: center;
+	font-weight: 700;
+	font-size: 27px;
+	position: relative;
+
+}
+
+
+.comments-link a {
+
+	color: white;
+	text-decoration: underline;
+	position: absolute;
+	top: 7px;
+	left: 40px;
+
+
+}
+
+.comment-form {
+
+	width: 98%;
+	background-color: #db9035;
+	min-height: 120px;
+	position: relative;
+
+}
+
+.comments-text {
+
+	width: 85%;
+	height: 90px;
+	margin: 20px 0 20px 20px;
+	font-size: 20px;
+	vertical-align: middle;
+	border: 1px solid #db9035;
+
+}
+
+.submit-comments {
+
+	height: 95px;
+	border: 1px solid #db9035;
+	font-size: 23px;
+	font-weight: 600;
+	padding: 18px;
+	position: absolute;
+	top: 20px;
+
+}
 
 
 /*==================================
@@ -174,6 +289,7 @@ main {
 
 
 
+
 /*==================================
            	PROFILE PAGE
 ==================================*/
@@ -183,3 +299,18 @@ main {
 /*==================================
            	EDIT PROFILE
 ==================================*/
+
+/*==================================
+           		PLAY
+==================================*/
+
+embed {
+	width: 100%;
+	height: 900px;
+}
+
+
+
+
+
+

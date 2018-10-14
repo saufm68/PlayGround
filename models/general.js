@@ -37,7 +37,7 @@ module.exports = (dbPool) => {
 
     const homepage = (callback) => {
 
-        let text = `SELECT * FROM posts WHERE author_id='1';`;
+        let text = `SELECT * FROM posts;`;
 
         dbPool.query(text, (error, result) => {
 
