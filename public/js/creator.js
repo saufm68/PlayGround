@@ -106,7 +106,6 @@ function updateGrid() {
     }
 
     console.log(jsGrid);
-    document.getElementById('done').remove();
     var form = document.getElementById('create-form');
     form.style.visibility = 'visible';
 
@@ -117,6 +116,54 @@ createBoard();
 
 var done = document.getElementById('done').addEventListener('click', updateGrid);
 
+var title = document.getElementById('title');
+var summary = document.getElementById('summary');
+var dt = document.getElementById('dt');
+var rating = document.getElementById('rating');
+var dp = document.getElementById('dp');
+var formSubmit = document.getElementById('create-form').addEventListener('submit', event => {
+    event.preventDefault();
+    ajaxPost(title.value, summary.value, dt.value, rating.value, dp.value, jsGrid);
+});
+
+function ajaxPost(title, summary, dt, rating, dp, map) {
+
+    var ajaxUrl = 'http://localhost:3000/game-maker/creator';
+
+    function responseHandler() {
+      console.log("response text", this.responseText);
+      console.log("status text", this.statusText);
+      console.log("status code", this.status);
+    };
+
+    // make a new request
+    var request = new XMLHttpRequest();
+
+    request.addEventListener('load', responseHandler);
+
+    // ready the system by calling open, and specifying the url
+    request.open('POST', ajaxUrl, true);
+
+    request.setRequestHeader(
+      'Content-type',
+      'application/x-www-form-urlencoded'
+    );
+
+    let values = {
+
+        title: title,
+        summary: summary,
+        dt: dt,
+        rating: rating,
+        dp: dp,
+        map: map
+    };
+
+    values = JSON.stringify(values);
+
+    request.send(`hello=${title}, gsj=${summary}`);
+
+};
 
 
 

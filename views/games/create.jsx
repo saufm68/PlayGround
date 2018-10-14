@@ -23,14 +23,14 @@ class Create extends React.Component {
                     <h1>GOAL</h1>
                     <div className='holder'><img className='character' id='goal' draggable='true' src='../gamemaker-media/goal.jpg' /></div>
                 </div>
-                <button id='done'>Done</button>
-                <form id='create-form' method='POST' action='/game-maker'>
+                <button id='done'>Save</button>
+                <form id='create-form' method='POST' action='/game-maker/creator'>
                     <h2>Title:</h2>
-                    <input type='text' name='title' required />
+                    <input id='title' type='text' name='title' required />
                     <h2>Summary:</h2>
-                    <textarea name='summary' placeholder='Enter a short summary' required></textarea>
-                    <input type='hidden' name='dt' value={date} />
-                    <input type='hidden' name='rating' value='0' />
+                    <textarea id='summary' name='summary' placeholder='Enter a short summary' required></textarea>
+                    <input id='dt' type='hidden' name='dt' value={date} />
+                    <input id='rating' type='hidden' name='rating' value='0' />
                     <input id='dp' type='hidden' name='displayimage' value='/dp/defaultpic.png' />
                     <input type='submit' value='Create Stage' />
                 </form>

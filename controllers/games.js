@@ -186,6 +186,10 @@ module.exports = (db) => {
         response.render('games/create', {cookie: cookie});
     };
 
+    const publish = (request, response) => {
+       response.send(request.body);
+    }
+
     return {
         uploadGameForm,
         uploadGames,
@@ -197,6 +201,7 @@ module.exports = (db) => {
         edit,
         changePic,
         play,
-        creator
+        creator,
+        publish
     };
 };
