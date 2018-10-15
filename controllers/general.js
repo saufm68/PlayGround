@@ -118,7 +118,13 @@ module.exports = (db) => {
 
         } else if(request.query.topic === 'rating') {
 
+            if(isNaN(request.query.show)) {
+                alert('Rating should be a number');
+            } else {
+
             searchDb(`Games With Rating = ${request.query.show}`,'rating', request.query.show);
+
+            }
 
         } else {
 
