@@ -77,7 +77,7 @@ function reCreateBoard() {
         }
 
       }
-
+      movePlayer();
     };
     // listen for the request response
     request.addEventListener("load", responseHandler);
@@ -620,7 +620,7 @@ function reCreateBoard() {
 // }
 
 reCreateBoard();
-movePlayer();
+
 
 
 

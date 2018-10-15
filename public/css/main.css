@@ -324,9 +324,10 @@ main {
 	text-align: center;
 }
 
-.summary {
+.summaryTextArea {
 
-	height: 160px
+	height: 160px;
+	text-align: justify;
 
 }
 
@@ -359,6 +360,13 @@ main {
 
 }
 
+.align {
+	margin-left: 343px;
+}
+
+.align-small {
+	margin-left: 58px;
+}
 
 /*==================================
            		COMMENTS
@@ -451,7 +459,70 @@ main {
            	PROFILE PAGE
 ==================================*/
 
+.bio-container {
 
+	display: inline-block;
+	height: 367px;
+	width: 65%;
+	position: absolute;
+	border: 1px solid #db9035;
+	margin-left: 25px;
+	padding: 15px;
+
+}
+
+.profile {
+
+	font-weight: 500;
+	font-size: 30px;
+
+}
+
+.deleteButton {
+
+	display: inline-block;
+}
+
+.profile-delete, .profile-edit {
+
+	background-color: #db9035;
+	color: white;
+	font-weight: 700;
+	font-size: 30px;
+	border: 0;
+	margin: auto 5px;
+
+}
+
+.profile-ui {
+
+	position: relative;
+	top: 25px;
+	left: 25px;
+
+}
+
+.game-list-container {
+
+	width: 96%;
+	min-height: 300px;
+	margin: 20px 0;
+	border: 1px solid #db9035;
+	padding: 10px;
+	position: relative;
+
+}
+
+.gameScroll {
+
+	width: 90%;
+	height: 440px;
+	overflow: auto;
+	white-space: nowrap;
+	margin: 30px auto;
+	background-color: rgb(245, 245, 245);
+
+}
 
 /*==================================
            	EDIT PROFILE

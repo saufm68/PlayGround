@@ -122,7 +122,7 @@ module.exports = (db) => {
                 alert('Rating should be a number');
             } else {
 
-            searchDb(`Games With Rating = ${request.query.show}`,'rating', request.query.show);
+                searchDb(`Games With Rating = ${request.query.show}`,'rating', request.query.show);
 
             }
 

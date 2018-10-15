@@ -23,7 +23,7 @@ class UploadForm extends React.Component {
                     <h2 className='subheader'>Title:</h2>
                     <input className='inputs' type='text' name='title' placeholder='Enter Title' required />
                     <h2 className='subheader'>Summary:</h2>
-                    <textarea className='inputs summary' name='summary' placeholder='Enter A Short Summary Of The Game'></textarea>
+                    <textarea className='inputs summaryTextArea' name='summary' placeholder='Enter A Short Summary Of The Game'></textarea>
                     <h2 className='subheader'>Tags:</h2>
                     <div className='tags-holder'>
                         {tags}
