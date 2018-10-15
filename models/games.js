@@ -11,8 +11,8 @@ module.exports = (dbPool) => {
 
     const uploadGames = (inputs, uploader, callback) => {
 
-        const text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;`;
-        const values = [inputs.title, inputs.summary, inputs.displayimage, inputs.link, uploader, inputs.dt, inputs.rating];
+        const text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating, gamemaker) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;`;
+        const values = [inputs.title, inputs.summary, inputs.displayimage, inputs.link, uploader, inputs.dt, inputs.rating, false];
 
         dbPool.query(text, values, (error, result) => {
 
@@ -167,6 +167,26 @@ module.exports = (dbPool) => {
         });
     };
 
+    const publish = (inputs, uploader, callback) => {
+
+        let text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating, gamemaker, map) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;`;
+
+        let values = [inputs.title, inputs.summary, inputs.displayimage, inputs.link, uploader, inputs.dt, inputs.rating, true, JSON.stringify(inputs.map)];
+
+        dbPool.query(text, values, (error, result) => {
+            callback(error, result.rows[0].id);
+        });
+    };
+
+    const playCreator = (currentPost, callback) => {
+
+        let text = `SELECT * FROM posts WHERE id='${currentPost}';`;
+
+        dbPool.query(text, (error, result) => {
+            callback(error, result.rows[0]);
+        });
+    };
+
     return {
         uploadGameForm,
         uploadGames,
@@ -176,6 +196,8 @@ module.exports = (dbPool) => {
         deletePost,
         editForm,
         edit,
-        play
+        play,
+        publish,
+        playCreator
     };
 };

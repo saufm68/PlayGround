@@ -54,6 +54,7 @@ module.exports = (db) => {
     };
 
     const homepage = (request, response) => {
+        console.log('working');
 
         const cookie = {
 

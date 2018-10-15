@@ -15,10 +15,10 @@ class Comments extends React.Component {
 
                 let userLink = `/users/${element.user_id}`;
 
-                return <div key={element.id} className='comments-list'>
+                return <div key={element.id} className='specific-comment'>
                     <div>
-                        <h3 className='comment-header'><a href={userLink}>{element.username}</a></h3>
-                        <h3 className='comment-header'>{element.dt}</h3>
+                        <h3 className='comment-header left'><a href={userLink}>{element.username}</a></h3>
+                        <h3 className='comment-header right'>{element.dt}</h3>
                     </div>
                     <p className='comment-body'>{element.message}</p>
                     </div>
@@ -28,11 +28,13 @@ class Comments extends React.Component {
         return(
 
             <Default cookie={this.props.cookie} title='Comments'>
-                <h1>{this.props.comments.title}</h1>
+                <h1 className='header'>{this.props.comments[0].title}</h1>
                 <div className='overall-comments-container'>
-                    <h2>Comments</h2>
-                    {comments}
-                    <a href={backUrl}><button>Back</button></a>
+                    <h2 className='header'>Comments</h2>
+                    <div className='comments-list'>
+                        {comments}
+                    </div>
+                    <a href={backUrl}><button className='back-button'>Back</button></a>
                 </div>
             </Default>
     )};

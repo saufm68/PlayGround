@@ -1,5 +1,7 @@
 const sha256 = require('js-sha256');
 const SALT = 'Project 2, Lets go.';
+const jsonfile = require('jsonfile');
+const FILE = 'gameMaker.json';
 
 module.exports = (db) => {
 
@@ -80,7 +82,7 @@ module.exports = (db) => {
                 console.log("error displaying comments: ", error.message);
                 response.status(500).render('error/error500');
             }
-
+            console.log(result);
             response.render('games/comments', {cookie: cookie, comments: result, currentPost: request.params.id});
         });
     };
@@ -183,12 +185,49 @@ module.exports = (db) => {
             userId: request.cookies['userId'],
             username: request.cookies['username']
         };
+
         response.render('games/create', {cookie: cookie});
     };
 
     const publish = (request, response) => {
-       response.send(request.body);
-    }
+
+        db.games.publish(request.body, request.cookies['userId'], (error, result) => {
+
+            if(error) {
+                console.log('error in publishing into server: ', error.message);
+                response.status(500).render('error/error500');
+            }
+
+            response.redirect('/games/' + result);
+        });
+    };
+
+    const playCreator = (request, response) => {
+
+        const cookie = {
+
+            check: sha256(SALT + request.cookies['username'] + 'loggedin'),
+            loginStatus: request.cookies['loginStatus'],
+            userId: request.cookies['userId'],
+            username: request.cookies['username']
+        };
+
+        response.cookie('currentPost', request.params.id)
+        response.render('games/gameMakerPlay', {cookie:cookie});
+    };
+
+    const jsonPass = (request, response) => {
+
+        db.games.playCreator(request.cookies['currentPost'], (error, result) => {
+
+            if(error) {
+                console.log('error getting creator game: ', error.message);
+                response.status(500).render('error/error500');
+            }
+            response.clearCookie('currentPost');
+            response.json(result);
+        });
+    };
 
     return {
         uploadGameForm,
@@ -202,6 +241,8 @@ module.exports = (db) => {
         changePic,
         play,
         creator,
-        publish
+        publish,
+        playCreator,
+        jsonPass
     };
 };

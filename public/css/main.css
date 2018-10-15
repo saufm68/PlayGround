@@ -11,7 +11,7 @@ main {
 
 .header {
 
-	font-size: 30px;
+	font-size: 40px;
 	width: 90%;
 	margin: auto;
 	padding-bottom: 10px;
@@ -276,7 +276,6 @@ main {
 
 }
 
-
 /*==================================
           EDIT/UPLOAD GAME
 ==================================*/
@@ -287,8 +286,88 @@ main {
            		COMMENTS
 ==================================*/
 
+.overall-comments-container {
 
+	font-size: 25px;
+	width: 90%;
+	margin: auto;
+	border: 1px solid #db9035;
+	margin-top: 30px;
+	padding-top: 30px;
+	height: 670px;
 
+}
+
+.comments-list {
+
+	overflow: scroll;
+	width: 90%;
+	margin: auto;
+	height: 500px;
+	margin-top: 25px;
+	background-color: rgb(245,245,245);
+
+}
+
+.specific-comment {
+
+	width: 80%;
+	min-height: 110px;
+	border-radius: 10px;
+	background-color: #db9035;
+	color: white;
+	margin: 20px auto;
+
+}
+
+.specific-comment a {
+	color: white
+}
+
+.comment-header {
+
+	display: inline-block;
+	position: relative;
+	top: 5px;
+	margin: 0;
+
+}
+
+.left {
+
+	left: 15px;
+
+}
+
+.right {
+
+	left: 500px;
+
+}
+
+.comment-body {
+
+	position: relative;
+	left: 15px;
+	top: -10px;
+
+}
+
+.back-button {
+
+	width: 90%;
+	border: 0;
+	background-color: #db9035;
+	font-size: 25px;
+	padding: 10px;
+	border-radius: 10px;
+	color: white;
+	font-weight: 700;
+	position: relative;
+	top: 20px;
+	left: 53px;
+
+}
 
 /*==================================
            	PROFILE PAGE

@@ -24,10 +24,14 @@ class Game extends React.Component {
             });
         }
 
-        if (this.props.game.author_id == 1) {
+         if (this.props.game.author_id == 1) {
             var admin = <a href={this.props.game.link}>Click To Purchase</a>
         } else {
-            const playLink = `/play/${this.props.game.id}`;
+            if (this.props.game.gamemaker == true) {
+                var playLink = `/game-maker/play/${this.props.game.id}`;
+            } else {
+                var playLink = `/play/${this.props.game.id}`;
+            }
             var admin = <a href={playLink}>Click To Play</a>
         }
 
