@@ -1,7 +1,5 @@
 const sha256 = require('js-sha256');
 const SALT = 'Project 2, Lets go.';
-const jsonfile = require('jsonfile');
-const FILE = 'gameMaker.json';
 
 module.exports = (db) => {
 
@@ -33,14 +31,26 @@ module.exports = (db) => {
 
     const uploadGames = (request, response) => {
 
-        db.games.uploadGames(request.body, request.cookies['userId'], (error, result) => {
+        let picture = request.files.displayimage;
 
-            if(error){
-                console.log("error in uploading: ", error.message);
+        picture.mv('public/dp/' + picture.name, (error) => {
+
+            if (error) {
+                console.log("fail to move file");
                 response.status(500).render('error/error500');
             }
 
-            response.redirect('/games/' + result);
+            let path = /dp/ + picture.name;
+
+            db.games.uploadGames(request.body, path, request.cookies['userId'], (error, result) => {
+
+                if(error){
+                    console.log("error in uploading: ", error.message);
+                    response.status(500).render('error/error500');
+                }
+
+                response.redirect('/games/' + result);
+            });
         });
     };
 
@@ -60,7 +70,7 @@ module.exports = (db) => {
                 console.log("error in displaying game: ", error.message);
                 response.status(500).render('error/error500');
             }
-
+            response.cookie('currentPost', request.params.id);
             response.render('games/game', {cookie: cookie, currentPost: request.params.id, game: result});
         });
 
@@ -124,14 +134,27 @@ module.exports = (db) => {
 
     const edit = (request, response) => {
 
-        db.games.edit(request.body, request.params.id, (error) => {
+        let picture = request.files.displayimage;
 
-            if(error) {
-                console.log("error looking for values:", error.message);
+        picture.mv('public/dp/' + picture.name, (error) => {
+
+            if (error) {
+                console.log("fail to move file");
                 response.status(500).render('error/error500');
             }
 
-            response.redirect('/games/' + request.params.id);
+            let path = /dp/ + picture.name;
+
+            db.games.edit(request.body, path, request.params.id, (error) => {
+
+                if(error) {
+                    console.log("error looking for values:", error.message);
+                    response.status(500).render('error/error500');
+                }
+
+                response.redirect('/games/' + request.params.id);
+            });
+
         });
     };
 
@@ -146,13 +169,6 @@ module.exports = (db) => {
 
             response.redirect(`/games/${request.params.id}/comments`)
         });
-    };
-
-    const changePic = (request, response) => {
-
-        console.log('working');
-        response.json(request.body);
-        console.log('response', request.body);
     };
 
     const play = (request, response) => {
@@ -191,14 +207,16 @@ module.exports = (db) => {
 
     const publish = (request, response) => {
 
-        db.games.publish(request.body, request.cookies['userId'], (error, result) => {
+        db.games.publish(JSON.parse(request.body.content), request.cookies['userId'], (error, result) => {
 
             if(error) {
                 console.log('error in publishing into server: ', error.message);
                 response.status(500).render('error/error500');
             }
 
-            response.redirect('/games/' + result);
+
+
+            response.send({link:'/games/' + result});
         });
     };
 
@@ -212,7 +230,7 @@ module.exports = (db) => {
             username: request.cookies['username']
         };
 
-        response.cookie('currentPost', request.params.id)
+
         response.render('games/gameMakerPlay', {cookie:cookie});
     };
 
@@ -224,8 +242,21 @@ module.exports = (db) => {
                 console.log('error getting creator game: ', error.message);
                 response.status(500).render('error/error500');
             }
-            response.clearCookie('currentPost');
+
             response.json(result);
+        });
+    };
+
+    const rating = (request, response) => {
+
+        db.games.rating(parseInt(request.body.value), request.cookies['currentPost'], request.cookies['userId'], (error, result) => {
+
+            if(error) {
+                console.log('error rating game: ', error.message);
+                response.status(500).render('error/error500');
+            }
+
+            response.send(result);
         });
     };
 
@@ -238,11 +269,12 @@ module.exports = (db) => {
         deletePost,
         editForm,
         edit,
-        changePic,
         play,
         creator,
         publish,
         playCreator,
-        jsonPass
+        jsonPass,
+        rating
+
     };
 };

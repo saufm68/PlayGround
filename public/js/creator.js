@@ -108,8 +108,6 @@ function updateGrid() {
     console.log(jsGrid);
     var form = document.getElementById('create-form');
     form.style.visibility = 'visible';
-    var map = document.getElementById('map');
-    map.setAttribute('value', JSON.stringify(jsGrid));
 
 };
 
@@ -118,7 +116,60 @@ createBoard();
 
 var done = document.getElementById('done').addEventListener('click', updateGrid);
 
+var inputTitle = document.getElementById('title');
+var inputSummary = document.getElementById('summary');
+var inputDt = document.getElementById('dt');
+var inputRating = document.getElementById('rating');
+var inputDp = document.getElementById('dp');
+var formCreate = document.getElementById('create-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    ajaxPost(inputTitle.value, inputSummary.value, inputDt.value, inputRating.value, inputDp.value);
+});
 
+function ajaxPost(title, summary, dt, rating, dp) {
+
+    let ajaxUrl = '/game-maker';
+
+    var request = new XMLHttpRequest();
+
+    function responseHandler() {
+        var link = JSON.parse(this.responseText);
+        console.log(link);
+        var create = document.createElement('a');
+        create.setAttribute('href', link['link']);
+        var button = document.createElement('button');
+        button.innerHTML = 'Create';
+        create.appendChild(button);
+        var done = document.getElementById('done')
+        done.parentNode.appendChild(create);
+        var form = document.getElementById('create-form')
+        form.parentNode.removeChild(form);
+        done.parentNode.removeChild(done);
+    };
+
+    request.addEventListener('load', responseHandler);
+
+    request.open('POST', ajaxUrl, true);
+
+    request.setRequestHeader(
+      'Content-type',
+      'application/x-www-form-urlencoded'
+    );
+
+    var inputs = {
+        title: title,
+        summary: summary,
+        dt: dt,
+        rating: rating,
+        dp: dp,
+        map: jsGrid
+    }
+
+    inputs = JSON.stringify(inputs);
+
+    request.send(`content=${inputs}`);
+
+};
 
 
 

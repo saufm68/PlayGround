@@ -91,11 +91,11 @@ module.exports = (dbPool) => {
         });
     };
 
-    const edit = (input, id, callback) => {
+    const edit = (input, path, id, callback) => {
 
         let text = `UPDATE users SET profilepic=($1), age=($2), biography=($3) WHERE id='${id}';`;
 
-        let values = [input.profilepic, input.age, input.biography];
+        let values = [path, input.age, input.biography];
 
         dbPool.query(text, values, (error, result) => {
             callback(error);

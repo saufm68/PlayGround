@@ -1,8 +1,10 @@
-var map;
+var jsGrid;
+var currentCoordinateX;
+var currentCoordinateY;
 
 function reCreateBoard() {
 
-    const ajaxUrl = 'http://localhost:3000/game-maker/play/json';
+    const ajaxUrl = '/game-maker/play/json';
 
     const request = new XMLHttpRequest();
 
@@ -12,11 +14,69 @@ function reCreateBoard() {
       console.log("status code", this.status);
 
       let info = JSON.parse(this.responseText);
-      map = JSON.parse(info.map);
+      jsGrid = JSON.parse(info.map);
+      console.log(jsGrid);
 
       var container = document.getElementsByTagName('main')[0];
       var script = document.getElementsByTagName('script')[0];
-      container.insertBefore()
+      var table = document.createElement('table');
+      table.id = 'gameContainer-play';
+      container.insertBefore(table, script);
+
+      var table = document.getElementById('gameContainer-play');
+      var enemyCount = 0;
+      var obstacleCount = 0;
+      for (let i = 0; i < jsGrid.length; i++) {
+
+        var tRow = document.createElement('tr');
+        tRow.id = 'r-' + i;
+        tRow.classList.add('createRow-play');
+        table.appendChild(tRow);
+
+        for (let j = 0; j < jsGrid[i].length; j++) {
+
+            var tCol = document.createElement('td');
+            tCol.id = 'c-' + j;
+            tCol.classList.add('createCol-play');
+            var row = document.getElementById('r-' + i);
+            row.appendChild(tCol);
+
+            if(jsGrid[i][j] === 'P') {
+                let image = document.createElement('img');
+                image.src = '/gamemaker-media/player.jpg';
+                image.classList.add('character-play');
+                image.id = 'player';
+                currentCoordinateY = i;
+                currentCoordinateX = j;
+                let col = document.querySelector(`#r-${i} #c-${j}`);
+                col.appendChild(image);
+            } else if (jsGrid[i][j] === 'E') {
+                let image = document.createElement('img');
+                image.src = '/gamemaker-media/enemy.jpg';
+                image.classList.add('character-play');
+                image.id = 'enemy' + enemyCount;
+                enemyCount++;
+                let col = document.querySelector(`#r-${i} #c-${j}`);
+                col.appendChild(image);
+            } else if (jsGrid[i][j] === 'G') {
+                let image = document.createElement('img');
+                image.src = '/gamemaker-media/goal.jpg';
+                image.classList.add('character-play');
+                image.id = 'goal';
+                let col = document.querySelector(`#r-${i} #c-${j}`);
+                col.appendChild(image);
+            } else if (jsGrid[i][j] === 'O') {
+                let image = document.createElement('img');
+                image.src = '/gamemaker-media/obstacle.jpg';
+                image.classList.add('character-play');
+                image.id = 'obstacle' + obstacleCount;
+                obstacleCount++;
+                let col = document.querySelector(`#r-${i} #c-${j}`);
+                col.appendChild(image);
+            }
+        }
+
+      }
 
     };
     // listen for the request response
@@ -28,11 +88,13 @@ function reCreateBoard() {
 
 };
 
-reCreateBoard();
-// //finding the currnent co-ordinates of the the player
-// function plottingPlayer(view) {
 
-//     var mapGridValue = "#r" + currentCoordinateY + " #c" + currentCoordinateX + " img";
+//finding the currnent co-ordinates of the the player
+// function plottingPlayer(y, x) {
+
+
+
+//     var mapGridValue = "#r-" + currentCoordinateY + " #c-" + currentCoordinateX + " img";
 //     var mapGrid = document.querySelector(mapGridValue);
 
 //     if (view === undefined ) {
@@ -46,10 +108,12 @@ reCreateBoard();
 
 // };
 
-// //getting the value of the key pressed and moving the character to the specified direction
+//getting the value of the key pressed and moving the character to the specified direction
 // function movePlayer() {
 
 //     var move = function(event){
+
+//         var player = document.getElementById('player');
 
 //         if (gameover === true) {
 
@@ -59,100 +123,104 @@ reCreateBoard();
 
 //         var events = event.key;
 
-//         if ( events === "ArrowUp" && currentCoordinateY > 0) {
 
-//             if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "*") {
 
-//                 if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "Y") {
+//             if ( events == "w" && currentCoordinateY > 0) {
 
-//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "Y";
-//                     currentCoordinateY -= 1;
-//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = " ";
+//                 if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "O") {
 
-//                 } else {
+//                     if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "E") {
 
-//                     //to plot the co-ordinate of he player before moving
-//                     plottingPlayer();
-//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "X";
-//                     currentCoordinateY -= 1;
-//                     //to plot the co-ordinate of the player after moving
-//                     plottingPlayer(selectedCharacter.backView);
-//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = " ";
+//                         jsGrid[currentCoordinateY - 1][currentCoordinateX] = "E";
+//                         currentCoordinateY -= 1;
+//                         jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
+
+//                     } else {
+
+//                         currentCoordinateY -= 1;
+//                         var newPlace = document.querySelector(`#r-${currentCoordinateY} #c-${currentCoordinateX}`);
+//                         jsGrid[currentCoordinateY][currentCoordinateX] = "P";
+//                         jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
+
+//                     }
+
 
 //                 }
-
 
 //             }
 
-//         } else if (events === "ArrowDown" && currentCoordinateY < jsGrid.length - 1) {
 
-//             if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "*") {
 
-//                 if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "Y") {
 
-//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "Y";
-//                     currentCoordinateY += 1;
-//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
+            // } else if (events === "a" && currentCoordinateY < jsGrid.length - 1) {
 
-//                 } else {
+            //     if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "*") {
 
-//                     plottingPlayer();
-//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "X";
-//                     currentCoordinateY += 1;
-//                     plottingPlayer(selectedCharacter.frontView);
-//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
+            //         if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "Y") {
 
-//                 }
-//             }
+            //             jsGrid[currentCoordinateY + 1][currentCoordinateX] = "Y";
+            //             currentCoordinateY += 1;
+            //             jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
 
-//         } else if (events === "ArrowLeft" && currentCoordinateX > 0) {
+            //         } else {
 
-//             if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "*") {
+            //             plottingPlayer();
+            //             jsGrid[currentCoordinateY + 1][currentCoordinateX] = "X";
+            //             currentCoordinateY += 1;
+            //             plottingPlayer(selectedCharacter.frontView);
+            //             jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
 
-//                 if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "Y") {
+            //         }
+            //     }
 
-//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "Y";
-//                     currentCoordinateX -= 1;
-//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
+            // } else if (events === "s" && currentCoordinateX > 0) {
 
-//                 } else {
+            //     if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "*") {
 
-//                     plottingPlayer();
-//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "X";
-//                     currentCoordinateX -= 1;
-//                     plottingPlayer(selectedCharacter.leftView);
-//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
+            //         if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "Y") {
 
-//                 }
-//             }
+            //             jsGrid[currentCoordinateY][currentCoordinateX - 1] = "Y";
+            //             currentCoordinateX -= 1;
+            //             jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
 
-//         } else if (events === "ArrowRight" && currentCoordinateX <(jsGrid[0].length - 1)) {
+            //         } else {
 
-//             if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "*") {
+            //             plottingPlayer();
+            //             jsGrid[currentCoordinateY][currentCoordinateX - 1] = "X";
+            //             currentCoordinateX -= 1;
+            //             plottingPlayer(selectedCharacter.leftView);
+            //             jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
 
-//                 if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "Y") {
+            //         }
+            //     }
 
-//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "Y";
-//                     currentCoordinateX += 1;
-//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
+            // } else if (events === "d" && currentCoordinateX <(jsGrid[0].length - 1)) {
 
-//                 } else {
+            //     if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "*") {
 
-//                     plottingPlayer();
-//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "X";
-//                     currentCoordinateX += 1;
-//                     plottingPlayer(selectedCharacter.rightView);
-//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
+            //         if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "Y") {
 
-//                 }
-//             }
+            //             jsGrid[currentCoordinateY][currentCoordinateX + 1] = "Y";
+            //             currentCoordinateX += 1;
+            //             jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
 
-//         }
+            //         } else {
 
+            //             plottingPlayer();
+            //             jsGrid[currentCoordinateY][currentCoordinateX + 1] = "X";
+            //             currentCoordinateX += 1;
+            //             plottingPlayer(selectedCharacter.rightView);
+            //             jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
+
+            //         }
+            //     }
+
+            // }
+
+//         window.addEventListener("keydown", move);
 //     };
 
-//     window.addEventListener("keydown", move);
-
+// };
 
 // };
 
@@ -550,3 +618,15 @@ reCreateBoard();
 
 //     }
 // }
+
+reCreateBoard();
+movePlayer();
+
+
+
+
+
+
+
+
+

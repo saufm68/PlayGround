@@ -71,7 +71,7 @@ module.exports = (db) => {
                 response.status(500).render('error/error500');
             }
 
-            response.render('general/home', {pro: result.pro, amateur: result.amateur, cookie: cookie});
+            response.render('general/home', {pro: result.pro, amateur: result.amateur, gamemaker: result.gamemaker, cookie: cookie});
         });
     };
 

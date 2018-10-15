@@ -64,14 +64,27 @@ module.exports = (db) => {
 
     const edit = (request, response) => {
 
-        db.users.edit(request.body, request.params.id, (error) => {
+        let picture = request.files.profilepic;
 
-            if(error) {
-                console.log("error in editing: ", error.message);
+        picture.mv('public/dp/' + picture.name, (error) => {
+
+            if (error) {
+                console.log("fail to move file");
                 response.status(500).render('error/error500');
             }
 
-            response.redirect('/users/' + request.params.id);
+            let path = /dp/ + picture.name;
+
+            db.users.edit(request.body, path, request.params.id, (error) => {
+
+                if(error) {
+                    console.log("error in editing: ", error.message);
+                    response.status(500).render('error/error500');
+                }
+
+                response.redirect('/users/' + request.params.id);
+            });
+
         });
     };
 

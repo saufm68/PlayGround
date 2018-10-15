@@ -9,10 +9,10 @@ module.exports = (dbPool) => {
         });
     };
 
-    const uploadGames = (inputs, uploader, callback) => {
+    const uploadGames = (inputs, image, uploader, callback) => {
 
         const text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating, gamemaker) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;`;
-        const values = [inputs.title, inputs.summary, inputs.displayimage, inputs.link, uploader, inputs.dt, inputs.rating, false];
+        const values = [inputs.title, inputs.summary, image, inputs.link, uploader, inputs.dt, inputs.rating, false];
 
         dbPool.query(text, values, (error, result) => {
 
@@ -86,7 +86,7 @@ module.exports = (dbPool) => {
 
                         dbPool.query(text4, (error, result) => {
                             let text5 = `SELECT posts.*, users.username FROM posts INNER JOIN users ON (posts.author_id = users.id) WHERE posts.id='${currentPost}';`;
-                            dbPool.query(text4, (error, result) => {
+                            dbPool.query(text5, (error, result) => {
                                 result.rows[0]['rated'] = rated;
                                 result.rows[0]['tags'] = tags;
                                 callback(error, result.rows[0]);
@@ -137,10 +137,10 @@ module.exports = (dbPool) => {
         });
     };
 
-    const edit = (input, currentPost, callback) => {
+    const edit = (input, image, currentPost, callback) => {
 
         let text = `UPDATE posts SET title=($1), summary=($2), link=($3), dt=($4), displayimage=($5) WHERE id='${currentPost}';`;
-        let values = [input.title, input.summary, input.link, input.dt, input.displayimage];
+        let values = [input.title, input.summary, input.link, input.dt, image];
 
         dbPool.query(text, values, (error, result) => {
             callback(error);
@@ -171,7 +171,7 @@ module.exports = (dbPool) => {
 
         let text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating, gamemaker, map) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;`;
 
-        let values = [inputs.title, inputs.summary, inputs.displayimage, inputs.link, uploader, inputs.dt, inputs.rating, true, JSON.stringify(inputs.map)];
+        let values = [inputs.title, inputs.summary, inputs.dp, inputs.link, uploader, inputs.dt, inputs.rating, true, JSON.stringify(inputs.map)];
 
         dbPool.query(text, values, (error, result) => {
             callback(error, result.rows[0].id);
@@ -187,6 +187,30 @@ module.exports = (dbPool) => {
         });
     };
 
+    const rating = (rating, currentPost, currentUser, callback) => {
+
+        var passedResult = {};
+        let text = `INSERT INTO ratings (rating, post_id, user_id) VALUES ($1, $2, $3);`;
+
+        let values = [rating, currentPost, currentUser];
+
+        dbPool.query(text, values, (error, result) => {
+
+            let text2 = `SELECT COUNT(post_id) FROM ratings WHERE post_id='${currentPost}';`;
+
+            dbPool.query(text2, (error, result) => {
+                passedResult['count'] = result.rows[0].count;
+
+                let text3 = `SELECT AVG(rating) FROM ratings WHERE post_id='${currentPost}';`;
+
+                dbPool.query(text3, (error, result) => {
+                    passedResult['avg'] = Math.floor(result.rows[0].avg);
+                    callback(error, passedResult);
+                });
+            });
+        });
+    };
+
     return {
         uploadGameForm,
         uploadGames,
@@ -198,6 +222,7 @@ module.exports = (dbPool) => {
         edit,
         play,
         publish,
-        playCreator
+        playCreator,
+        rating
     };
 };

@@ -72,7 +72,7 @@ class Game extends React.Component {
                         <h2 className='header'>Information</h2>
                         <div className='info'>
                             <p>Uploader: <a href={author}>{this.props.game.username}</a></p>
-                            <p>Rated By: {this.props.game.rated} people</p>
+                            <p>Rated By: <span id='ratedBy'> {this.props.game.rated} </span> people</p>
                             {admin}
                         </div>
                     </div>
@@ -80,7 +80,7 @@ class Game extends React.Component {
                         <h1 className='score-header'>Score:</h1>
                         <h1 id='score'>{this.props.game.rating}</h1>
                         <form id='rating-form' method='POST' action={rateUrl}>
-                            <input id='rating-input' type='number' name='rating' max='5' min='0' placeholder='Rate the game' />
+                            <input id='rating-input' type='number' name='rating' max='10' min='0' placeholder='Rate the game' />
                             {disabled}
                         </form>
                     </div>

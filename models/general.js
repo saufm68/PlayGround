@@ -43,12 +43,15 @@ module.exports = (dbPool) => {
 
             var games = {
                 pro: [],
-                amateur: []
+                amateur: [],
+                gamemaker: []
             };
 
             result.rows.filter((element) => {
                 if(element.author_id === 1) {
                     return games.pro.push(element);
+                } else if(element.gamemaker == true) {
+                    return games.gamemaker.push(element);
                 } else {
                     return games.amateur.push(element);
                 }

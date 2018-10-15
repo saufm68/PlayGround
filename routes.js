@@ -9,11 +9,11 @@ module.exports = (app,db) => {
     =============================*/
     app.get('/games/new', games.uploadGameForm);
     app.post('/games', games.uploadGames);
-    //app.post('/games/new', games.changePic);
     app.get('/game-maker/creator', games.creator);
     app.get('/game-maker/play/json', games.jsonPass);
     app.get('/game-maker/play/:id', games.playCreator);
     app.post('/game-maker', games.publish);
+    app.post('/rating', games.rating);
     app.get('/play/:id', games.play);
     app.get('/games/:id/comments', games.commentsPage);
     app.post('/games/:id/comments', games.comments);
@@ -42,3 +42,4 @@ module.exports = (app,db) => {
     app.get('/', general.homepage);
 
 };
+

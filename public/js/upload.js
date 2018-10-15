@@ -1,36 +1,21 @@
-window.onload = () => {
+ var input = document.getElementById('pic');
+ input.addEventListener('change', handleFile);
 
-    var input = document.getElementById('pic');
-    var uploadPic = document.getElementById('changePic').addEventListener('submit', event => {
-        event.preventDefault();
+function handleFile() {
 
-        let files = input.files['0'];
-        console.log(files)
-        const formData = new FormData();
-        formData.append('photo', files)
+    file = this.files[0];
 
-        upload(formData);
-    });
-};
+    var preview = document.getElementById('initial-pic');
+    //preview.classList.add('pic');
+    preview.file = file;
 
-function upload(formData) {
+    var reader = new FileReader();
+    reader.onload = (function(aImg) {
+        return function(e) {
+            aImg.src = e.target.result;
+        };
+    })(preview);
 
-    const ajaxUrl = 'http://localhost:3000/games/new';
-
-    const request = new XMLHttpRequest();
-    console.log(formData.get('photo'));
-    var responseHandler = function() {
-      console.log("response text", this);
-      console.log("status text", this.statusText);
-      console.log("status code", this.status);
-    }
-
-    request.open('POST', ajaxUrl, true);
-    request.upload = formData;
-    request.setRequestHeader('Content-Type', File.type);
-
-    request.addEventListener('load', responseHandler);
-
-    request.send(formData);
+    reader.readAsDataURL(file);
 
 };

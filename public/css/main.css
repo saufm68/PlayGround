@@ -280,6 +280,84 @@ main {
           EDIT/UPLOAD GAME
 ==================================*/
 
+.pic {
+
+	height: 500px;
+	width: 500px;
+	position: relative;
+	left: 350px;
+	margin-top: 30px;
+
+}
+
+.input-file {
+
+	margin-top: 10px;
+	font-size: 20px;
+	position: relative;
+	left: 420px;
+
+}
+
+.upload-form {
+
+	width: 90%;
+	margin: auto;
+
+}
+
+.subheader {
+
+	font-weight: 700;
+	font-size: 40px;
+	text-align: center;
+	margin: 20px auto;
+}
+
+.inputs {
+
+	width: 500px;
+	height: 50px;
+	font-size: 30px;
+	margin-left: 290px;
+	border: 2px solid #db9035;
+	text-align: center;
+}
+
+.summary {
+
+	height: 160px
+
+}
+
+.checkbox {
+
+	display: inline-block;
+	font-size: 25px;
+	margin: 10px 25px;
+
+}
+
+.tags-holder {
+
+	width: 500px;
+	margin-left: 315px;
+
+}
+
+.form-button {
+
+	border: 2px solid #db9035;
+	background-color: #db9035;
+	color: white;
+	font-size: 40px;
+	font-weight: 700;
+	margin-top: 25px;
+	position: relative;
+	left: 470px;
+	padding: 5px;
+
+}
 
 
 /*==================================
@@ -404,6 +482,7 @@ table {
 
 	background-color: black;
 	border-spacing: 0;
+	margin: auto;
 
 }
 
@@ -426,6 +505,23 @@ table {
 	visibility: hidden;
 }
 
+
+.createCol-play {
+
+	width: 55px;
+	height: 45px;
+	border: 1px solid grey;
+
+}
+
+.character-play {
+
+	height: 41px;
+	width: 51px;
+	margin: auto;
+	vertical-align: middle;
+
+}
 
 
 
