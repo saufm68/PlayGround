@@ -87,7 +87,7 @@ module.exports = (db) => {
 
         const searchDb = (show, searchby, value) => {
 
-            db.general.searchProNameRating(searchby, value, (error, result) => {
+            db.general.searchProNameRatingGamemaker(searchby, value, (error, result) => {
 
                 if(error) {
                     console.log("error in searching", error.message);
@@ -144,6 +144,8 @@ module.exports = (db) => {
                     response.render('general/search', {show: `Amateur Games`, result: result, cookie: cookie});
                 });
 
+            } else if (request.query.show === 'gamemaker'){
+                searchDb(`Created Games`,'gamemaker', true);
             } else {
                 response.status(404).render('error/error404');
             }

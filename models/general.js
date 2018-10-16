@@ -61,7 +61,7 @@ module.exports = (dbPool) => {
         });
     };
 
-    const searchProNameRating = (searchby, value, callback) => {
+    const searchProNameRatingGamemaker = (searchby, value, callback) => {
         let text = `SELECT * FROM posts WHERE ${searchby}='${value}';`;
 
         dbPool.query(text, (error, result) => {
@@ -92,7 +92,7 @@ module.exports = (dbPool) => {
         register,
         login,
         homepage,
-        searchProNameRating,
+        searchProNameRatingGamemaker,
         searchAmateur,
         searchTags
     };

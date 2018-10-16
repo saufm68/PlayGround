@@ -9,7 +9,8 @@ class Default extends React.Component {
             let profile = `/users/${this.props.cookie.userId}`;
             let currentUser = this.props.cookie.username;
 
-            var uploadGame = <a href='/games/new'><button className='upload'>Upload Game</button></a>
+            var uploadGame = <div className='uploadGame'><a href='/games/new'><button className='upload'>Upload Game</button></a>
+                            <a href='/game-maker/creator'><button className='upload'>Create Game</button></a></div>
             var login = <div><a className='user' href={profile}>{currentUser}</a><button id='drop-down'></button>
                 <form id='logout' method='POST' action='/logout'><input type='submit' value='Logout' /></form>
                 </div>
@@ -33,13 +34,13 @@ class Default extends React.Component {
                         <header>
                             <div className='top-header'>
                                 <h1 className='title'>PlayGround</h1>
-
-                                <div className='uploadGame'>{uploadGame}</div>
+                                {uploadGame}
                                 <div className='login'>{login}</div>
                             </div>
                             <div className='bottom-header'>
                                 <a href='/search?show=pro'><button className='linkButton'>Pro Games</button></a>
                                 <a href='/search?show=amateur'><button className='linkButton'>Amateur Games</button></a>
+                                <a href='/search?show=gamemaker'><button className='linkButton'>Game Maker</button></a>
                                 <a href='/'><button className='linkButton'>Home</button></a>
                                 <form method='GET' action='/search' className='search'>
                                     <select className='search-topic' name='topic'>

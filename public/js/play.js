@@ -38,46 +38,42 @@ function reCreateBoard() {
             var tCol = document.createElement('td');
             tCol.id = 'c-' + j;
             tCol.classList.add('createCol-play');
+            var image = document.createElement('img');
+            image.src = '';
+            tCol.appendChild(image);
             var row = document.getElementById('r-' + i);
             row.appendChild(tCol);
 
             if(jsGrid[i][j] === 'P') {
-                let image = document.createElement('img');
+                let image = document.querySelector(`#r-${i} #c-${j} img`);
                 image.src = '/gamemaker-media/player.jpg';
                 image.classList.add('character-play');
                 image.id = 'player';
                 currentCoordinateY = i;
                 currentCoordinateX = j;
-                let col = document.querySelector(`#r-${i} #c-${j}`);
-                col.appendChild(image);
             } else if (jsGrid[i][j] === 'E') {
-                let image = document.createElement('img');
+                let image = document.querySelector(`#r-${i} #c-${j} img`);
                 image.src = '/gamemaker-media/enemy.jpg';
                 image.classList.add('character-play');
                 image.id = 'enemy' + enemyCount;
                 enemyCount++;
-                let col = document.querySelector(`#r-${i} #c-${j}`);
-                col.appendChild(image);
             } else if (jsGrid[i][j] === 'G') {
-                let image = document.createElement('img');
+                let image = document.querySelector(`#r-${i} #c-${j} img`);
                 image.src = '/gamemaker-media/goal.jpg';
                 image.classList.add('character-play');
                 image.id = 'goal';
-                let col = document.querySelector(`#r-${i} #c-${j}`);
-                col.appendChild(image);
             } else if (jsGrid[i][j] === 'O') {
-                let image = document.createElement('img');
+                let image = document.querySelector(`#r-${i} #c-${j} img`);
                 image.src = '/gamemaker-media/obstacle.jpg';
                 image.classList.add('character-play');
                 image.id = 'obstacle' + obstacleCount;
                 obstacleCount++;
-                let col = document.querySelector(`#r-${i} #c-${j}`);
-                col.appendChild(image);
+
             }
         }
 
       }
-      movePlayer();
+      //movePlayer();
     };
     // listen for the request response
     request.addEventListener("load", responseHandler);
@@ -89,10 +85,8 @@ function reCreateBoard() {
 };
 
 
-//finding the currnent co-ordinates of the the player
-// function plottingPlayer(y, x) {
-
-
+// //finding the currnent co-ordinates of the the player
+// function plottingPlayer(view) {
 
 //     var mapGridValue = "#r-" + currentCoordinateY + " #c-" + currentCoordinateX + " img";
 //     var mapGrid = document.querySelector(mapGridValue);
@@ -108,12 +102,26 @@ function reCreateBoard() {
 
 // };
 
-//getting the value of the key pressed and moving the character to the specified direction
+// function plottingEnemy(enemyId, view) {
+
+//     var enemyGridValue = "#r-" + enemyId[0] + " #c" + enemyId[1] + " img";
+//     var enemyGrid = document.querySelector(enemyGridValue);
+
+//     if (view === undefined ) {
+
+//        enemyGrid.src = "";
+
+//     } else {
+
+//         enemyGrid.src = view;
+//     }
+
+// };
+
+// //getting the value of the key pressed and moving the character to the specified direction
 // function movePlayer() {
 
 //     var move = function(event){
-
-//         var player = document.getElementById('player');
 
 //         if (gameover === true) {
 
@@ -123,105 +131,177 @@ function reCreateBoard() {
 
 //         var events = event.key;
 
+//         if ( events === "w" && currentCoordinateY > 0) {
 
+//             if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "O") {
 
-//             if ( events == "w" && currentCoordinateY > 0) {
+//                 if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "E") {
 
-//                 if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "O") {
+//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "E";
+//                     currentCoordinateY -= 1;
+//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
 
-//                     if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "E") {
+//                 } else {
 
-//                         jsGrid[currentCoordinateY - 1][currentCoordinateX] = "E";
-//                         currentCoordinateY -= 1;
-//                         jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
-
-//                     } else {
-
-//                         currentCoordinateY -= 1;
-//                         var newPlace = document.querySelector(`#r-${currentCoordinateY} #c-${currentCoordinateX}`);
-//                         jsGrid[currentCoordinateY][currentCoordinateX] = "P";
-//                         jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
-
-//                     }
-
+//                     //to plot the co-ordinate of he player before moving
+//                     plottingPlayer();
+//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "P";
+//                     currentCoordinateY -= 1;
+//                     //to plot the co-ordinate of the player after moving
+//                     plottingPlayer('/gamemaker-media/player.jpg');
+//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
 
 //                 }
 
+
 //             }
 
+//         } else if (events === "s" && currentCoordinateY < jsGrid.length - 1) {
 
+//             if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "O") {
 
+//                 if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "E") {
 
-            // } else if (events === "a" && currentCoordinateY < jsGrid.length - 1) {
+//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "E";
+//                     currentCoordinateY += 1;
+//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "* ";
 
-            //     if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "*") {
+//                 } else {
 
-            //         if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "Y") {
+//                     plottingPlayer();
+//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "P";
+//                     currentCoordinateY += 1;
+//                     plottingPlayer('/gamemaker-media/player.jpg');
+//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "*";
 
-            //             jsGrid[currentCoordinateY + 1][currentCoordinateX] = "Y";
-            //             currentCoordinateY += 1;
-            //             jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
+//                 }
+//             }
 
-            //         } else {
+//         } else if (events === "a" && currentCoordinateX > 0) {
 
-            //             plottingPlayer();
-            //             jsGrid[currentCoordinateY + 1][currentCoordinateX] = "X";
-            //             currentCoordinateY += 1;
-            //             plottingPlayer(selectedCharacter.frontView);
-            //             jsGrid[currentCoordinateY - 1][currentCoordinateX] = " ";
+//             if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "O") {
 
-            //         }
-            //     }
+//                 if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "E") {
 
-            // } else if (events === "s" && currentCoordinateX > 0) {
+//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "E";
+//                     currentCoordinateX -= 1;
+//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "*";
 
-            //     if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "*") {
+//                 } else {
 
-            //         if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "Y") {
+//                     plottingPlayer();
+//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "P";
+//                     currentCoordinateX -= 1;
+//                     plottingPlayer('/gamemaker-media/player.jpg');
+//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "*";
 
-            //             jsGrid[currentCoordinateY][currentCoordinateX - 1] = "Y";
-            //             currentCoordinateX -= 1;
-            //             jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
+//                 }
+//             }
 
-            //         } else {
+//         } else if (events === "d" && currentCoordinateX <(jsGrid[0].length - 1)) {
 
-            //             plottingPlayer();
-            //             jsGrid[currentCoordinateY][currentCoordinateX - 1] = "X";
-            //             currentCoordinateX -= 1;
-            //             plottingPlayer(selectedCharacter.leftView);
-            //             jsGrid[currentCoordinateY][currentCoordinateX + 1] = " ";
+//             if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "O") {
 
-            //         }
-            //     }
+//                 if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "E") {
 
-            // } else if (events === "d" && currentCoordinateX <(jsGrid[0].length - 1)) {
+//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "E";
+//                     currentCoordinateX += 1;
+//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "*";
 
-            //     if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "*") {
+//                 } else {
 
-            //         if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "Y") {
+//                     plottingPlayer();
+//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "P";
+//                     currentCoordinateX += 1;
+//                     plottingPlayer('/gamemaker-media/player.jpg');
+//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "*";
 
-            //             jsGrid[currentCoordinateY][currentCoordinateX + 1] = "Y";
-            //             currentCoordinateX += 1;
-            //             jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
+//                 }
+//             }
 
-            //         } else {
+//         }
 
-            //             plottingPlayer();
-            //             jsGrid[currentCoordinateY][currentCoordinateX + 1] = "X";
-            //             currentCoordinateX += 1;
-            //             plottingPlayer(selectedCharacter.rightView);
-            //             jsGrid[currentCoordinateY][currentCoordinateX - 1] = " ";
-
-            //         }
-            //     }
-
-            // }
-
-//         window.addEventListener("keydown", move);
 //     };
+
+//     window.addEventListener("keydown", move);
+
 
 // };
 
+// // creating a random number
+// function randomness(number) {
+
+//     var randomNo = Math.floor(Math.random() * number);
+
+//     return randomNo;
+
+// };
+
+// // set timeout to end game after 20s and show stage lvl
+// function createBoundaries() {
+
+//     for (var i = 1; i < totalColumns - 1; i++) {
+
+//         if (i%3 === 0) {
+
+//             jsGrid[1][i] = "*";
+//             jsGrid[totalRows-2][i] = "*";
+//             var setBoundariesImageTop = "#r" + 1 + " #c" + i + " img";
+//             var setBoundariesImageBottom ="#r" + (totalRows - 2) + " #c" + i + " img";
+//             var obstacleTop = document.querySelector(setBoundariesImageTop);
+//             obstacleTop.src = selectedObstacle.image;
+//             var obstacleBottom = document.querySelector(setBoundariesImageBottom);
+//             obstacleBottom.src = selectedObstacle.image;
+
+//         }
+
+//     }
+
+//     for (var i = 1; i < totalRows - 1; i++) {
+
+//         if (i%3 === 0) {
+
+//             jsGrid[i][1] = "*";
+//             jsGrid[i][totalColumns-2] = "*";
+//             var setBoundariesImageLeft = "#r" + i + " #c" + 1 + " img";
+//             var setBoundariesImageRight ="#r" + i + " #c" + (totalColumns - 2) + " img";
+//             var obstacleLeft = document.querySelector(setBoundariesImageLeft);
+//             obstacleLeft.src = selectedObstacle.image;
+//             var obstacleRight = document.querySelector(setBoundariesImageRight);
+//             obstacleRight.src = selectedObstacle.image;
+
+//         }
+
+//     }
+
+//     jsGrid[0][(totalColumns - 1)] = "*";
+//     jsGrid[(totalRows - 1)][0] = "*";
+//     var setBoundariesImageTopRight = "#r0 #c" + (totalColumns - 1) + " img";
+//     var setBoundariesImageBottomLeft ="#r" + (totalRows - 1) + " #c0 img";
+//     var obstacleTopRight = document.querySelector(setBoundariesImageTopRight);
+//     obstacleTopRight.src = selectedObstacle.image;
+//     var obstacleBottomLeft = document.querySelector(setBoundariesImageBottomLeft);
+//     obstacleBottomLeft.src = selectedObstacle.image;
+
+//     var totalInnerBoundaries = Math.round(((totalRows - 4)*(totalColumns - 4))/5);
+
+//     for (var i = 0; i <= totalInnerBoundaries; i++) {
+
+//         var randomColumn = randomness(totalColumns - 3) + 2;
+//         var randomRow = randomness(totalRows - 3) + 2;
+
+//         while (jsGrid[randomRow][randomColumn] !== " ") {
+
+//             randomColumn = randomness(totalColumns - 3) + 2;
+//             randomRow = randomness(totalRows - 3) + 2;
+
+//         }
+
+//         jsGrid[randomRow][randomColumn] = "*";
+//         var onGridValue = "#r" + randomRow + " #c" + randomColumn + " img";
+//         var onGrid = document.querySelector(onGridValue);
+//         onGrid.src = selectedObstacle.image;
+//     }
 // };
 
 // function enemyBehaviour(enemyId) {
@@ -501,7 +581,6 @@ function reCreateBoard() {
 //         enemyMovements.push(intervalForMoving);
 
 // };
-
 
 // var gameOver = function() {
 
