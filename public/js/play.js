@@ -1,6 +1,8 @@
 var jsGrid;
 var currentCoordinateX;
 var currentCoordinateY;
+var enemies = {}
+var gameover = false;
 
 function reCreateBoard() {
 
@@ -38,42 +40,48 @@ function reCreateBoard() {
             var tCol = document.createElement('td');
             tCol.id = 'c-' + j;
             tCol.classList.add('createCol-play');
-            var image = document.createElement('img');
-            image.src = '';
-            tCol.appendChild(image);
             var row = document.getElementById('r-' + i);
             row.appendChild(tCol);
 
             if(jsGrid[i][j] === 'P') {
-                let image = document.querySelector(`#r-${i} #c-${j} img`);
-                image.src = '/gamemaker-media/player.jpg';
+                let col = document.querySelector(`#r-${i} #c-${j}`);
+                let image = document.createElement('img');
                 image.classList.add('character-play');
+                image.src = '/gamemaker-media/player.jpg';
                 image.id = 'player';
                 currentCoordinateY = i;
                 currentCoordinateX = j;
+                col.appendChild(image);
             } else if (jsGrid[i][j] === 'E') {
-                let image = document.querySelector(`#r-${i} #c-${j} img`);
+                let col = document.querySelector(`#r-${i} #c-${j}`);
+                let image = document.createElement('img');
                 image.src = '/gamemaker-media/enemy.jpg';
                 image.classList.add('character-play');
                 image.id = 'enemy' + enemyCount;
+                enemies[image.id] = [i, j];
+                col.appendChild(image);
                 enemyCount++;
             } else if (jsGrid[i][j] === 'G') {
-                let image = document.querySelector(`#r-${i} #c-${j} img`);
+                let col = document.querySelector(`#r-${i} #c-${j}`);
+                let image = document.createElement('img');
                 image.src = '/gamemaker-media/goal.jpg';
                 image.classList.add('character-play');
                 image.id = 'goal';
+                col.appendChild(image);
             } else if (jsGrid[i][j] === 'O') {
-                let image = document.querySelector(`#r-${i} #c-${j} img`);
+                let col = document.querySelector(`#r-${i} #c-${j}`);
+                let image = document.createElement('img');
                 image.src = '/gamemaker-media/obstacle.jpg';
                 image.classList.add('character-play');
                 image.id = 'obstacle' + obstacleCount;
+                col.appendChild(image);
                 obstacleCount++;
 
             }
         }
 
       }
-      //movePlayer();
+      movePlayer();
     };
     // listen for the request response
     request.addEventListener("load", responseHandler);
@@ -85,22 +93,20 @@ function reCreateBoard() {
 };
 
 
-// //finding the currnent co-ordinates of the the player
-// function plottingPlayer(view) {
+//finding the currnent co-ordinates of the the player
+function plottingPlayer(Y, X) {
 
-//     var mapGridValue = "#r-" + currentCoordinateY + " #c-" + currentCoordinateX + " img";
-//     var mapGrid = document.querySelector(mapGridValue);
+    var mapGridValue = "#r-" + Y + " #c-" + X;
+    var mapGrid = document.querySelector(mapGridValue);
+    var player = document.getElementById('player')
 
-//     if (view === undefined ) {
+    if (mapGrid.firstChild) {
+        mapGrid.removeChild(player);
+    } else {
+        mapGrid.appendChild(player);
+    }
 
-//        mapGrid.src = "";
-
-//     } else {
-
-//         mapGrid.src = view;
-//     }
-
-// };
+};
 
 // function plottingEnemy(enemyId, view) {
 
@@ -118,585 +124,516 @@ function reCreateBoard() {
 
 // };
 
-// //getting the value of the key pressed and moving the character to the specified direction
-// function movePlayer() {
+//getting the value of the key pressed and moving the character to the specified direction
+function movePlayer() {
 
-//     var move = function(event){
+    var move = function(event){
 
-//         if (gameover === true) {
+        if (gameover === true) {
 
-//             window.removeEventListener("keydown", move);
+            window.removeEventListener("keydown", move);
 
-//         }
+        }
 
-//         var events = event.key;
+        var events = event.key;
 
-//         if ( events === "w" && currentCoordinateY > 0) {
+        if ( events === "w" && currentCoordinateY > 0) {
 
-//             if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "O") {
+            if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "O") {
 
-//                 if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "E") {
+                if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "E") {
 
-//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "E";
-//                     currentCoordinateY -= 1;
-//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
+                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = "E";
+                    currentCoordinateY -= 1;
+                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
 
-//                 } else {
+                } else {
 
-//                     //to plot the co-ordinate of he player before moving
-//                     plottingPlayer();
-//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "P";
-//                     currentCoordinateY -= 1;
-//                     //to plot the co-ordinate of the player after moving
-//                     plottingPlayer('/gamemaker-media/player.jpg');
-//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
+                    //to plot the co-ordinate of he player before moving
+                    plottingPlayer(currentCoordinateY - 1, currentCoordinateX);
+                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = "P";
+                    currentCoordinateY -= 1;
+                    //to plot the co-ordinate of the player after moving
+                    plottingPlayer(currentCoordinateY + 1, currentCoordinateX);
+                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
 
-//                 }
+                }
 
 
-//             }
+            }
 
-//         } else if (events === "s" && currentCoordinateY < jsGrid.length - 1) {
+        } else if (events === "s" && currentCoordinateY < jsGrid.length - 1) {
 
-//             if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "O") {
+            if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "O") {
 
-//                 if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "E") {
+                if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "E") {
 
-//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "E";
-//                     currentCoordinateY += 1;
-//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "* ";
+                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = "E";
+                    currentCoordinateY += 1;
+                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = "* ";
 
-//                 } else {
+                } else {
 
-//                     plottingPlayer();
-//                     jsGrid[currentCoordinateY + 1][currentCoordinateX] = "P";
-//                     currentCoordinateY += 1;
-//                     plottingPlayer('/gamemaker-media/player.jpg');
-//                     jsGrid[currentCoordinateY - 1][currentCoordinateX] = "*";
+                    plottingPlayer();
+                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = "P";
+                    currentCoordinateY += 1;
+                    plottingPlayer('/gamemaker-media/player.jpg');
+                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = "*";
 
-//                 }
-//             }
+                }
+            }
 
-//         } else if (events === "a" && currentCoordinateX > 0) {
+        } else if (events === "a" && currentCoordinateX > 0) {
 
-//             if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "O") {
+            if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "O") {
 
-//                 if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "E") {
+                if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "E") {
 
-//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "E";
-//                     currentCoordinateX -= 1;
-//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "*";
+                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = "E";
+                    currentCoordinateX -= 1;
+                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = "*";
 
-//                 } else {
+                } else {
 
-//                     plottingPlayer();
-//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "P";
-//                     currentCoordinateX -= 1;
-//                     plottingPlayer('/gamemaker-media/player.jpg');
-//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "*";
+                    plottingPlayer();
+                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = "P";
+                    currentCoordinateX -= 1;
+                    plottingPlayer('/gamemaker-media/player.jpg');
+                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = "*";
 
-//                 }
-//             }
+                }
+            }
 
-//         } else if (events === "d" && currentCoordinateX <(jsGrid[0].length - 1)) {
+        } else if (events === "d" && currentCoordinateX <(jsGrid[0].length - 1)) {
 
-//             if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "O") {
+            if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "O") {
 
-//                 if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "E") {
+                if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "E") {
 
-//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "E";
-//                     currentCoordinateX += 1;
-//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "*";
+                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = "E";
+                    currentCoordinateX += 1;
+                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = "*";
 
-//                 } else {
+                } else {
 
-//                     plottingPlayer();
-//                     jsGrid[currentCoordinateY][currentCoordinateX + 1] = "P";
-//                     currentCoordinateX += 1;
-//                     plottingPlayer('/gamemaker-media/player.jpg');
-//                     jsGrid[currentCoordinateY][currentCoordinateX - 1] = "*";
+                    plottingPlayer();
+                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = "P";
+                    currentCoordinateX += 1;
+                    plottingPlayer('/gamemaker-media/player.jpg');
+                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = "*";
 
-//                 }
-//             }
+                }
+            }
 
-//         }
+        }
 
-//     };
+    };
 
-//     window.addEventListener("keydown", move);
+    window.addEventListener("keydown", move);
+};
 
+// creating a random number
+function randomness(number) {
 
-// };
+    var randomNo = Math.floor(Math.random() * number);
 
-// // creating a random number
-// function randomness(number) {
+    return randomNo;
 
-//     var randomNo = Math.floor(Math.random() * number);
+};
 
-//     return randomNo;
+function enemyBehaviour(enemyId) {
 
-// };
+    var moveUp = function(enemyId) {
 
-// // set timeout to end game after 20s and show stage lvl
-// function createBoundaries() {
+        if (enemyId[0] > 0) {
 
-//     for (var i = 1; i < totalColumns - 1; i++) {
+            if (jsGrid[enemyId[0] - 1][enemyId[1]] !== "*" && jsGrid[enemyId[0] - 1][enemyId[1]] !== "E") {
 
-//         if (i%3 === 0) {
+                //to plot the co-ordinate of he player before moving
+                plottingEnemy(enemyId);
+                jsGrid[enemyId[0] - 1][enemyId[1]] = "Y";
+                enemyId[0] -= 1;
+                jsGrid[enemyId[0] + 1][enemyId[1]] = " ";
+                //to plot the co-ordinate of the player after moving
+                plottingEnemy(enemyId, selectedEnemy.backView);
+                enemyId[2] = "ok";
 
-//             jsGrid[1][i] = "*";
-//             jsGrid[totalRows-2][i] = "*";
-//             var setBoundariesImageTop = "#r" + 1 + " #c" + i + " img";
-//             var setBoundariesImageBottom ="#r" + (totalRows - 2) + " #c" + i + " img";
-//             var obstacleTop = document.querySelector(setBoundariesImageTop);
-//             obstacleTop.src = selectedObstacle.image;
-//             var obstacleBottom = document.querySelector(setBoundariesImageBottom);
-//             obstacleBottom.src = selectedObstacle.image;
+            } else {
 
-//         }
+                enemyId[2] = "notOk";
+            }
 
-//     }
+        } else {
 
-//     for (var i = 1; i < totalRows - 1; i++) {
+            enemyId[2] = "notOk";
+        }
 
-//         if (i%3 === 0) {
+    };
 
-//             jsGrid[i][1] = "*";
-//             jsGrid[i][totalColumns-2] = "*";
-//             var setBoundariesImageLeft = "#r" + i + " #c" + 1 + " img";
-//             var setBoundariesImageRight ="#r" + i + " #c" + (totalColumns - 2) + " img";
-//             var obstacleLeft = document.querySelector(setBoundariesImageLeft);
-//             obstacleLeft.src = selectedObstacle.image;
-//             var obstacleRight = document.querySelector(setBoundariesImageRight);
-//             obstacleRight.src = selectedObstacle.image;
+    var moveDown = function(enemyId) {
 
-//         }
+        if (enemyId[0] < jsGrid.length - 1) {
 
-//     }
+            if (jsGrid[enemyId[0] + 1][enemyId[1]] !== "*" && jsGrid[enemyId[0] + 1][enemyId[1]] !== "E") {
 
-//     jsGrid[0][(totalColumns - 1)] = "*";
-//     jsGrid[(totalRows - 1)][0] = "*";
-//     var setBoundariesImageTopRight = "#r0 #c" + (totalColumns - 1) + " img";
-//     var setBoundariesImageBottomLeft ="#r" + (totalRows - 1) + " #c0 img";
-//     var obstacleTopRight = document.querySelector(setBoundariesImageTopRight);
-//     obstacleTopRight.src = selectedObstacle.image;
-//     var obstacleBottomLeft = document.querySelector(setBoundariesImageBottomLeft);
-//     obstacleBottomLeft.src = selectedObstacle.image;
+                //to plot the co-ordinate of he player before moving
+                plottingEnemy(enemyId);
+                jsGrid[enemyId[0] + 1][enemyId[1]] = "Y";
+                enemyId[0] += 1;
+                jsGrid[enemyId[0] - 1][enemyId[1]] = " ";
+                //to plot the co-ordinate of the player after moving
+                plottingEnemy(enemyId, selectedEnemy.frontView);
+                enemyId[2] = "ok";
 
-//     var totalInnerBoundaries = Math.round(((totalRows - 4)*(totalColumns - 4))/5);
+            } else {
 
-//     for (var i = 0; i <= totalInnerBoundaries; i++) {
+                enemyId[2] = "notOk";
+            }
 
-//         var randomColumn = randomness(totalColumns - 3) + 2;
-//         var randomRow = randomness(totalRows - 3) + 2;
+        } else {
 
-//         while (jsGrid[randomRow][randomColumn] !== " ") {
+            enemyId[2] = "notOk";
+        }
 
-//             randomColumn = randomness(totalColumns - 3) + 2;
-//             randomRow = randomness(totalRows - 3) + 2;
+    };
 
-//         }
+    var moveLeft = function(enemyId) {
 
-//         jsGrid[randomRow][randomColumn] = "*";
-//         var onGridValue = "#r" + randomRow + " #c" + randomColumn + " img";
-//         var onGrid = document.querySelector(onGridValue);
-//         onGrid.src = selectedObstacle.image;
-//     }
-// };
+        if (enemyId[1] > 0) {
 
-// function enemyBehaviour(enemyId) {
+            if (jsGrid[enemyId[0]][enemyId[1] - 1] !== "*" && jsGrid[enemyId[0]][enemyId[1] - 1] !== "E") {
 
-//     var moveUp = function(enemyId) {
+                //to plot the co-ordinate of he player before moving
+                plottingEnemy(enemyId);
+                jsGrid[enemyId[0]][enemyId[1] - 1] = "Y";
+                enemyId[1] -= 1;
+                jsGrid[enemyId[0]][enemyId[1] + 1] = " ";
+                //to plot the co-ordinate of the player after moving
+                plottingEnemy(enemyId, selectedEnemy.leftView);
+                enemyId[2] = "ok";
 
-//         if (enemyId[0] > 0) {
+            } else {
 
-//             if (jsGrid[enemyId[0] - 1][enemyId[1]] !== "*" && jsGrid[enemyId[0] - 1][enemyId[1]] !== "E") {
+                enemyId[2] = 'notOk';
+            }
 
-//                 //to plot the co-ordinate of he player before moving
-//                 plottingEnemy(enemyId);
-//                 jsGrid[enemyId[0] - 1][enemyId[1]] = "Y";
-//                 enemyId[0] -= 1;
-//                 jsGrid[enemyId[0] + 1][enemyId[1]] = " ";
-//                 //to plot the co-ordinate of the player after moving
-//                 plottingEnemy(enemyId, selectedEnemy.backView);
-//                 enemyId[2] = "ok";
+        } else {
 
-//             } else {
+            enemyId[2] = "notOk";
+        }
 
-//                 enemyId[2] = "notOk";
-//             }
 
-//         } else {
+    };
 
-//             enemyId[2] = "notOk";
-//         }
+    var moveRight = function(enemyId) {
 
-//     };
+        if (enemyId[1] < jsGrid[0].length - 1) {
 
-//     var moveDown = function(enemyId) {
+            if (jsGrid[enemyId[0]][enemyId[1] + 1] !== "*" && jsGrid[enemyId[0]][enemyId[1] + 1] !== "E") {
 
-//         if (enemyId[0] < jsGrid.length - 1) {
+                //to plot the co-ordinate of he player before moving
+                plottingEnemy(enemyId);
+                jsGrid[enemyId[0]][enemyId[1] + 1] = "Y";
+                enemyId[1] += 1;
+                jsGrid[enemyId[0]][enemyId[1] - 1] = " ";
+                //to plot the co-ordinate of the player after moving
+                plottingEnemy(enemyId, selectedEnemy.rightView);
+                enemyId[2] = "ok";
 
-//             if (jsGrid[enemyId[0] + 1][enemyId[1]] !== "*" && jsGrid[enemyId[0] + 1][enemyId[1]] !== "E") {
+            } else {
 
-//                 //to plot the co-ordinate of he player before moving
-//                 plottingEnemy(enemyId);
-//                 jsGrid[enemyId[0] + 1][enemyId[1]] = "Y";
-//                 enemyId[0] += 1;
-//                 jsGrid[enemyId[0] - 1][enemyId[1]] = " ";
-//                 //to plot the co-ordinate of the player after moving
-//                 plottingEnemy(enemyId, selectedEnemy.frontView);
-//                 enemyId[2] = "ok";
+                enemyId[2] = "notOk";
+            }
 
-//             } else {
+        } else {
 
-//                 enemyId[2] = "notOk";
-//             }
+            enemyId[2] = "notOk";
+        }
 
-//         } else {
+    };
 
-//             enemyId[2] = "notOk";
-//         }
+        var intervalForMoving = setInterval(function(){
 
-//     };
+            var differenceX = enemyId[1] - currentCoordinateX;
+            var differenceY = enemyId[0] - currentCoordinateY;
+            var valueDifferenceX = differenceX * -1;
+            var valueDifferenceY = differenceY * -1;
 
-//     var moveLeft = function(enemyId) {
+            var options = [moveUp, moveDown, moveLeft, moveRight];
 
-//         if (enemyId[1] > 0) {
+            if (valueDifferenceX < valueDifferenceY && differenceX < 0) {
 
-//             if (jsGrid[enemyId[0]][enemyId[1] - 1] !== "*" && jsGrid[enemyId[0]][enemyId[1] - 1] !== "E") {
+                moveRight(enemyId);
 
-//                 //to plot the co-ordinate of he player before moving
-//                 plottingEnemy(enemyId);
-//                 jsGrid[enemyId[0]][enemyId[1] - 1] = "Y";
-//                 enemyId[1] -= 1;
-//                 jsGrid[enemyId[0]][enemyId[1] + 1] = " ";
-//                 //to plot the co-ordinate of the player after moving
-//                 plottingEnemy(enemyId, selectedEnemy.leftView);
-//                 enemyId[2] = "ok";
+                if (enemyId[2] === "notOk") {
 
-//             } else {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-//                 enemyId[2] = 'notOk';
-//             }
+                    while (enemyId[2] === "notOk" ) {
 
-//         } else {
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-//             enemyId[2] = "notOk";
-//         }
+                    }
+                }
 
+            } else if (valueDifferenceX < valueDifferenceY && differenceX > 0) {
 
-//     };
+                moveLeft(enemyId);
 
-//     var moveRight = function(enemyId) {
+                if (enemyId[2] === "notOk") {
 
-//         if (enemyId[1] < jsGrid[0].length - 1) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-//             if (jsGrid[enemyId[0]][enemyId[1] + 1] !== "*" && jsGrid[enemyId[0]][enemyId[1] + 1] !== "E") {
+                    while (enemyId[2] === "notOk" ) {
 
-//                 //to plot the co-ordinate of he player before moving
-//                 plottingEnemy(enemyId);
-//                 jsGrid[enemyId[0]][enemyId[1] + 1] = "Y";
-//                 enemyId[1] += 1;
-//                 jsGrid[enemyId[0]][enemyId[1] - 1] = " ";
-//                 //to plot the co-ordinate of the player after moving
-//                 plottingEnemy(enemyId, selectedEnemy.rightView);
-//                 enemyId[2] = "ok";
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-//             } else {
+                    }
+                }
 
-//                 enemyId[2] = "notOk";
-//             }
+            } else if (valueDifferenceY < valueDifferenceX && differenceY < 0) {
 
-//         } else {
+                moveDown(enemyId);
 
-//             enemyId[2] = "notOk";
-//         }
+                if (enemyId[2] === "notOk") {
 
-//     };
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-//         var intervalForMoving = setInterval(function(){
+                    while ( enemyId[2]  === "notOk" ) {
 
-//             var differenceX = enemyId[1] - currentCoordinateX;
-//             var differenceY = enemyId[0] - currentCoordinateY;
-//             var valueDifferenceX = differenceX * -1;
-//             var valueDifferenceY = differenceY * -1;
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-//             var options = [moveUp, moveDown, moveLeft, moveRight];
+                    }
+                }
 
-//             if (valueDifferenceX < valueDifferenceY && differenceX < 0) {
+            } else if (valueDifferenceY < valueDifferenceX && differenceY > 0) {
 
-//                 moveRight(enemyId);
+                moveUp(enemyId);
 
-//                 if (enemyId[2] === "notOk") {
+                if (enemyId[2] === "notOk") {
 
-//                     var pickRandomMovement = randomness(options.length);
-//                     options[pickRandomMovement](enemyId);
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-//                     while (enemyId[2] === "notOk" ) {
+                    while (enemyId[2] === "notOk" ) {
 
-//                         pickRandomMovement = randomness(options.length);
-//                         options[pickRandomMovement](enemyId);
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-//                     }
-//                 }
+                    }
+                }
 
-//             } else if (valueDifferenceX < valueDifferenceY && differenceX > 0) {
+            } else if (valueDifferenceY === 0 && differenceX > 0) {
 
-//                 moveLeft(enemyId);
+                moveLeft(enemyId);
 
-//                 if (enemyId[2] === "notOk") {
+                if (enemyId[2] === "notOk") {
 
-//                     var pickRandomMovement = randomness(options.length);
-//                     options[pickRandomMovement](enemyId);
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-//                     while (enemyId[2] === "notOk" ) {
+                    while (enemyId[2] === "notOk" ) {
 
-//                         pickRandomMovement = randomness(options.length);
-//                         options[pickRandomMovement](enemyId);
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-//                     }
-//                 }
+                    }
+                }
 
-//             } else if (valueDifferenceY < valueDifferenceX && differenceY < 0) {
+            } else if (valueDifferenceY === 0 && differenceX < 0) {
 
-//                 moveDown(enemyId);
+                moveRight(enemyId);
 
-//                 if (enemyId[2] === "notOk") {
+                if (enemyId[2] === "notOk") {
 
-//                     var pickRandomMovement = randomness(options.length);
-//                     options[pickRandomMovement](enemyId);
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-//                     while ( enemyId[2]  === "notOk" ) {
+                    while (enemyId[2] === "notOk" ) {
 
-//                         pickRandomMovement = randomness(options.length);
-//                         options[pickRandomMovement](enemyId);
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-//                     }
-//                 }
+                    }
 
-//             } else if (valueDifferenceY < valueDifferenceX && differenceY > 0) {
+                }
 
-//                 moveUp(enemyId);
+            } else if (valueDifferenceX === 0 && differenceY > 0) {
 
-//                 if (enemyId[2] === "notOk") {
+                moveUp(enemyId);
 
-//                     var pickRandomMovement = randomness(options.length);
-//                     options[pickRandomMovement](enemyId);
+                if (enemyId[2] === "notOk") {
 
-//                     while (enemyId[2] === "notOk" ) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-//                         pickRandomMovement = randomness(options.length);
-//                         options[pickRandomMovement](enemyId);
+                    while (enemyId[2] === "notOk" ) {
 
-//                     }
-//                 }
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-//             } else if (valueDifferenceY === 0 && differenceX > 0) {
+                    }
+                }
 
-//                 moveLeft(enemyId);
+            } else if (valueDifferenceX === 0 && differenceY < 0) {
 
-//                 if (enemyId[2] === "notOk") {
+                moveDown(enemyId);
 
-//                     var pickRandomMovement = randomness(options.length);
-//                     options[pickRandomMovement](enemyId);
+                if (enemyId[2] === "notOk") {
 
-//                     while (enemyId[2] === "notOk" ) {
+                    var pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-//                         pickRandomMovement = randomness(options.length);
-//                         options[pickRandomMovement](enemyId);
+                    while (enemyId[2] === "notOk" ) {
 
-//                     }
-//                 }
+                        pickRandomMovement = randomness(options.length);
+                        options[pickRandomMovement](enemyId);
 
-//             } else if (valueDifferenceY === 0 && differenceX < 0) {
+                    }
+                }
 
-//                 moveRight(enemyId);
+            } else if (valueDifferenceX === valueDifferenceY) {
 
-//                 if (enemyId[2] === "notOk") {
+                var pickRandomMovement = randomness(options.length);
+                options[pickRandomMovement](enemyId);
 
-//                     var pickRandomMovement = randomness(options.length);
-//                     options[pickRandomMovement](enemyId);
+                while (enemyId[2] === "notOk" ) {
 
-//                     while (enemyId[2] === "notOk" ) {
+                    pickRandomMovement = randomness(options.length);
+                    options[pickRandomMovement](enemyId);
 
-//                         pickRandomMovement = randomness(options.length);
-//                         options[pickRandomMovement](enemyId);
+                }
 
-//                     }
+            }
 
-//                 }
 
-//             } else if (valueDifferenceX === 0 && differenceY > 0) {
+        }, 295);
 
-//                 moveUp(enemyId);
+        enemyMovements.push(intervalForMoving);
 
-//                 if (enemyId[2] === "notOk") {
+};
 
-//                     var pickRandomMovement = randomness(options.length);
-//                     options[pickRandomMovement](enemyId);
+var gameOver = function() {
 
-//                     while (enemyId[2] === "notOk" ) {
+    var checkForX = [];
 
-//                         pickRandomMovement = randomness(options.length);
-//                         options[pickRandomMovement](enemyId);
+    for (var i = 0; i < totalRows; i++) {
 
-//                     }
-//                 }
+        var innerString = jsGrid[i].toString();
+        checkForX.push(innerString);
 
-//             } else if (valueDifferenceX === 0 && differenceY < 0) {
+    }
 
-//                 moveDown(enemyId);
+    var string = checkForX.toString();
+    var check = string.includes("X");
 
-//                 if (enemyId[2] === "notOk") {
+    if (check === false) {
 
-//                     var pickRandomMovement = randomness(options.length);
-//                     options[pickRandomMovement](enemyId);
+        gameover = true;
+        while (overallContainer.firstChild) {
 
-//                     while (enemyId[2] === "notOk" ) {
+            overallContainer.removeChild(overallContainer.childNodes[0]);
 
-//                         pickRandomMovement = randomness(options.length);
-//                         options[pickRandomMovement](enemyId);
+        }
 
-//                     }
-//                 }
+        var text = document.createElement("h1");
+        var text2 = document.createElement("h2");
+        var restart = document.createElement("button");
+        restart.innerHTML = "Restart";
+        text.innerHTML = "Game Over!!";
+        text.classList.add("gameover");
+        text2.classList.add("text2");
+        text2.innerHTML = "Nice try but you are not escaping from here...";
+        overallContainer.appendChild(text);
+        overallContainer.appendChild(text2);
+        overallContainer.appendChild(restart);
+        document.getElementsByTagName("button")[0].addEventListener("click", function(){location.reload()});
 
-//             } else if (valueDifferenceX === valueDifferenceY) {
+        for (var i = 0; i < enemyMovements.length; i++) {
 
-//                 var pickRandomMovement = randomness(options.length);
-//                 options[pickRandomMovement](enemyId);
+            clearInterval(enemyMovements[i]);
 
-//                 while (enemyId[2] === "notOk" ) {
+        }
 
-//                     pickRandomMovement = randomness(options.length);
-//                     options[pickRandomMovement](enemyId);
+        clearInterval(executeCheck);
+        clearInterval(executeCheckForWin);
+        clearInterval(timer);
+        clearInterval(enemyGenerator);
 
-//                 }
+    }
 
-//             }
+};
 
+var win = function() {
 
-//         }, 295);
+    if (jsGrid[0].includes("E") === false) {
 
-//         enemyMovements.push(intervalForMoving);
+        gameover = true;
+        while (overallContainer.firstChild) {
 
-// };
+            overallContainer.removeChild(overallContainer.childNodes[0]);
 
-// var gameOver = function() {
+        }
 
-//     var checkForX = [];
+        var text = document.createElement("h1");
+        var showScore = document.createElement("h2");
+        var restart = document.createElement("button");
+        restart.innerHTML = "Restart";
+        text.innerHTML = "Congratulations!!";
+        text.classList.add("winner");
+        showScore.classList.add("score");
+        showScore.innerHTML = "Your score is: " + seconds;
+        overallContainer.appendChild(text);
 
-//     for (var i = 0; i < totalRows; i++) {
+        //check browser support
+        if ( typeof(Storage) !== undefined) {
 
-//         var innerString = jsGrid[i].toString();
-//         checkForX.push(innerString);
+            if (localStorage.getItem("highScore") !== null ) {
 
-//     }
+                var currentHighScore = localStorage.getItem("highScore");
 
-//     var string = checkForX.toString();
-//     var check = string.includes("X");
+                if (currentHighScore >= seconds) {
 
-//     if (check === false) {
+                    localStorage.setItem("highScore", seconds);
+                    localStorage.setItem("leaderboardInitials", initials);
+                }
 
-//         gameover = true;
-//         while (overallContainer.firstChild) {
+            } else {
 
-//             overallContainer.removeChild(overallContainer.childNodes[0]);
+               localStorage.setItem("highScore", seconds);
+               localStorage.setItem("leaderboardInitials", initials);
+            }
 
-//         }
+            var highScore = document.createElement("h2");
+            highScore.innerHTML = "LEADERBOARD: " + localStorage.getItem("leaderboardInitials") + " " +localStorage.getItem("highScore");
+            highScore.classList.add("highscore");
+            overallContainer.appendChild(highScore);
 
-//         var text = document.createElement("h1");
-//         var text2 = document.createElement("h2");
-//         var restart = document.createElement("button");
-//         restart.innerHTML = "Restart";
-//         text.innerHTML = "Game Over!!";
-//         text.classList.add("gameover");
-//         text2.classList.add("text2");
-//         text2.innerHTML = "Nice try but you are not escaping from here...";
-//         overallContainer.appendChild(text);
-//         overallContainer.appendChild(text2);
-//         overallContainer.appendChild(restart);
-//         document.getElementsByTagName("button")[0].addEventListener("click", function(){location.reload()});
+        }
 
-//         for (var i = 0; i < enemyMovements.length; i++) {
+        overallContainer.appendChild(showScore);
+        overallContainer.appendChild(restart);
+        document.getElementsByTagName("button")[0].addEventListener("click", function(){location.reload()});
 
-//             clearInterval(enemyMovements[i]);
+        for (var i = 0; i < enemyMovements.length; i++) {
 
-//         }
+            clearInterval(enemyMovements[i]);
 
-//         clearInterval(executeCheck);
-//         clearInterval(executeCheckForWin);
-//         clearInterval(timer);
-//         clearInterval(enemyGenerator);
+        }
 
-//     }
+        clearInterval(executeCheck);
+        clearInterval(executeCheckForWin);
+        clearInterval(timer);
+        clearInterval(enemyGenerator);
 
-// };
-
-// var win = function() {
-
-//     if (jsGrid[0].includes("E") === false) {
-
-//         gameover = true;
-//         while (overallContainer.firstChild) {
-
-//             overallContainer.removeChild(overallContainer.childNodes[0]);
-
-//         }
-
-//         var text = document.createElement("h1");
-//         var showScore = document.createElement("h2");
-//         var restart = document.createElement("button");
-//         restart.innerHTML = "Restart";
-//         text.innerHTML = "Congratulations!!";
-//         text.classList.add("winner");
-//         showScore.classList.add("score");
-//         showScore.innerHTML = "Your score is: " + seconds;
-//         overallContainer.appendChild(text);
-
-//         //check browser support
-//         if ( typeof(Storage) !== undefined) {
-
-//             if (localStorage.getItem("highScore") !== null ) {
-
-//                 var currentHighScore = localStorage.getItem("highScore");
-
-//                 if (currentHighScore >= seconds) {
-
-//                     localStorage.setItem("highScore", seconds);
-//                     localStorage.setItem("leaderboardInitials", initials);
-//                 }
-
-//             } else {
-
-//                localStorage.setItem("highScore", seconds);
-//                localStorage.setItem("leaderboardInitials", initials);
-//             }
-
-//             var highScore = document.createElement("h2");
-//             highScore.innerHTML = "LEADERBOARD: " + localStorage.getItem("leaderboardInitials") + " " +localStorage.getItem("highScore");
-//             highScore.classList.add("highscore");
-//             overallContainer.appendChild(highScore);
-
-//         }
-
-//         overallContainer.appendChild(showScore);
-//         overallContainer.appendChild(restart);
-//         document.getElementsByTagName("button")[0].addEventListener("click", function(){location.reload()});
-
-//         for (var i = 0; i < enemyMovements.length; i++) {
-
-//             clearInterval(enemyMovements[i]);
-
-//         }
-
-//         clearInterval(executeCheck);
-//         clearInterval(executeCheckForWin);
-//         clearInterval(timer);
-//         clearInterval(enemyGenerator);
-
-//     }
-// }
+    }
+}
 
 reCreateBoard();
 
