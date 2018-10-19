@@ -1,12 +1,14 @@
 window.onload = () => {
 
     var logOut = document.getElementById('logout');
-    var dropDown = document.getElementById('drop-down').addEventListener('click', () => {
+    if (document.getElementById('drop-down') !== null) {
+        var dropDown = document.getElementById('drop-down').addEventListener('click', () => {
 
-        if (logOut.style.visibility === 'visible') {
-            logOut.style.visibility = 'hidden';
-        } else {
-            logOut.style.visibility = 'visible';
-        }
-    })
+            if (logOut.style.visibility === 'visible') {
+                logOut.style.visibility = 'hidden';
+            } else {
+                logOut.style.visibility = 'visible';
+            }
+        });
+    }
 };

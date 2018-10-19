@@ -581,7 +581,9 @@ table {
 
 	width: 55px;
 	height: 45px;
-	border: 1px solid grey;
+	/*border: 1px solid grey;*/
+	position: relative;
+	border-spacing: 0;
 
 }
 
@@ -593,7 +595,21 @@ table {
 }
 
 
+.enemy-behaviour {
 
+	position: absolute;
+	top: 0;
+
+}
+
+.blank-container {
+
+	background-color: red;
+	width: 900px;
+	height: 712px;
+	margin: auto;
+
+}
 
 
 

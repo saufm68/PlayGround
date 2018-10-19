@@ -3,6 +3,7 @@ var currentCoordinateX;
 var currentCoordinateY;
 var enemies = {}
 var gameover = false;
+var enemyMovements = []
 
 function reCreateBoard() {
 
@@ -26,8 +27,8 @@ function reCreateBoard() {
       container.insertBefore(table, script);
 
       var table = document.getElementById('gameContainer-play');
-      var enemyCount = 0;
-      var obstacleCount = 0;
+      var enemyCount = 1;
+      var obstacleCount = 1;
       for (let i = 0; i < jsGrid.length; i++) {
 
         var tRow = document.createElement('tr');
@@ -57,9 +58,13 @@ function reCreateBoard() {
                 let image = document.createElement('img');
                 image.src = '/gamemaker-media/enemy.jpg';
                 image.classList.add('character-play');
+                image.classList.add('enemy-behaviour');
+                image.style['z-index'] = enemyCount;
                 image.id = 'enemy' + enemyCount;
                 enemies[image.id] = [i, j];
                 col.appendChild(image);
+                enemies[image.id] = [i, j, 'ok', image.id];
+                enemyBehaviour(enemies[image.id]);
                 enemyCount++;
             } else if (jsGrid[i][j] === 'G') {
                 let col = document.querySelector(`#r-${i} #c-${j}`);
@@ -82,6 +87,7 @@ function reCreateBoard() {
 
       }
       movePlayer();
+
     };
     // listen for the request response
     request.addEventListener("load", responseHandler);
@@ -92,6 +98,8 @@ function reCreateBoard() {
 
 };
 
+reCreateBoard();
+
 
 //finding the currnent co-ordinates of the the player
 function plottingPlayer(Y, X) {
@@ -99,30 +107,18 @@ function plottingPlayer(Y, X) {
     var mapGridValue = "#r-" + Y + " #c-" + X;
     var mapGrid = document.querySelector(mapGridValue);
     var player = document.getElementById('player')
-
-    if (mapGrid.firstChild) {
-        mapGrid.removeChild(player);
-    } else {
-        mapGrid.appendChild(player);
-    }
+    mapGrid.appendChild(player);
 
 };
 
-// function plottingEnemy(enemyId, view) {
+function plottingEnemy(enemyId, Y, X) {
 
-//     var enemyGridValue = "#r-" + enemyId[0] + " #c" + enemyId[1] + " img";
-//     var enemyGrid = document.querySelector(enemyGridValue);
+    var enemyGridValue = "#r-" + Y + " #c-" + X;
+    var enemyGrid = document.querySelector(enemyGridValue);
+    const enemy = document.getElementById(enemyId[3])
+    enemyGrid.appendChild(enemy)
 
-//     if (view === undefined ) {
-
-//        enemyGrid.src = "";
-
-//     } else {
-
-//         enemyGrid.src = view;
-//     }
-
-// };
+};
 
 //getting the value of the key pressed and moving the character to the specified direction
 function movePlayer() {
@@ -137,98 +133,81 @@ function movePlayer() {
 
         var events = event.key;
 
-        if ( events === "w" && currentCoordinateY > 0) {
+        if (event.repeat === false) {
 
-            if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "O") {
+            if ( events === "w" && currentCoordinateY > 0) {
 
-                if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "E") {
+                if (jsGrid[currentCoordinateY - 1][currentCoordinateX] !== "O") {
 
-                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = "E";
-                    currentCoordinateY -= 1;
-                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
+                    if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "E") {
+                        gameOver();
+                    } else if (jsGrid[currentCoordinateY - 1][currentCoordinateX] === "G") {
+                        win();
+                    }else {
 
-                } else {
+                        //to plot the co-ordinate of he player before moving
+                        plottingPlayer(currentCoordinateY - 1, currentCoordinateX);
+                        jsGrid[currentCoordinateY - 1][currentCoordinateX] = "P";
+                        currentCoordinateY -= 1;
+                        //to plot the co-ordinate of the player after moving
+                        jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
 
-                    //to plot the co-ordinate of he player before moving
-                    plottingPlayer(currentCoordinateY - 1, currentCoordinateX);
-                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = "P";
-                    currentCoordinateY -= 1;
-                    //to plot the co-ordinate of the player after moving
-                    plottingPlayer(currentCoordinateY + 1, currentCoordinateX);
-                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = "*";
-
+                    }
                 }
+            } else if (events === "s" && currentCoordinateY < jsGrid.length - 1) {
 
+                if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "O") {
 
-            }
+                    if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "E") {
+                        gameOver();
+                    } else if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "G") {
+                        win();
+                    } else {
 
-        } else if (events === "s" && currentCoordinateY < jsGrid.length - 1) {
+                        plottingPlayer(currentCoordinateY + 1, currentCoordinateX);
+                        jsGrid[currentCoordinateY + 1][currentCoordinateX] = "P";
+                        currentCoordinateY += 1;
+                        jsGrid[currentCoordinateY - 1][currentCoordinateX] = "*";
 
-            if (jsGrid[currentCoordinateY + 1][currentCoordinateX] !== "O") {
-
-                if (jsGrid[currentCoordinateY + 1][currentCoordinateX] === "E") {
-
-                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = "E";
-                    currentCoordinateY += 1;
-                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = "* ";
-
-                } else {
-
-                    plottingPlayer();
-                    jsGrid[currentCoordinateY + 1][currentCoordinateX] = "P";
-                    currentCoordinateY += 1;
-                    plottingPlayer('/gamemaker-media/player.jpg');
-                    jsGrid[currentCoordinateY - 1][currentCoordinateX] = "*";
-
+                    }
                 }
-            }
+            } else if (events === "a" && currentCoordinateX > 0) {
 
-        } else if (events === "a" && currentCoordinateX > 0) {
+                if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "O") {
 
-            if (jsGrid[currentCoordinateY][currentCoordinateX - 1] !== "O") {
+                    if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "E") {
+                        gameOver();
+                    } else if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "G") {
+                        win();
+                    } else {
 
-                if (jsGrid[currentCoordinateY][currentCoordinateX - 1] === "E") {
+                        plottingPlayer(currentCoordinateY, currentCoordinateX - 1);
+                        jsGrid[currentCoordinateY][currentCoordinateX - 1] = "P";
+                        currentCoordinateX -= 1;
+                        jsGrid[currentCoordinateY][currentCoordinateX + 1] = "*";
 
-                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = "E";
-                    currentCoordinateX -= 1;
-                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = "*";
-
-                } else {
-
-                    plottingPlayer();
-                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = "P";
-                    currentCoordinateX -= 1;
-                    plottingPlayer('/gamemaker-media/player.jpg');
-                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = "*";
-
+                    }
                 }
-            }
+            } else if (events === "d" && currentCoordinateX <(jsGrid[0].length - 1)) {
 
-        } else if (events === "d" && currentCoordinateX <(jsGrid[0].length - 1)) {
+                if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "O") {
 
-            if (jsGrid[currentCoordinateY][currentCoordinateX + 1] !== "O") {
+                    if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "E") {
+                        gameOver();
+                    } else if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "G") {
+                        win();
+                    } else {
 
-                if (jsGrid[currentCoordinateY][currentCoordinateX + 1] === "E") {
+                        plottingPlayer(currentCoordinateY, currentCoordinateX + 1);
+                        jsGrid[currentCoordinateY][currentCoordinateX + 1] = "P";
+                        currentCoordinateX += 1;
+                        jsGrid[currentCoordinateY][currentCoordinateX - 1] = "*";
 
-                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = "E";
-                    currentCoordinateX += 1;
-                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = "*";
-
-                } else {
-
-                    plottingPlayer();
-                    jsGrid[currentCoordinateY][currentCoordinateX + 1] = "P";
-                    currentCoordinateX += 1;
-                    plottingPlayer('/gamemaker-media/player.jpg');
-                    jsGrid[currentCoordinateY][currentCoordinateX - 1] = "*";
-
+                    }
                 }
             }
-
         }
-
     };
-
     window.addEventListener("keydown", move);
 };
 
@@ -247,24 +226,26 @@ function enemyBehaviour(enemyId) {
 
         if (enemyId[0] > 0) {
 
-            if (jsGrid[enemyId[0] - 1][enemyId[1]] !== "*" && jsGrid[enemyId[0] - 1][enemyId[1]] !== "E") {
+            if (jsGrid[enemyId[0] - 1][enemyId[1]] !== "O" && jsGrid[enemyId[0] - 1][enemyId[1]] !== "G") {
 
                 //to plot the co-ordinate of he player before moving
-                plottingEnemy(enemyId);
-                jsGrid[enemyId[0] - 1][enemyId[1]] = "Y";
-                enemyId[0] -= 1;
-                jsGrid[enemyId[0] + 1][enemyId[1]] = " ";
-                //to plot the co-ordinate of the player after moving
-                plottingEnemy(enemyId, selectedEnemy.backView);
-                enemyId[2] = "ok";
+                if (jsGrid[enemyId[0] - 1][enemyId[1]] !== "P") {
+
+                    plottingEnemy(enemyId, enemyId[0] - 1, enemyId[1]);
+                    jsGrid[enemyId[0] - 1][enemyId[1]] = "E";
+                    enemyId[0] -= 1;
+                    jsGrid[enemyId[0] + 1][enemyId[1]] = "*";
+                    enemyId[2] = "ok";
+
+                } else {
+                    gameOver();
+                }
 
             } else {
-
                 enemyId[2] = "notOk";
             }
 
         } else {
-
             enemyId[2] = "notOk";
         }
 
@@ -274,16 +255,18 @@ function enemyBehaviour(enemyId) {
 
         if (enemyId[0] < jsGrid.length - 1) {
 
-            if (jsGrid[enemyId[0] + 1][enemyId[1]] !== "*" && jsGrid[enemyId[0] + 1][enemyId[1]] !== "E") {
+            if (jsGrid[enemyId[0] + 1][enemyId[1]] !== "O" && jsGrid[enemyId[0] + 1][enemyId[1]] !== "G") {
 
                 //to plot the co-ordinate of he player before moving
-                plottingEnemy(enemyId);
-                jsGrid[enemyId[0] + 1][enemyId[1]] = "Y";
-                enemyId[0] += 1;
-                jsGrid[enemyId[0] - 1][enemyId[1]] = " ";
-                //to plot the co-ordinate of the player after moving
-                plottingEnemy(enemyId, selectedEnemy.frontView);
-                enemyId[2] = "ok";
+                if (jsGrid[enemyId[0] + 1][enemyId[1]] !== "P") {
+                    plottingEnemy(enemyId, enemyId[0] + 1, enemyId[1]);
+                    jsGrid[enemyId[0] + 1][enemyId[1]] = "E";
+                    enemyId[0] += 1;
+                    jsGrid[enemyId[0] - 1][enemyId[1]] = "*";
+                    enemyId[2] = "ok";
+                } else {
+                    gameover();
+                }
 
             } else {
 
@@ -301,16 +284,18 @@ function enemyBehaviour(enemyId) {
 
         if (enemyId[1] > 0) {
 
-            if (jsGrid[enemyId[0]][enemyId[1] - 1] !== "*" && jsGrid[enemyId[0]][enemyId[1] - 1] !== "E") {
+            if (jsGrid[enemyId[0]][enemyId[1] - 1] !== "O" && jsGrid[enemyId[0]][enemyId[1] - 1] !== "G") {
 
                 //to plot the co-ordinate of he player before moving
-                plottingEnemy(enemyId);
-                jsGrid[enemyId[0]][enemyId[1] - 1] = "Y";
-                enemyId[1] -= 1;
-                jsGrid[enemyId[0]][enemyId[1] + 1] = " ";
-                //to plot the co-ordinate of the player after moving
-                plottingEnemy(enemyId, selectedEnemy.leftView);
-                enemyId[2] = "ok";
+                if (jsGrid[enemyId[0]][enemyId[1] - 1] !== "P") {
+                    plottingEnemy(enemyId, enemyId[0], enemyId[1] - 1);
+                    jsGrid[enemyId[0]][enemyId[1] - 1] = "E";
+                    enemyId[1] -= 1;
+                    jsGrid[enemyId[0]][enemyId[1] + 1] = "*";
+                    enemyId[2] = "ok";
+                } else {
+                    gameOver();
+                }
 
             } else {
 
@@ -329,16 +314,18 @@ function enemyBehaviour(enemyId) {
 
         if (enemyId[1] < jsGrid[0].length - 1) {
 
-            if (jsGrid[enemyId[0]][enemyId[1] + 1] !== "*" && jsGrid[enemyId[0]][enemyId[1] + 1] !== "E") {
+            if (jsGrid[enemyId[0]][enemyId[1] + 1] !== "O" && jsGrid[enemyId[0]][enemyId[1] + 1] !== "G") {
 
                 //to plot the co-ordinate of he player before moving
-                plottingEnemy(enemyId);
-                jsGrid[enemyId[0]][enemyId[1] + 1] = "Y";
-                enemyId[1] += 1;
-                jsGrid[enemyId[0]][enemyId[1] - 1] = " ";
-                //to plot the co-ordinate of the player after moving
-                plottingEnemy(enemyId, selectedEnemy.rightView);
-                enemyId[2] = "ok";
+                if (jsGrid[enemyId[0]][enemyId[1] + 1] !== "P") {
+                    plottingEnemy(enemyId, enemyId[0], enemyId[1] + 1);
+                    jsGrid[enemyId[0]][enemyId[1] + 1] = "E";
+                    enemyId[1] += 1;
+                    jsGrid[enemyId[0]][enemyId[1] - 1] = "*";
+                    enemyId[2] = "ok";
+                } else {
+                    gameOver();
+                }
 
             } else {
 
@@ -513,7 +500,7 @@ function enemyBehaviour(enemyId) {
             }
 
 
-        }, 295);
+        }, 200);
 
         enemyMovements.push(intervalForMoving);
 
@@ -521,128 +508,65 @@ function enemyBehaviour(enemyId) {
 
 var gameOver = function() {
 
-    var checkForX = [];
+    gameover = true;
 
-    for (var i = 0; i < totalRows; i++) {
+    for (var i = 0; i < enemyMovements.length; i++) {
 
-        var innerString = jsGrid[i].toString();
-        checkForX.push(innerString);
-
-    }
-
-    var string = checkForX.toString();
-    var check = string.includes("X");
-
-    if (check === false) {
-
-        gameover = true;
-        while (overallContainer.firstChild) {
-
-            overallContainer.removeChild(overallContainer.childNodes[0]);
-
-        }
-
-        var text = document.createElement("h1");
-        var text2 = document.createElement("h2");
-        var restart = document.createElement("button");
-        restart.innerHTML = "Restart";
-        text.innerHTML = "Game Over!!";
-        text.classList.add("gameover");
-        text2.classList.add("text2");
-        text2.innerHTML = "Nice try but you are not escaping from here...";
-        overallContainer.appendChild(text);
-        overallContainer.appendChild(text2);
-        overallContainer.appendChild(restart);
-        document.getElementsByTagName("button")[0].addEventListener("click", function(){location.reload()});
-
-        for (var i = 0; i < enemyMovements.length; i++) {
-
-            clearInterval(enemyMovements[i]);
-
-        }
-
-        clearInterval(executeCheck);
-        clearInterval(executeCheckForWin);
-        clearInterval(timer);
-        clearInterval(enemyGenerator);
+        clearInterval(enemyMovements[i]);
 
     }
+
+    const main = document.getElementsByTagName('main')[0];
+    const script = document.getElementsByTagName('script')[0];
+    main.removeChild(document.getElementById('gameContainer-play'));
+    const blank = document.createElement('div');
+    main.insertBefore(blank, script);
+    blank.classList.add('blank-container');
+
+    var text = document.createElement("h1");
+    var restart = document.createElement("button");
+    restart.id = "restart";
+    restart.innerHTML = "Restart";
+    text.innerHTML = "Game Over!!";
+    text.classList.add("text");
+    blank.appendChild(text);
+    blank.appendChild(restart);
+    document.getElementById("restart").addEventListener("click", () => {
+        location.reload()
+    });
 
 };
 
 var win = function() {
 
-    if (jsGrid[0].includes("E") === false) {
+    gameover = true;
 
-        gameover = true;
-        while (overallContainer.firstChild) {
+    for (var i = 0; i < enemyMovements.length; i++) {
 
-            overallContainer.removeChild(overallContainer.childNodes[0]);
-
-        }
-
-        var text = document.createElement("h1");
-        var showScore = document.createElement("h2");
-        var restart = document.createElement("button");
-        restart.innerHTML = "Restart";
-        text.innerHTML = "Congratulations!!";
-        text.classList.add("winner");
-        showScore.classList.add("score");
-        showScore.innerHTML = "Your score is: " + seconds;
-        overallContainer.appendChild(text);
-
-        //check browser support
-        if ( typeof(Storage) !== undefined) {
-
-            if (localStorage.getItem("highScore") !== null ) {
-
-                var currentHighScore = localStorage.getItem("highScore");
-
-                if (currentHighScore >= seconds) {
-
-                    localStorage.setItem("highScore", seconds);
-                    localStorage.setItem("leaderboardInitials", initials);
-                }
-
-            } else {
-
-               localStorage.setItem("highScore", seconds);
-               localStorage.setItem("leaderboardInitials", initials);
-            }
-
-            var highScore = document.createElement("h2");
-            highScore.innerHTML = "LEADERBOARD: " + localStorage.getItem("leaderboardInitials") + " " +localStorage.getItem("highScore");
-            highScore.classList.add("highscore");
-            overallContainer.appendChild(highScore);
-
-        }
-
-        overallContainer.appendChild(showScore);
-        overallContainer.appendChild(restart);
-        document.getElementsByTagName("button")[0].addEventListener("click", function(){location.reload()});
-
-        for (var i = 0; i < enemyMovements.length; i++) {
-
-            clearInterval(enemyMovements[i]);
-
-        }
-
-        clearInterval(executeCheck);
-        clearInterval(executeCheckForWin);
-        clearInterval(timer);
-        clearInterval(enemyGenerator);
+        clearInterval(enemyMovements[i]);
 
     }
+
+    const main = document.getElementsByTagName('main')[0];
+    const script = document.getElementsByTagName('script')[0];
+    main.removeChild(document.getElementById('gameContainer-play'));
+    const blank = document.createElement('div');
+    main.insertBefore(blank, script);
+    blank.classList.add('blank-container');
+
+    var text = document.createElement("h1");
+    var restart = document.createElement("button");
+    restart.id = "play-again";
+    restart.innerHTML = "Play Again";
+    text.innerHTML = "Congratulations!!";
+    text.classList.add("text");
+    blank.appendChild(text);
+    blank.appendChild(restart);
+    document.getElementById("play-again").addEventListener("click", () => {
+        location.reload()
+    });
+
+
 }
-
-reCreateBoard();
-
-
-
-
-
-
-
-
 
 
