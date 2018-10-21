@@ -12,7 +12,9 @@ CREATE TABLE IF NOT EXISTS users (
 	password TEXT,
 	profilePic TEXT,
 	age INTEGER,
-	biography TEXT
+	biography TEXT,
+	activated BOOLEAN,
+	unread_messages INTEGER
 
 );
 
@@ -26,8 +28,12 @@ CREATE TABLE IF NOT EXISTS posts (
 	author_id INTEGER,
 	dt TEXT,
 	rating INTEGER,
+	pro BOOLEAN,
 	gameMaker BOOLEAN,
-	map TEXT
+	map TEXT,
+	music TEXT,
+	player_function TEXT,
+	enemy_function TEXT
 
 );
 

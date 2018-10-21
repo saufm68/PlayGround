@@ -243,7 +243,8 @@ module.exports = (db) => {
                 response.status(500).render('error/error500');
             }
 
-            response.json(result);
+
+            response.send(result);
         });
     };
 
