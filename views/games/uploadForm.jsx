@@ -24,6 +24,11 @@ class UploadForm extends React.Component {
                     <input className='inputs' type='text' name='title' placeholder='Enter Title' required />
                     <h2 className='subheader'>Summary:</h2>
                     <textarea className='inputs summaryTextArea' name='summary' placeholder='Enter A Short Summary Of The Game'></textarea>
+                    <h2 className='subheader'>Category</h2>
+                    <input type='radio' name='category' value='pro'/>Professional<br/>
+                    <p>'Professional Games' are established games in the market, that other users can buy/download. Please provide a link where users can go to buy/download the game.</p>
+                    <input type='radio' name='category' value='amatuer' checked />Amatuer<br/>
+                    <p>'Amatuer Games' are games that you have created and hosted on a site. Please provide a link where users can go to play the game </p>
                     <h2 className='subheader'>Tags:</h2>
                     <div className='tags-holder'>
                         {tags}
@@ -32,6 +37,7 @@ class UploadForm extends React.Component {
                     <input className='inputs' type='text' name='link' placeholder='Enter the link to the game' /><br/>
                     <input type='hidden' name='dt' value={date} />
                     <input type='hidden' name='rating' value='0' />
+                    <input type='hidden' name='displayimage' value='/dp/defaultpic.png' />
                     <input className='form-button' type='submit' value='Upload' />
                 </form>
                 <script type='text/javascript' src='/js/upload.js'></script>

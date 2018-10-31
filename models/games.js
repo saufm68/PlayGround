@@ -11,8 +11,15 @@ module.exports = (dbPool) => {
 
     const uploadGames = (inputs, image, uploader, callback) => {
 
-        const text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating, gamemaker) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id;`;
-        const values = [inputs.title, inputs.summary, image, inputs.link, uploader, inputs.dt, inputs.rating, false];
+        const text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating, pro,  gamemaker) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;`;
+
+        if (inputs.category === 'pro') {
+            var pro = true;
+        } else {
+            var pro = false;
+        }
+
+        const values = [inputs.title, inputs.summary, image, inputs.link, uploader, inputs.dt, inputs.rating, pro, false];
 
         dbPool.query(text, values, (error, result) => {
 
@@ -62,48 +69,46 @@ module.exports = (dbPool) => {
             }
             var tags = result.rows;
 
-            let text2 = `SELECT COUNT(post_id) FROM ratings WHERE post_id='${currentPost}';`;
+            let text2 = `SELECT comments.*, users.username FROM comments INNER JOIN posts ON (comments.post_id = posts.id) INNER JOIN users ON (comments.user_id = users.id) WHERE post_id='${currentPost}';`;
 
             dbPool.query(text2, (error, result) => {
 
-                if(result.rows[0].count == 0 ) {
-                    var rated = 0;
-                    let text3 = `SELECT posts.*, users.username FROM posts INNER JOIN users ON (posts.author_id = users.id) WHERE posts.id='${currentPost}';`;
+                let comments = result.rows;
 
-                    dbPool.query(text3, (error, result) => {
-                        result.rows[0]['rated'] = rated;
-                        result.rows[0]['tags'] = tags;
-                        callback(error, result.rows[0]);
-                    });
+                let text3 = `SELECT COUNT(post_id) FROM ratings WHERE post_id='${currentPost}';`;
 
-                } else {
-                    var rated = result.rows[0].count;
-                    let text3 = `SELECT AVG(rating) FROM ratings WHERE post_id='${currentPost}';`;
+                dbPool.query(text3, (error, result) => {
 
-                    dbPool.query(text3, (error, result) => {
-                        var rating = Math.floor(result.rows[0].avg);
-                        let text4 = `UPDATE posts SET rating=${rating} WHERE id='${currentPost}';`;
+                    if(result.rows[0].count == 0 ) {
+                        var rated = 0;
+                        let text4 = `SELECT posts.*, users.username FROM posts INNER JOIN users ON (posts.author_id = users.id) WHERE posts.id='${currentPost}';`;
 
                         dbPool.query(text4, (error, result) => {
-                            let text5 = `SELECT posts.*, users.username FROM posts INNER JOIN users ON (posts.author_id = users.id) WHERE posts.id='${currentPost}';`;
+                            result.rows[0]['rated'] = rated;
+                            result.rows[0]['tags'] = tags;
+                            callback(error, result.rows[0], comments);
+                        });
+
+                    } else {
+                        var rated = result.rows[0].count;
+                        let text4 = `SELECT AVG(rating) FROM ratings WHERE post_id='${currentPost}';`;
+
+                        dbPool.query(text4, (error, result) => {
+                            var rating = Math.floor(result.rows[0].avg);
+                            let text5 = `UPDATE posts SET rating=${rating} WHERE id='${currentPost}';`;
+
                             dbPool.query(text5, (error, result) => {
-                                result.rows[0]['rated'] = rated;
-                                result.rows[0]['tags'] = tags;
-                                callback(error, result.rows[0]);
+                                let text6 = `SELECT posts.*, users.username FROM posts INNER JOIN users ON (posts.author_id = users.id) WHERE posts.id='${currentPost}';`;
+                                dbPool.query(text6, (error, result) => {
+                                    result.rows[0]['rated'] = rated;
+                                    result.rows[0]['tags'] = tags;
+                                    callback(error, result.rows[0], comments);
+                                });
                             });
                         });
-                    });
-                }
+                    }
+                });
             });
-        });
-    };
-
-    const commentsPage = (currentPost, callback) => {
-
-        let text = `SELECT comments.*, posts.title, users.username FROM comments INNER JOIN posts ON (comments.post_id = posts.id) INNER JOIN users ON (comments.user_id = users.id) WHERE post_id='${currentPost}';`;
-
-        dbPool.query(text, (error, result) => {
-            callback(error, result.rows);
         });
     };
 
@@ -149,19 +154,24 @@ module.exports = (dbPool) => {
 
     const comments = (input, callback) => {
 
-        let text = `INSERT INTO comments (message, post_id, user_id, dt) VALUES ($1, $2, $3, $4);`;
+        let text = `INSERT INTO comments (message, post_id, user_id, dt) VALUES ($1, $2, $3, $4) RETURNING message, post_id, user_id, dt;`;
 
         let values = [input.message, input.post_id, input.user_id, input.dt];
 
         dbPool.query(text, values, (error, result) => {
-            callback(error);
+            let comments = result.rows[0];
+            let text2 = `SELECT users.username FROM users WHERE id = '${comments.user_id}';`;
+
+            dbPool.query(text2, (error, result) => {
+                comments.username = result.rows[0].username;
+                callback(error, comments);
+            })
         });
     };
 
     const play = (gameId, callback) => {
 
         let text = `SELECT * FROM posts WHERE id='${gameId}';`;
-
         dbPool.query(text, (error, result) => {
             callback(error, result.rows[0].link);
         });
@@ -169,9 +179,9 @@ module.exports = (dbPool) => {
 
     const publish = (inputs, uploader, callback) => {
 
-        let text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating, gamemaker, map) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;`;
+        let text = `INSERT INTO posts (title, summary, displayimage, link, author_id, dt, rating, gamemaker, map, player_function, enemy_function) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id;`;
 
-        let values = [inputs.title, inputs.summary, inputs.dp, inputs.link, uploader, inputs.dt, inputs.rating, true, JSON.stringify(inputs.map)];
+        let values = [inputs.title, inputs.summary, inputs.dp, inputs.link, uploader, inputs.dt, inputs.rating, true, JSON.stringify(inputs.map), inputs.player_function, inputs.enemy_function];
 
         dbPool.query(text, values, (error, result) => {
             callback(error, result.rows[0].id);
@@ -215,7 +225,6 @@ module.exports = (dbPool) => {
         uploadGameForm,
         uploadGames,
         selectedGame,
-        commentsPage,
         comments,
         deletePost,
         editForm,

@@ -29,6 +29,12 @@ class Create extends React.Component {
                     <input id='title' type='text' name='title' required />
                     <h2>Summary:</h2>
                     <textarea id='summary' name='summary' placeholder='Enter a short summary' required></textarea>
+                    <h2>Player Behaviour: </h2>
+                    <input class="player_function" type='radio' name='player_function' value='bordersPlayer' checked />Disable going out of border
+                    <input class="player_function" type='radio' name='player_function' value='noBordersPlayer' />Enable going out of border
+                    <h2>Enemy Behaviour: </h2>
+                    <input class="enemy_function" type='radio' name='enemy_function' value='noGravityEnemyChase' checked />Chase Player
+                    <input class="enemy_function" type='radio' name='enemy_function' value='noGravityEnemyRandom' />Random Movements
                     <input id='dt' type='hidden' name='dt' value={date} />
                     <input id='rating' type='hidden' name='rating' value='0' />
                     <input id='dp' type='hidden' name='displayimage' value='/dp/defaultpic.png' />

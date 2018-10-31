@@ -54,7 +54,6 @@ module.exports = (db) => {
     };
 
     const homepage = (request, response) => {
-        console.log('working');
 
         const cookie = {
 
@@ -71,7 +70,7 @@ module.exports = (db) => {
                 response.status(500).render('error/error500');
             }
 
-            response.render('general/home', {pro: result.pro, amateur: result.amateur, gamemaker: result.gamemaker, cookie: cookie});
+            response.render('general/home', {pro: result.pro, amateur: result.amateur, gamemaker: result.gamemaker, leaderboard: result.leaderboard, cookie: cookie});
         });
     };
 
@@ -130,11 +129,11 @@ module.exports = (db) => {
 
             if(request.query.show === 'pro') {
 
-                searchDb(`Professional Games`,'author_id', 1);
+                searchDb(`Professional Games`,'pro', true);
 
             } else if(request.query.show === 'amateur') {
 
-                db.general.searchAmateur('author_id', 1, (error, result) => {
+                db.general.searchAmateur('pro', true, (error, result) => {
 
                     if(error) {
                         console.log("error in searching", error.message);

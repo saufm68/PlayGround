@@ -81,7 +81,6 @@ function createBoard() {
         jsGrid.push(jsRow);
     }
 
-    console.log(jsGrid);
 };
 
 function updateGrid() {
@@ -105,7 +104,6 @@ function updateGrid() {
         }
     }
 
-    console.log(jsGrid);
     var form = document.getElementById('create-form');
     form.style.visibility = 'visible';
 
@@ -121,12 +119,28 @@ var inputSummary = document.getElementById('summary');
 var inputDt = document.getElementById('dt');
 var inputRating = document.getElementById('rating');
 var inputDp = document.getElementById('dp');
+var playerFunction = document.getElementsByClassName('player_function');
+var enemyFunction = document.getElementsByClassName('enemy_function');
+
 var formCreate = document.getElementById('create-form').addEventListener('submit', (event) => {
     event.preventDefault();
-    ajaxPost(inputTitle.value, inputSummary.value, inputDt.value, inputRating.value, inputDp.value);
+
+    for (let i = 0; i < playerFunction.length; i++ ) {
+        if(playerFunction[i].checked) {
+            playerFunction = playerFunction[i];
+        }
+    }
+
+    for (let i = 0; i < enemyFunction.length; i++ ) {
+        if(enemyFunction[i].checked) {
+            enemyFunction = enemyFunction[i];
+        }
+    }
+
+    ajaxPost(inputTitle.value, inputSummary.value, inputDt.value, inputRating.value, inputDp.value, playerFunction.value, enemyFunction.value);
 });
 
-function ajaxPost(title, summary, dt, rating, dp) {
+function ajaxPost(title, summary, dt, rating, dp, playerBehaviour, enemyBehaviour) {
 
     let ajaxUrl = '/game-maker';
 
@@ -134,7 +148,6 @@ function ajaxPost(title, summary, dt, rating, dp) {
 
     function responseHandler() {
         var link = JSON.parse(this.responseText);
-        console.log(link);
         var create = document.createElement('a');
         create.setAttribute('href', link['link']);
         var button = document.createElement('button');
@@ -162,12 +175,13 @@ function ajaxPost(title, summary, dt, rating, dp) {
         dt: dt,
         rating: rating,
         dp: dp,
-        map: jsGrid
+        map: jsGrid,
+        player_function: playerBehaviour,
+        enemy_function: enemyBehaviour
+
     }
 
-    inputs = JSON.stringify(inputs);
-
-    request.send(`content=${inputs}`);
+    request.send(`content=${JSON.stringify(inputs)}`);
 
 };
 

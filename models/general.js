@@ -44,18 +44,39 @@ module.exports = (dbPool) => {
             var games = {
                 pro: [],
                 amateur: [],
-                gamemaker: []
+                gamemaker: [],
+                leaderboard: []
             };
 
             result.rows.filter((element) => {
-                if(element.author_id === 1) {
-                    return games.pro.push(element);
-                } else if(element.gamemaker == true) {
+                if(element.gamemaker === true) {
                     return games.gamemaker.push(element);
+                } else if(element.pro === true) {
+                    return games.pro.push(element);
                 } else {
                     return games.amateur.push(element);
                 }
             });
+
+            function addLeaderboard(array) {
+                let check = 0;
+                let leadGame = null;
+                if (array.length > 0) {
+                    array.forEach((element) => {
+                        if (element.rating >= check) {
+                            check = element.rating;
+                            leadGame = element;
+                        }
+                        if (array.indexOf(element) === (array.length - 1)) {
+                            games.leaderboard.push(leadGame);
+                        }
+                    });
+                }
+            };
+
+            addLeaderboard(games.pro);
+            addLeaderboard(games.amateur);
+            addLeaderboard(games.gamemaker);
 
             callback(error, games);
         });

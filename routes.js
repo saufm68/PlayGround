@@ -15,8 +15,7 @@ module.exports = (app,db) => {
     app.post('/game-maker', games.publish);
     app.post('/rating', games.rating);
     app.get('/play/:id', games.play);
-    app.get('/games/:id/comments', games.commentsPage);
-    app.post('/games/:id/comments', games.comments);
+    app.post('/comment', games.comments);
     app.get('/games/:id/edit', games.editForm);
     app.put('/games/:id', games.edit);
     app.delete('/games/:id', games.deletePost);

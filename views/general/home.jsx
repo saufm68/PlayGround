@@ -8,6 +8,7 @@ class Home extends React.Component {
         let pro;
         let amateur;
         let gamemaker;
+        let leaderboard;
 
         if (this.props.pro.length > 0) {
 
@@ -33,6 +34,19 @@ class Home extends React.Component {
             });
         }
 
+        if (this.props.leaderboard.length > 0) {
+
+            leaderboard = this.props.leaderboard.map((element) => {
+                let link = `/games/${element.id}`;
+                if (element.pro == true) {
+                   return <div key={element.id}><h6>Top Professional Game</h6><a href={link}><p>{element.title}</p></a></div>
+                } else if (element.gamemaker == true) {
+                   return <div key={element.id}><h6>Top Amatuer Game</h6><a href={link}><p>{element.title}</p></a></div>
+                } else {
+                   return <div key={element.id}><h6>Top Gamemaker Game</h6><a href={link}><p>{element.title}</p></a></div>
+                }
+            });
+        }
 
         return (
 
@@ -43,6 +57,10 @@ class Home extends React.Component {
                 <div className='wrapper'>{amateur}</div>
                 <h2 className='header'>GAME MAKER</h2>
                 <div className='wrapper'>{gamemaker}</div>
+                <div>
+                    <h2>LeaderBoard</h2>
+                    <div className='leaderBoard'>{leaderboard}</div>
+                </div>
             </Default>
     )};
 };

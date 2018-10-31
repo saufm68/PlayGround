@@ -8,8 +8,7 @@ class GameMakerPlay extends React.Component {
         return(
 
             <Default cookie={this.props.cookie} title='Play'>
-                <script type="module" src='/js/functions.js'></script>
-                <script type="module" src='/js/play.js'></script>
+                <script type="text/javascript" src='/js/play.js'></script>
             </Default>
 
     )};

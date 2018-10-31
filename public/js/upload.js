@@ -6,7 +6,6 @@ function handleFile() {
     file = this.files[0];
 
     var preview = document.getElementById('initial-pic');
-    //preview.classList.add('pic');
     preview.file = file;
 
     var reader = new FileReader();

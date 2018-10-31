@@ -33,16 +33,28 @@ module.exports = (db) => {
 
         let picture = request.files.displayimage;
 
-        picture.mv('public/dp/' + picture.name, (error) => {
+        if (picture) {
+            picture.mv('public/dp/' + picture.name, (error) => {
 
-            if (error) {
-                console.log("fail to move file");
-                response.status(500).render('error/error500');
-            }
+                if (error) {
+                    console.log("fail to move file");
+                    response.status(500).render('error/error500');
+                }
 
-            let path = /dp/ + picture.name;
+                let path = /dp/ + picture.name;
 
-            db.games.uploadGames(request.body, path, request.cookies['userId'], (error, result) => {
+                db.games.uploadGames(request.body, path, request.cookies['userId'], (error, result) => {
+
+                    if(error){
+                        console.log("error in uploading: ", error.message);
+                        response.status(500).render('error/error500');
+                    }
+
+                    response.redirect('/games/' + result);
+                });
+            });
+        } else  {
+            db.games.uploadGames(request.body, request.body.displayimage, request.cookies['userId'], (error, result) => {
 
                 if(error){
                     console.log("error in uploading: ", error.message);
@@ -51,7 +63,7 @@ module.exports = (db) => {
 
                 response.redirect('/games/' + result);
             });
-        });
+        }
     };
 
     const display = (request, response) => {
@@ -64,37 +76,16 @@ module.exports = (db) => {
             username: request.cookies['username']
         };
 
-        db.games.selectedGame(request.params.id, (error, result) => {
+        db.games.selectedGame(request.params.id, (error, result, comments) => {
 
             if(error) {
                 console.log("error in displaying game: ", error.message);
                 response.status(500).render('error/error500');
             }
             response.cookie('currentPost', request.params.id);
-            response.render('games/game', {cookie: cookie, currentPost: request.params.id, game: result});
+            response.render('games/game', {cookie: cookie, currentPost: request.params.id, game: result, comments: comments});
         });
 
-    };
-
-    const commentsPage = (request, response) => {
-
-        const cookie = {
-
-            check: sha256(SALT + request.cookies['username'] + 'loggedin'),
-            loginStatus: request.cookies['loginStatus'],
-            userId: request.cookies['userId'],
-            username: request.cookies['username']
-        };
-
-        db.games.commentsPage(request.params.id, (error, result) => {
-
-            if(error) {
-                console.log("error displaying comments: ", error.message);
-                response.status(500).render('error/error500');
-            }
-            console.log(result);
-            response.render('games/comments', {cookie: cookie, comments: result, currentPost: request.params.id});
-        });
     };
 
     const deletePost = (request, response) => {
@@ -160,14 +151,14 @@ module.exports = (db) => {
 
     const comments = (request, response) => {
 
-        db.games.comments(request.body, (error) => {
+        db.games.comments(JSON.parse(request.body.comment), (error, result) => {
 
             if(error) {
                 console.log("error in posting comments: ", error.message);
                 response.status(500).render('error500');
             }
 
-            response.redirect(`/games/${request.params.id}/comments`)
+            response.send(result)
         });
     };
 
@@ -182,7 +173,6 @@ module.exports = (db) => {
         };
 
         db.games.play(request.params.id, (error, result) => {
-
             if(error) {
                 console.log('error in rendering playPage: ', error.message);
                 response.status(500).render('error/error500');
@@ -213,8 +203,6 @@ module.exports = (db) => {
                 console.log('error in publishing into server: ', error.message);
                 response.status(500).render('error/error500');
             }
-
-
 
             response.send({link:'/games/' + result});
         });
@@ -265,7 +253,6 @@ module.exports = (db) => {
         uploadGameForm,
         uploadGames,
         display,
-        commentsPage,
         comments,
         deletePost,
         editForm,

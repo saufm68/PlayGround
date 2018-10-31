@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS ratings;
-DROP TABLE IF EXISTS tags;
+-- DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS tags_post;
 
 CREATE TABLE IF NOT EXISTS users (
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS posts (
 	pro BOOLEAN,
 	gameMaker BOOLEAN,
 	map TEXT,
-	music TEXT,
+	-- music TEXT,
 	player_function TEXT,
 	enemy_function TEXT
 
