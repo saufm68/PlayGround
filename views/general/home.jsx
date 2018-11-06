@@ -14,7 +14,7 @@ class Home extends React.Component {
 
             pro = this.props.pro.map((element) => {
                 let link = `/games/${element.id}`;
-                return <a key={element.id} href={link}><img className='gameDisplay' src={element.displayimage} /></a>
+                return <a key={element.id} href={link}><img src={element.displayimage} alt={element.title} className="rounded mr-1" width="200px" height="200px" /></a>
             });
         }
 
@@ -22,7 +22,7 @@ class Home extends React.Component {
 
             amateur = this.props.amateur.map((element) => {
                 let link = `/games/${element.id}`;
-                return <a key={element.id} href={link}><img className='gameDisplay' src={element.displayimage} /></a>
+                return <a key={element.id} href={link}><img src={element.displayimage} alt={element.title} className="rounded mr-1" width="200px" height="200px" /></a>
             });
         }
 
@@ -30,7 +30,7 @@ class Home extends React.Component {
 
             gamemaker = this.props.gamemaker.map((element) => {
                 let link = `/games/${element.id}`;
-                return <a key={element.id} href={link}><img className='gameDisplay' src={element.displayimage} /></a>
+                return <a key={element.id} href={link}><img src={element.displayimage} alt={element.title} className="rounded mr-1" width="200px" height="200px" /></a>
             });
         }
 
@@ -39,27 +39,44 @@ class Home extends React.Component {
             leaderboard = this.props.leaderboard.map((element) => {
                 let link = `/games/${element.id}`;
                 if (element.pro == true) {
-                   return <div key={element.id}><h6>Top Professional Game</h6><a href={link}><p>{element.title}</p></a></div>
+                   return <div key={element.id}><h6 className="neon-green">Top Professional Game</h6><a href={link}><p className="mb-2">{element.title}</p></a></div>
                 } else if (element.gamemaker == true) {
-                   return <div key={element.id}><h6>Top Amatuer Game</h6><a href={link}><p>{element.title}</p></a></div>
+                   return <div key={element.id}><h6 className="neon-green">Top Amatuer Game</h6><a href={link}><p className="mb-2">{element.title}</p></a></div>
                 } else {
-                   return <div key={element.id}><h6>Top Gamemaker Game</h6><a href={link}><p>{element.title}</p></a></div>
+                   return <div key={element.id}><h6 className="neon-green">Top Gamemaker Game</h6><a href={link}><p className="mb-2">{element.title}</p></a></div>
                 }
             });
         }
 
         return (
 
-            <Default cookie={this.props.cookie} title='PlayGround'>
-                <h2 className='header'>PROFESSIONAL GAMES</h2>
-                <div className='wrapper'>{pro}</div>
-                <h2 className='header'>AMATEUR GAMES</h2>
-                <div className='wrapper'>{amateur}</div>
-                <h2 className='header'>GAME MAKER</h2>
-                <div className='wrapper'>{gamemaker}</div>
-                <div>
-                    <h2>LeaderBoard</h2>
-                    <div className='leaderBoard'>{leaderboard}</div>
+            <Default cookie={this.props.cookie}>
+                <div className="row">
+                    <div className="col-12 col-lg-8">
+                        <div className='border-bottom-neon mb-2'>
+                            <h4 className='neon-green d-inline-block mb-0'>PROFESSIONAL GAMES</h4>
+                            <a className='neon-green float-right' href="/search?show=pro">View All</a>
+                        </div>
+                        <div className='wrapper mb-2'>{pro}</div>
+                        <div className='border-bottom-neon mb-2'>
+                            <h4 className='neon-green d-inline-block mb-0'>AMATEUR GAMES</h4>
+                            <a className='neon-green float-right' href="/search?show=amateur">View All</a>
+                        </div>
+                        <div className='wrapper mb-2'>{amateur}</div>
+                        <div className='border-bottom-neon mb-2'>
+                            <h4 className='neon-green d-inline-block mb-0'>GAME MAKER</h4>
+                            <a className='neon-green float-right' href="/search?show=gamemaker">View All</a>
+                        </div>
+                        <div className='wrapper mb-3'>{gamemaker}</div>
+                    </div>
+                    <div className="col-12 col-lg-4 border-left-neon">
+                        <div className='leaderboard border-all-neon text-center'>
+                            <h3 className="neon-green border-bottom-neon mt-1 mb-3 pb-2">LeaderBoard</h3>
+                            {leaderboard}
+                        </div>
+                        <div className="forum border-all-neon mt-2">
+                        </div>
+                    </div>
                 </div>
             </Default>
     )};

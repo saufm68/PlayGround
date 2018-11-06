@@ -8,16 +8,24 @@ class Search extends React.Component {
         if(this.props.result.length > 0) {
             var result = this.props.result.map((element) => {
                 let link = `/games/${element.id}`;
-                return <a key={element.id} href={link}><img className='gameDisplay' src={element.displayimage} /></a>
+                return  <a key={element.id} href={link}>
+                            <div className="card bg-dark d-inline-block mr-4 mb-3 text-center" style={{width: 200 + "px"}}>
+                              <img className="card-img-top" src={element.displayimage} width="200px" height="200px" alt={element.title} />
+                              <div className="card-body bg-dark">
+                                <h6 className="card-title neon-green mb-2">{element.title}</h6>
+                                <p className="card-text neon-green"><i class="fas fa-star"></i> {element.rating}</p>
+                              </div>
+                            </div>
+                        </a>
             });
         } else {
-            var result = <h1>No Results Found</h1>
+            var result = <h3 className='neon-green pt-4'>No Results Found</h3>
         }
 
         return(
 
-            <Default cookie={this.props.cookie} title='title'>
-                <h2 className='header'>{this.props.show}</h2>
+            <Default cookie={this.props.cookie}>
+                <h2 className='neon-green border-bottom-neon mb-3'>{this.props.show}</h2>
                 <div className='full-wrapper'>{result}</div>
             </Default>
 

@@ -1,41 +1,20 @@
-main {
-
-	margin-top: 30px;
-	width: 100%;
-
-}
-
 /*==================================
            		HOMEPAGE
 ==================================*/
 
-.header {
-
-	font-size: 40px;
-	width: 90%;
-	margin: auto;
-	padding-bottom: 10px;
-	border-bottom: 2px solid black;
-
-}
-
 .wrapper {
-
-	width: 90%;
-	height: 450px;
-	margin: 30px auto;
+	width: 100%;
+	height: 200px;
 	overflow: auto;
 	white-space: nowrap;
-	background-color: rgb(250, 250, 250);
-
 }
 
-.gameDisplay {
+.leaderboard {
+	height: 34%;
+}
 
-	height: 400px;
-	width: 300px;
-	margin-top: 20px;
-	margin-right: 30px;
+.forum {
+	height: 64%;
 }
 
 /*==================================
@@ -43,244 +22,65 @@ main {
 ==================================*/
 
 .full-wrapper {
-
-	width: 90%;
-	margin: 30px auto;
-	min-height: 450px;
-
+	width: 100%;
+	min-height: 60vh;
 }
-
 
 /*==================================
            	SELECTED GAME
 ==================================*/
 
-.full-content-container {
-
-	width: 90%;
-	margin: auto;
-	min-height: 450px;
-	position: relative;
-
-}
-
-.game-pic {
-
-	height: 400px;
-	width: 300px;
-
-}
-
-.information-container {
-
-	display: inline-block;
-	height: 200px;
-	width: 65%;
-	position: absolute;
-	border: 1px solid #db9035;
-	margin-left: 25px;
-	padding: 15px;
-
-}
-
-.info, .summary {
-
-	width: 90%;
-	margin: auto;
-	font-size: 20px
-
-}
-
-.info a {
-
-	color: red;
-	text-decoration: underline;
-
-}
-
-.score-container {
-
-	display: inline-block;
-	height: 90px;
-	width: 65%;
-	position: absolute;
-	border: 1px solid #db9035;
-	margin-left: 25px;
-	padding: 15px;
-	top: 275px;
-
-}
-
-.score-header {
-
-	display: inline;
-	font-size: 60px;
-	margin-left: 50px;
-
-}
-
-#score {
-
-	display: inline-block;
-	font-size: 60px;
-	margin: 6px 30px;
-
-}
-
-#rating-form {
-
-	float: right;
-
+.info, .tags-container {
+	width: 50%;
+	height: 150px;
 }
 
 #rating-input {
-
-	height: 82px;
-	width: 200px;
-	font-size: 25px;
-	text-align: center;
-	border: 1px solid #db9035;
-
+	width: 145px;
 }
 
-#rate-button {
-
-	height: 86px;
-	width: 100px;
-	font-size: 25px;
-	border: 1px solid #db9035;
-
+.game-delete {
+	background-color: black;
+	padding: 0;
+	border: none;
+	color: red;
+	cursor: pointer;
 }
 
-.summary-container {
-
-	width: 96%;
-	min-height: 300px;
-	margin: 20px 0;
-	border: 1px solid #db9035;
-	padding: 10px;
-	position: relative;
-
+.summary {
+	height: 300px;
 }
 
-.summary-container p {
-
-	margin-bottom: 45px;
-
+.comments-container {
+	width: 100%;
+	height: 300px;
 }
 
-.ui-button {
-
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
-
+.comments-list {
+	overflow: scroll;
+	width: 100%;
+	height: 79%;
 }
 
-.ui-button form {
-
-	display: inline-block;
+.comments-text, .submit-comments {
+	border-radius: 0;
 }
 
-.interactive-button {
-
-	display: inline-block;
-	margin-right: 5px;
-	font-size: 24px;
-	font-weight: 700;
-	border: 2px solid #db9035;
-	background-color: #db9035;
-	color: white;
-}
-
-.tags-container {
-
-	height: 35px;
-	width: 150px;
-	position: absolute;
-	bottom: 10px;
-	left: 50px;
-	overflow: auto;
-	white-space: nowrap;
-
-}
-
-.single-tag {
-
-	font-size: 18px;
-	font-weight: 700;
-	border: 1px solid #db9035;
-	padding: 4px;
-	margin-right: 7px;
-	border-radius: 5px;
-	position: relative;
-	top: 5px;
-	background-color: #db9035;
-	color: white;
-
-}
-
-.comments-link {
-
-	height: 40px;
-	width: 200px;
-	background-color: #db9035;
-	text-align: center;
-	font-weight: 700;
-	font-size: 27px;
-	position: relative;
-
-}
-
-
-.comments-link a {
-
-	color: white;
-	text-decoration: underline;
-	position: absolute;
-	top: 7px;
-	left: 40px;
-
-
-}
-
-.comment-form {
-
-	width: 98%;
-	background-color: #db9035;
-	min-height: 120px;
-	position: relative;
-
-}
-
-.comments-text {
-
-	width: 85%;
-	height: 90px;
-	margin: 20px 0 20px 20px;
-	font-size: 20px;
-	vertical-align: middle;
-	border: 1px solid #db9035;
-
-}
-
-.submit-comments {
-
-	height: 95px;
-	border: 1px solid #db9035;
-	font-size: 23px;
-	font-weight: 600;
-	padding: 18px;
-	position: absolute;
-	top: 20px;
-
+.comments-text:focus, #rating-input:focus {
+	color: 	#00ff7f;
 }
 
 /*==================================
-          EDIT/UPLOAD GAME
+          EDIT/UPLOAD
 ==================================*/
 
-.pic {
+.custom-file-label::after {
+	color: #28a745;
+  background-color: black;
+  border-color: #28a745;
+}
+
+/*.pic {
 
 	height: 500px;
 	width: 500px;
@@ -366,167 +166,28 @@ main {
 
 .align-small {
 	margin-left: 58px;
-}
-
-/*==================================
-           		COMMENTS
-==================================*/
-
-.overall-comments-container {
-
-	font-size: 25px;
-	width: 90%;
-	margin: auto;
-	border: 1px solid #db9035;
-	margin-top: 30px;
-	padding-top: 30px;
-	height: 670px;
-
-}
-
-.comments-list {
-
-	overflow: scroll;
-	width: 90%;
-	margin: auto;
-	height: 500px;
-	margin-top: 25px;
-	background-color: rgb(245,245,245);
-
-}
-
-.specific-comment {
-
-	width: 80%;
-	min-height: 110px;
-	border-radius: 10px;
-	background-color: #db9035;
-	color: white;
-	margin: 20px auto;
-
-}
-
-.specific-comment a {
-	color: white
-}
-
-.comment-header {
-
-	display: inline-block;
-	position: relative;
-	top: 5px;
-	margin: 0;
-
-}
-
-.left {
-
-	left: 15px;
-
-}
-
-.right {
-
-	left: 500px;
-
-}
-
-.comment-body {
-
-	position: relative;
-	left: 15px;
-	top: -10px;
-
-}
-
-.back-button {
-
-	width: 90%;
-	border: 0;
-	background-color: #db9035;
-	font-size: 25px;
-	padding: 10px;
-	border-radius: 10px;
-	color: white;
-	font-weight: 700;
-	position: relative;
-	top: 20px;
-	left: 53px;
-
-}
+}*/
 
 /*==================================
            	PROFILE PAGE
 ==================================*/
 
-.bio-container {
-
-	display: inline-block;
-	height: 367px;
-	width: 65%;
-	position: absolute;
-	border: 1px solid #db9035;
-	margin-left: 25px;
-	padding: 15px;
-
-}
-
-.profile {
-
-	font-weight: 500;
-	font-size: 30px;
-
-}
-
-.deleteButton {
-
-	display: inline-block;
-}
-
-.profile-delete, .profile-edit {
-
-	background-color: #db9035;
-	color: white;
-	font-weight: 700;
-	font-size: 30px;
-	border: 0;
-	margin: auto 5px;
-
-}
-
-.profile-ui {
-
-	position: relative;
-	top: 25px;
-	left: 25px;
-
-}
-
 .game-list-container {
-
-	width: 96%;
+	width: 100%;
 	min-height: 300px;
-	margin: 20px 0;
-	border: 1px solid #db9035;
-	padding: 10px;
-	position: relative;
-
 }
 
-.gameScroll {
-
-	width: 90%;
-	height: 440px;
-	overflow: auto;
-	white-space: nowrap;
-	margin: 30px auto;
-	background-color: rgb(245, 245, 245);
-
+.profile-delete {
+	background-color: rgb(52,58,64);
+	padding: 0;
+	border: none;
+	color: red;
+	cursor: pointer;
 }
 
-/*==================================
-           	EDIT PROFILE
-==================================*/
+.profile-delete:hover {
+	text-decoration: underline;
+}
 
 /*==================================
            		PLAY

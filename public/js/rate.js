@@ -36,13 +36,12 @@ function ajaxRate(value) {
 var commentInput = document.getElementById('comment-input');
 var postId = document.getElementById('postId-input');
 var userId = document.getElementById('userId-input');
-var dt = document.getElementById('dt-input');
 const commentForm = document.getElementById('comment-form').addEventListener('submit', event => {
     event.preventDefault();
-    ajaxComment(commentInput.value, postId.value, userId.value, dt.value);
+    ajaxComment(commentInput.value, postId.value, userId.value);
 });
 
-function ajaxComment(comment, postId, userId, dt) {
+function ajaxComment(comment, postId, userId) {
 
     const ajaxUrl = '/comment';
 
@@ -55,27 +54,19 @@ function ajaxComment(comment, postId, userId, dt) {
     }
 
     function addComment(comment) {
-        console.log(comment)
         var container = document.getElementById('allComments');
         var newComment = document.createElement('div');
-        newComment.classList.add('specific-comment')
-        var top = document.createElement('div')
-        var username = document.createElement('h3');
-        username.classList.add('comment-header','left');
-        var userNameLink = document.createElement('a')
-        userNameLink.setAttribute('href', `/users/${comment.user_id}`);
-        userNameLink.innerHTML = comment.username;
-        username.appendChild(userNameLink);
-        var dt = document.createElement('h3');
-        dt.classList.add('comment-header','right');
-        dt.innerHTML = comment.dt;
-        top.appendChild(username);
-        top.appendChild(dt);
-        var bottom = document.createElement('p');
-        bottom.classList.add('comment-body');
-        bottom.innerHTML = comment.message;
-        newComment.appendChild(top);
-        newComment.appendChild(bottom);
+        var commentDetails = document.createElement('p');
+        commentDetails.classList.add('d-inline-block', 'my-1', 'mr-2');
+        var detailLink = document.createElement('a');
+        detailLink.setAttribute('href', `/users/${comment.user_id}`);
+        detailLink.innerHTML = comment.username + ' - ' + comment.dt_simplified;
+        commentDetails.appendChild(detailLink);
+        var commentMessage = document.createElement('p');
+        commentMessage.classList.add('d-inline-block', 'my-1', 'neon-green');
+        commentMessage.innerHTML = comment.message;
+        newComment.appendChild(commentDetails);
+        newComment.appendChild(commentMessage);
         container.insertBefore(newComment, container.firstChild);
     }
 
@@ -92,7 +83,6 @@ function ajaxComment(comment, postId, userId, dt) {
         message: comment,
         post_id: postId,
         user_id: userId,
-        dt: dt
     }
 
     request.send(`comment=${JSON.stringify(comments)}`);

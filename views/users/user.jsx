@@ -11,11 +11,19 @@ class User extends React.Component {
 
                 let linkUrl = `/games/${element.id}`
 
-                return <a key={element.id} href={linkUrl}><img className='gameDisplay' src={element.displayimage} /></a>
+                return <a key={element.id} href={linkUrl}>
+                            <div className="card bg-dark d-inline-block mr-3 mb-3 text-center" style={{width: 160 + "px"}}>
+                              <img className="card-img-top" src={element.displayimage} width="160px" height="160px" alt={element.title} />
+                              <div className="card-body bg-dark">
+                                <h6 className="card-title neon-green mb-2">{element.title}</h6>
+                                <p className="card-text neon-green"><i class="fas fa-star"></i> {element.rating}</p>
+                              </div>
+                            </div>
+                        </a>
             });
 
         } else {
-            var list = <h1>Has Yet To Upload Game</h1>
+            var list = <h1>Has Yet To Upload/Create Game</h1>
         }
 
 
@@ -24,34 +32,46 @@ class User extends React.Component {
 
         if (this.props.cookie.loginStatus === this.props.cookie.check && this.props.cookie.userId == this.props.user.id) {
 
-            var editButton = <a href={editUrl}><button className='profile-edit'>Edit</button></a>
-            var deleteButton = <form className='deleteButton' method='POST' action={deleteUrl}>
-                <input className='profile-delete' type='submit' value='Delete' />
-                </form>
+            var editButton = <a className="float-right mt-2 mr-2" href={editUrl}>Edit</a>
+            var deleteButton = <form className='deleteButton d-inline-block float-right' method='POST' action={deleteUrl}>
+                                    <input className='profile-delete mt-2' type='submit' value='Delete' />
+                                </form>
+
+
         } else {
             var editButton;
-            var deleteButton;
+            var deleteButton
         }
 
         return(
 
-            <Default cookie={this.props.cookie} title='Profile'>
-                <div className='full-content-container'>
-                    <img className='game-pic' src={this.props.user.profilepic} />
-                    <div className='bio-container'>
-                        <h2 className='header'>Biography</h2>
-                        <div className='info profile'>
-                            <p>Username: {this.props.user.username}</p>
-                            <p>Age: {this.props.user.age}</p>
-                            <p>Description: {this.props.user.biography}</p>
-                        </div>
-                        <div className='profile-ui'>
-                            {editButton}
-                            {deleteButton}
+            <Default cookie={this.props.cookie}>
+                <div className='row'>
+                    <div className="col-5 img-container">
+                        <img src={this.props.user.profilepic} width="320px" height="300px" />
+                    </div>
+                    <div className="col-7">
+                        <div className="card bg-dark border-all-neon" style={{width: 100 + '%', height: 300 + 'px'}}>
+                            <div className="card-body">
+                                <div className="profile-title border-bottom-neon mb-3">
+                                    <h3 className="card-title neon-green d-inline-block mb-1">{this.props.user.username}</h3>
+                                    {deleteButton}
+                                    {editButton}
+                                </div>
+                                <h6 className="card-subtitle mb-2 text-muted">Biography</h6>
+                                <div className='profile-bio'>
+                                    <p className="card-text neon-green">Age: {this.props.user.age}</p>
+                                    <p className="card-text neon-green">Description: <br/>
+                                        {this.props.user.biography}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className='game-list-container'>
-                        <h2 className='header'>List Of Games</h2>
+                </div>
+                <div className='row mt-3'>
+                    <div className='col game-list-container '>
+                        <h3 className='neon-green border-bottom-neon mb-3'>List Of Games</h3>
                         <div className='gameScroll'>
                             {list}
                         </div>

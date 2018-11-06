@@ -108,7 +108,13 @@ module.exports = (db) => {
                     return;
                 }
 
-                response.render('general/search', {show: `${request.query.show} Games`, result: result, cookie: cookie});
+                if (request.query.show === 'rpg') {
+                    var header = request.query.show.toUpperCase();
+                } else {
+                    var header = request.query.show[0].toUpperCase() + request.query.show.substring(1).toLowerCase();
+                }
+
+                response.render('general/search', {show: `${header} Games`, result: result, cookie: cookie});
             });
 
         } else if(request.query.topic === 'name') {

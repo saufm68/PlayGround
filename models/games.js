@@ -69,7 +69,7 @@ module.exports = (dbPool) => {
             }
             var tags = result.rows;
 
-            let text2 = `SELECT comments.*, users.username FROM comments INNER JOIN posts ON (comments.post_id = posts.id) INNER JOIN users ON (comments.user_id = users.id) WHERE post_id='${currentPost}';`;
+            let text2 = `SELECT comments.*, users.username FROM comments INNER JOIN posts ON (comments.post_id = posts.id) INNER JOIN users ON (comments.user_id = users.id) WHERE post_id='${currentPost}' ORDER BY dt DESC;`;
 
             dbPool.query(text2, (error, result) => {
 
@@ -154,9 +154,10 @@ module.exports = (dbPool) => {
 
     const comments = (input, callback) => {
 
-        let text = `INSERT INTO comments (message, post_id, user_id, dt) VALUES ($1, $2, $3, $4) RETURNING message, post_id, user_id, dt;`;
-
-        let values = [input.message, input.post_id, input.user_id, input.dt];
+        let text = `INSERT INTO comments (message, post_id, user_id, dt_simplified, dt) VALUES ($1, $2, $3, $4, $5) RETURNING message, post_id, user_id, dt_simplified, dt;`;
+        let date = new Date();
+        let dt_simplified = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}  ${date.getHours()}:${date.getMinutes()}`;
+        let values = [input.message, input.post_id, input.user_id, dt_simplified, date];
 
         dbPool.query(text, values, (error, result) => {
             let comments = result.rows[0];

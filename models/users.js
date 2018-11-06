@@ -7,7 +7,7 @@ module.exports = (dbPool) => {
 
             profile = result.rows[0];
 
-            let text2 = `SELECT posts.id, posts.displayimage FROM posts WHERE author_id='${id}';`;
+            let text2 = `SELECT * FROM posts WHERE author_id='${id}';`;
 
             dbPool.query(text2, (error, result) => {
                 profile['list'] = result.rows;
