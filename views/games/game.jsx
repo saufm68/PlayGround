@@ -95,7 +95,7 @@ class Game extends React.Component {
                             <h1 className='neon-green d-inline-block mx-2'>Score:</h1>
                             <h1 className='neon-green d-inline-block' id='score'>{this.props.game.rating}</h1>
                             <form id='rating-form' className="d-inline-block float-right mt-2" method='POST'>
-                                <div class="input-group">
+                                <div className="input-group">
                                     <input className="bg-dark neon-green form-control" id='rating-input' type='number' name='rating' max='10' min='0' placeholder='Rate the game' />
                                     <div className="input-group-append">
                                         {disabled}

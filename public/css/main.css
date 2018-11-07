@@ -14,7 +14,18 @@
 }
 
 .forum {
-	height: 64%;
+	height: 63%;
+}
+
+.forum-list {
+	overflow-y: scroll;
+	word-wrap: break-word;
+	width: 100%;
+	height: 87%;
+}
+
+.forum-form {
+	border-radius: 0;
 }
 
 /*==================================
@@ -57,7 +68,8 @@
 }
 
 .comments-list {
-	overflow: scroll;
+	overflow-y: scroll;
+	word-wrap: break-word;
 	width: 100%;
 	height: 79%;
 }
@@ -78,6 +90,14 @@
 	color: #28a745;
   background-color: black;
   border-color: #28a745;
+}
+
+.display-pic {
+	width: 380px;
+}
+
+.longText:focus {
+	color: #28a745;
 }
 
 /*.pic {
@@ -195,7 +215,8 @@
 
 embed {
 	width: 100%;
-	height: 900px;
+	height: 90vh;
+	padding: 10px;
 }
 
 /*==================================

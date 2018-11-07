@@ -7,8 +7,8 @@ class Play extends React.Component {
 
         return (
 
-            <Default cookie={this.props.cookie} title='Play'>
-                <embed src={this.props.link} />
+            <Default cookie={this.props.cookie}>
+                <embed className="border-all-neon" src={this.props.link} />
             </Default>
     )};
 };

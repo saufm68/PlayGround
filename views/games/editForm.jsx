@@ -14,20 +14,45 @@ class EditForm extends React.Component {
 
         return (
 
-            <Default cookie={this.props.cookie} title='Edit'>
-                <h1 className='header'>EDIT GAME</h1>
-                <img id='initial-pic' className='pic' src={image} />
-                <form className='edit-form' method='POST' action={editLink} encType='multipart/form-data'>
-                    <input className='input-file align-small' id='pic' type='file' name='displayimage'  />
-                    <h2 className='subheader'>Title:</h2>
-                    <input className='inputs align' type='text' name='title' defaultValue={this.props.post.title} />
-                    <h2 className='subheader'>Summary:</h2>
-                    <textarea className='inputs summaryTextArea align' name='summary' defaultValue={this.props.post.summary}></textarea>
-                    <h2 className='subheader'>Link:</h2>
-                    <input className='inputs align' type='text' name='link' defaultValue={this.props.post.link} /><br/>
-                    <input type='hidden' name='dt' value={date} />
-                    <input className='form-button align-small' type='submit' value='Update' />
-                </form>
+            <Default cookie={this.props.cookie}>
+                <div className="row mb-3">
+                    <div className="col">
+                        <h4 className='neon-green border-bottom-neon'>EDIT GAME</h4>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-6">
+                        <img id='initial-pic' src={image} width="380px" height="360px" />
+                    </div>
+                    <div className="col-6">
+                        <form className='edit-form' method='POST' action={editLink} encType='multipart/form-data'>
+                            <div className="custom-file">
+                              <input className='custom-file-input' id='pic' type='file' name='displayimage' accept="image/*"  />
+                              <label id="fileLabel" className="custom-file-label bg-dark" htmlFor="customFile">Choose display picture</label>
+                            </div>
+                            <div className="form-row mt-1">
+                                <div className="col">
+                                    <h6 className='neon-green'>Title:</h6>
+                                    <input className='bg-dark form-control neon-green' type='text' name='title' defaultValue={this.props.post.title} required />
+                                </div>
+                            </div>
+                            <div className="form-row mt-1">
+                                <div className="col">
+                                    <h6 className='neon-green'>Link:</h6>
+                                    <input className='bg-dark form-control neon-green' type='text' name='link' defaultValue={this.props.post.link} required />
+                                </div>
+                            </div>
+                            <div className="form-row mt-1">
+                                <div className="col">
+                                    <h6 className='neon-green'>Summary:</h6>
+                                    <textarea className='bg-dark form-control neon-green' rows="4" name='summary' defaultValue={this.props.post.summary} required></textarea>
+                                </div>
+                            </div>
+                            <input type='hidden' name='dt' value={date} />
+                            <input className='btn btn-outline-success btn-block mt-2' type='submit' value='Update' />
+                        </form>
+                    </div>
+                </div>
                 <script type="text/javascript" src='/js/upload.js'></script>
             </Default>
 

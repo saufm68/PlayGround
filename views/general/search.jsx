@@ -13,7 +13,7 @@ class Search extends React.Component {
                               <img className="card-img-top" src={element.displayimage} width="200px" height="200px" alt={element.title} />
                               <div className="card-body bg-dark">
                                 <h6 className="card-title neon-green mb-2">{element.title}</h6>
-                                <p className="card-text neon-green"><i class="fas fa-star"></i> {element.rating}</p>
+                                <p className="card-text neon-green"><i className="fas fa-star"></i> {element.rating}</p>
                               </div>
                             </div>
                         </a>

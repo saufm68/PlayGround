@@ -6,6 +6,8 @@ const db = require('./db');
 
 //Initialize express app
 const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 //Set up middleware
 app.use(methodOverride('_method'));
@@ -29,6 +31,13 @@ app.engine('jsx', reactEngine);
 //Import Routes
 require('./routes')(app, db);
 
+//Socket.io fro real time messaging
+io.on('connection', function(socket){
+    socket.on('chat', (message) => {
+        io.emit('chat', message);
+    });
+});
+
 /**
  * ===================================
  * Listen to requests on port 3000
@@ -37,7 +46,7 @@ require('./routes')(app, db);
 
  const PORT =  process.env.PORT || 3000;
 
- const server = app.listen(PORT, () => console.log("~~ PlayGround running ~~"))
+ const server = http.listen(PORT, () => console.log("~~ PlayGround running ~~"))
 
 //Run clean up actions when server shuts down
 server.on('close', () => {

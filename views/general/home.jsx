@@ -48,6 +48,17 @@ class Home extends React.Component {
             });
         }
 
+        if (this.props.cookie.loginStatus === this.props.cookie.check) {
+            var user = <span>
+                            <input id='userId-input' type='hidden' name='user_id' value={this.props.cookie.userId} />
+                            <input id='username-input' type='hidden' name='username' value={this.props.cookie.username} />
+                       </span>
+            var disableForum = <input className='forum-submit btn btn-outline-success' type='submit' value='Submit' />
+        } else {
+            var user;
+            var disableForum = <input className='forum-submit btn btn-outline-success' type='submit' value='Submit' disabled />
+        }
+
         return (
 
             <Default cookie={this.props.cookie}>
@@ -75,9 +86,22 @@ class Home extends React.Component {
                             {leaderboard}
                         </div>
                         <div className="forum border-all-neon mt-2">
+                            <div id="forum-list" className="forum-list bg-dark p-2">
+                            </div>
+                            <form id='forum-form' className='forum-form'>
+                                {user}
+                                <div className="input-group">
+                                    <textarea id='forum-input' className='comments-text bg-dark neon-green form-control' name='message' placeholder='Say something...'></textarea>
+                                    <div className="input-group-append">
+                                        {disableForum}
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+                <script src="/socket.io/socket.io.js"></script>
+                <script src='/js/forum.js'></script>
             </Default>
     )};
 };

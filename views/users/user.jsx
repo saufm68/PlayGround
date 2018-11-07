@@ -16,7 +16,7 @@ class User extends React.Component {
                               <img className="card-img-top" src={element.displayimage} width="160px" height="160px" alt={element.title} />
                               <div className="card-body bg-dark">
                                 <h6 className="card-title neon-green mb-2">{element.title}</h6>
-                                <p className="card-text neon-green"><i class="fas fa-star"></i> {element.rating}</p>
+                                <p className="card-text neon-green"><i className="fas fa-star"></i> {element.rating}</p>
                               </div>
                             </div>
                         </a>
@@ -61,9 +61,8 @@ class User extends React.Component {
                                 <h6 className="card-subtitle mb-2 text-muted">Biography</h6>
                                 <div className='profile-bio'>
                                     <p className="card-text neon-green">Age: {this.props.user.age}</p>
-                                    <p className="card-text neon-green">Description: <br/>
-                                        {this.props.user.biography}
-                                    </p>
+                                    <p className="card-text neon-green mb-2">Description:</p>
+                                    <p className="card-text neon-green">{this.props.user.biography}</p>
                                 </div>
                             </div>
                         </div>

@@ -13,7 +13,7 @@ class EditForm extends React.Component {
             <Default cookie={this.props.cookie}>
                 <div className="row mb-3">
                     <div className="col">
-                        <h2 className='neon-green border-bottom-neon'>EDIT PROFILE</h2>
+                        <h4 className='neon-green border-bottom-neon'>EDIT PROFILE</h4>
                     </div>
                 </div>
                 <div className="row">
@@ -22,17 +22,27 @@ class EditForm extends React.Component {
                     </div>
                     <div className="col-6">
                         <form className='edit-profile-form' method='POST' action={editLink} encType='multipart/form-data'>
-                            <div class="custom-file">
-                              <input className='custom-file-input' id='pic' type='file' name='profilepic' />
-                              <label class="custom-file-label bg-dark" htmlFor="customFile">Choose profile picture</label>
+                            <div className="custom-file">
+                              <input className='custom-file-input' id='pic' type='file' name='profilepic' accept="image/*" />
+                              <label id="fileLabel" className="custom-file-label bg-dark" htmlFor="customFile">Choose profile picture</label>
                             </div>
-                            <h2 className='subheader'>Username:</h2>
-                            <input className='inputs align' type='text' name='username' defaultValue={this.props.user.username} disabled/>
-                            <h2 className='subheader'>Age:</h2>
-                            <input className='inputs align' type='number' name='age' defaultValue={this.props.user.age} />
-                            <h2 className='subheader'>Description:</h2>
-                            <textarea className='inputs summaryTextArea align' name='biography' defaultValue={this.props.user.biography}></textarea><br/>
-                            <input className='form-button align-small' type='submit' value='Update' />
+                            <div className="form-row mt-3">
+                                <div className="form-group col-8">
+                                    <h6 className='neon-green'>Username:</h6>
+                                    <input className='bg-dark form-control neon-green' type='text' name='username' defaultValue={this.props.user.username} disabled/>
+                                </div>
+                                <div className="form-group col-4">
+                                    <h6 className='neon-green'>Age:</h6>
+                                    <input className='bg-dark neon-green form-control' type='number' name='age' defaultValue={this.props.user.age} />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="form-group col">
+                                    <h6 className='neon-green'>Description:</h6>
+                                    <textarea className='bg-dark neon-green form-control longText' name='biography' rows="5" defaultValue={this.props.user.biography}></textarea>
+                                </div>
+                            </div>
+                            <input className='btn btn-outline-success btn-lg btn-block' type='submit' value='Update' />
                         </form>
                     </div>
                 </div>
