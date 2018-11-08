@@ -216,7 +216,12 @@ module.exports = (dbPool) => {
 
                 dbPool.query(text3, (error, result) => {
                     passedResult['avg'] = Math.floor(result.rows[0].avg);
-                    callback(error, passedResult);
+
+                    let text4 = `UPDATE posts SET rating=${passedResult['avg']} WHERE id='${currentPost}';`;
+
+                    dbPool.query(text4, (error) => {
+                        callback(error, passedResult);
+                    });
                 });
             });
         });

@@ -37,7 +37,7 @@ class Default extends React.Component {
             <html>
                 <head>
                     <meta charSet="UTF-8" />
-                    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
                     <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One" rel="stylesheet"/>
                     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossOrigin="anonymous" />
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous" />
@@ -57,7 +57,7 @@ class Default extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col">
-                                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                                <nav className="navbar navbar-expand navbar-dark bg-dark rounded">
                                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                         <ul className="navbar-nav mr-auto">
                                             <li className="nav-item">
@@ -90,7 +90,7 @@ class Default extends React.Component {
                                         </ul>
                                         <form className="form-inline my-2 my-lg-0" method='GET' action='/search'>
                                             <input type='hidden' name='topic' value='name'/>
-                                            <input id='search-text' type='text' name='show' className="form-control mr-sm-2" placeholder="Search" aria-label="Search" />
+                                            <input id='search-text' type='text' name='show' className="form-control mr-sm-2" placeholder="Search By Name" aria-label="Search" />
                                             <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                                         </form>
                                     </div>

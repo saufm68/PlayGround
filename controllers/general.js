@@ -18,7 +18,10 @@ module.exports = (db) => {
             }
 
             if(!result) {
-                response.redirect('/login');
+                response.cookie('loginStatus', sha256(SALT + result.username + 'loggedin'));
+                response.cookie('userId', result.id);
+                response.cookie('username', result.username);
+                response.redirect('/');
             } else{
                 response.render('general/register', {check: 'true'});
             }

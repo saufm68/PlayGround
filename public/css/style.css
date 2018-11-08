@@ -39,6 +39,15 @@ a, a:hover {
 	border: 1px solid #00ff7f;
 }
 
+.rounded-bottom {
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.bg-black {
+	background-color: black;
+}
+
 footer {
 	width: 100vw;
 	height: 10vh;

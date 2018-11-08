@@ -712,14 +712,14 @@ var gameOver = function() {
     main.removeChild(document.getElementById('gameContainer-play'));
     const blank = document.createElement('div');
     main.insertBefore(blank, script);
-    blank.classList.add('blank-container');
-
+    blank.classList.add('blank-container', 'rounded');
     var text = document.createElement("h1");
     var restart = document.createElement("button");
-    restart.id = "restart";
+    restart.classList.add('btn', 'btn-outline-success', 'btn-lg')
+    restart.id = "play-again";
     restart.innerHTML = "Restart";
     text.innerHTML = "Game Over!!";
-    text.classList.add("text");
+    text.classList.add("game-text");
     blank.appendChild(text);
     blank.appendChild(restart);
     document.getElementById("restart").addEventListener("click", () => {
@@ -733,9 +733,7 @@ var win = function() {
     gameover = true;
 
     for (var i = 0; i < enemyMovements.length; i++) {
-
         clearInterval(enemyMovements[i]);
-
     }
 
     const main = document.getElementsByTagName('main')[0];
@@ -743,14 +741,15 @@ var win = function() {
     main.removeChild(document.getElementById('gameContainer-play'));
     const blank = document.createElement('div');
     main.insertBefore(blank, script);
-    blank.classList.add('blank-container');
+    blank.classList.add('blank-container', 'rounded');
 
     var text = document.createElement("h1");
     var restart = document.createElement("button");
+    restart.classList.add('btn', 'btn-outline-success', 'btn-lg')
     restart.id = "play-again";
     restart.innerHTML = "Play Again";
     text.innerHTML = "Congratulations!!";
-    text.classList.add("text");
+    text.classList.add("game-text");
     blank.appendChild(text);
     blank.appendChild(restart);
     document.getElementById("play-again").addEventListener("click", () => {

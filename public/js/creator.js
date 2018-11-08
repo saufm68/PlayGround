@@ -103,16 +103,10 @@ function updateGrid() {
             }
         }
     }
-
-    var form = document.getElementById('create-form');
-    form.style.visibility = 'visible';
-
 };
 
 drag();
 createBoard();
-
-var done = document.getElementById('done').addEventListener('click', updateGrid);
 
 var inputTitle = document.getElementById('title');
 var inputSummary = document.getElementById('summary');
@@ -124,6 +118,7 @@ var enemyFunction = document.getElementsByClassName('enemy_function');
 
 var formCreate = document.getElementById('create-form').addEventListener('submit', (event) => {
     event.preventDefault();
+    updateGrid();
 
     for (let i = 0; i < playerFunction.length; i++ ) {
         if(playerFunction[i].checked) {
@@ -148,16 +143,7 @@ function ajaxPost(title, summary, dt, rating, dp, playerBehaviour, enemyBehaviou
 
     function responseHandler() {
         var link = JSON.parse(this.responseText);
-        var create = document.createElement('a');
-        create.setAttribute('href', link['link']);
-        var button = document.createElement('button');
-        button.innerHTML = 'Create';
-        create.appendChild(button);
-        var done = document.getElementById('done')
-        done.parentNode.appendChild(create);
-        var form = document.getElementById('create-form')
-        form.parentNode.removeChild(form);
-        done.parentNode.removeChild(done);
+        window.location = link['link'];
     };
 
     request.addEventListener('load', responseHandler);

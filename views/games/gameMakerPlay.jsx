@@ -7,7 +7,7 @@ class GameMakerPlay extends React.Component {
 
         return(
 
-            <Default cookie={this.props.cookie} title='Play'>
+            <Default cookie={this.props.cookie}>
                 <script type="text/javascript" src='/js/play.js'></script>
             </Default>
 

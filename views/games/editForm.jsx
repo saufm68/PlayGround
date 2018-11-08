@@ -33,22 +33,23 @@ class EditForm extends React.Component {
                             <div className="form-row mt-1">
                                 <div className="col">
                                     <h6 className='neon-green'>Title:</h6>
-                                    <input className='bg-dark form-control neon-green' type='text' name='title' defaultValue={this.props.post.title} required />
+                                    <input className='bg-dark form-control neon-green longText' type='text' name='title' defaultValue={this.props.post.title} required autoComplete="off" />
                                 </div>
                             </div>
                             <div className="form-row mt-1">
                                 <div className="col">
                                     <h6 className='neon-green'>Link:</h6>
-                                    <input className='bg-dark form-control neon-green' type='text' name='link' defaultValue={this.props.post.link} required />
+                                    <input className='bg-dark form-control neon-green longText' type='text' name='link' defaultValue={this.props.post.link} required autoComplete="off" />
                                 </div>
                             </div>
                             <div className="form-row mt-1">
                                 <div className="col">
                                     <h6 className='neon-green'>Summary:</h6>
-                                    <textarea className='bg-dark form-control neon-green' rows="4" name='summary' defaultValue={this.props.post.summary} required></textarea>
+                                    <textarea className='bg-dark form-control neon-green longText' rows="4" name='summary' defaultValue={this.props.post.summary}></textarea>
                                 </div>
                             </div>
                             <input type='hidden' name='dt' value={date} />
+                            <input type='hidden' name='displayimage' value='/dp/defaultpic.png' />
                             <input className='btn btn-outline-success btn-block mt-2' type='submit' value='Update' />
                         </form>
                     </div>

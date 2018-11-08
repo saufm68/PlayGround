@@ -127,16 +127,31 @@ module.exports = (db) => {
 
         let picture = request.files.displayimage;
 
-        picture.mv('public/dp/' + picture.name, (error) => {
+        if (picture) {
 
-            if (error) {
-                console.log("fail to move file");
-                response.status(500).render('error/error500');
-            }
+            picture.mv('public/dp/' + picture.name, (error) => {
 
-            let path = /dp/ + picture.name;
+                if (error) {
+                    console.log("fail to move file");
+                    response.status(500).render('error/error500');
+                }
 
-            db.games.edit(request.body, path, request.params.id, (error) => {
+                let path = /dp/ + picture.name;
+
+                db.games.edit(request.body, path, request.params.id, (error) => {
+
+                    if(error) {
+                        console.log("error looking for values:", error.message);
+                        response.status(500).render('error/error500');
+                    }
+
+                    response.redirect('/games/' + request.params.id);
+                });
+
+            });
+
+        } else {
+            db.games.edit(request.body, request.body.displayimage, request.params.id, (error) => {
 
                 if(error) {
                     console.log("error looking for values:", error.message);
@@ -145,8 +160,7 @@ module.exports = (db) => {
 
                 response.redirect('/games/' + request.params.id);
             });
-
-        });
+        }
     };
 
     const comments = (request, response) => {

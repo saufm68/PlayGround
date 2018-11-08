@@ -63,7 +63,7 @@ class Home extends React.Component {
 
             <Default cookie={this.props.cookie}>
                 <div className="row">
-                    <div className="col-12 col-lg-8">
+                    <div className="col-8">
                         <div className='border-bottom-neon mb-2'>
                             <h4 className='neon-green d-inline-block mb-0'>PROFESSIONAL GAMES</h4>
                             <a className='neon-green float-right' href="/search?show=pro">View All</a>
@@ -80,7 +80,7 @@ class Home extends React.Component {
                         </div>
                         <div className='wrapper mb-3'>{gamemaker}</div>
                     </div>
-                    <div className="col-12 col-lg-4 border-left-neon">
+                    <div className="col-4 border-left-neon">
                         <div className='leaderboard border-all-neon text-center'>
                             <h3 className="neon-green border-bottom-neon mt-1 mb-3 pb-2">LeaderBoard</h3>
                             {leaderboard}
