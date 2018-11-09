@@ -1,9 +1,9 @@
--- DROP TABLE IF EXISTS users;
--- DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS comments;
--- DROP TABLE IF EXISTS ratings;
--- DROP TABLE IF EXISTS tags;
--- DROP TABLE IF EXISTS tags_post;
+DROP TABLE IF EXISTS ratings;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS tags_post;
 
 CREATE TABLE IF NOT EXISTS users (
 
@@ -12,9 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
 	password TEXT,
 	profilePic TEXT,
 	age INTEGER,
-	biography TEXT,
-	activated BOOLEAN,
-	unread_messages INTEGER
+	biography TEXT
 
 );
 
@@ -31,7 +29,6 @@ CREATE TABLE IF NOT EXISTS posts (
 	pro BOOLEAN,
 	gameMaker BOOLEAN,
 	map TEXT,
-	-- music TEXT,
 	player_function TEXT,
 	enemy_function TEXT
 
