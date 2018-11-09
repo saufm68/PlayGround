@@ -7,11 +7,11 @@ class Error403 extends React.Component {
 
         return(
 
-            <Structure title='403'>
-            <h1>ERROR 403</h1>
-            <h2>Restricted Access</h2>
+            <Structure>
+                <h1>ERROR 403</h1>
+                <h2>Restricted Access</h2>
             </Structure>
     )};
 };
 
-module.exports = Error403;
+module.exports = Error403;h

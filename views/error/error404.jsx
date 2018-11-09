@@ -7,9 +7,9 @@ class Error404 extends React.Component {
 
         return(
 
-            <Structure title='404'>
-            <h1>ERROR 404</h1>
-            <h2>Request Not Found</h2>
+            <Structure>
+                <h1>ERROR 404</h1>
+                <h2>Request Not Found</h2>
             </Structure>
     )};
 };

@@ -33,7 +33,7 @@ class EditForm extends React.Component {
                                 </div>
                                 <div className="form-group col-4">
                                     <h6 className='neon-green'>Age:</h6>
-                                    <input className='bg-dark neon-green form-control' type='number' name='age' defaultValue={this.props.user.age} />
+                                    <input className='bg-dark neon-green form-control longText' type='number' name='age' defaultValue={this.props.user.age} />
                                 </div>
                             </div>
                             <div className="form-row">

@@ -10,8 +10,8 @@ module.exports = (dbPool) => {
 
             if(result.rows.length === 0) {
 
-                let text2 = `INSERT INTO users (username, age, password, profilepic) VALUES ($1,$2,$3,$4) RETURNING id, username;`;
-                let values = [input.username, input.age, sha256(input.password), '/dp/defaultpic.png'];
+                let text2 = `INSERT INTO users (username, age, password, profilepic, biography) VALUES ($1,$2,$3,$4,$5) RETURNING id, username;`;
+                let values = [input.username, input.age, sha256(input.password), '/dp/defaultpic.png', ''];
 
                 dbPool.query(text2, values, (error, result) => {
                     callback(error, result.rows[0]);
