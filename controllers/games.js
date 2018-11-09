@@ -1,7 +1,7 @@
 const sha256 = require('js-sha256');
 const SALT = 'Project 2, Lets go.';
 
-module.exports = (db) => {
+module.exports = (db, cloudinary) => {
 
     const uploadGameForm = (request, response) => {
 
@@ -43,14 +43,16 @@ module.exports = (db) => {
 
                 let path = /dp/ + picture.name;
 
-                db.games.uploadGames(request.body, path, request.cookies['userId'], (error, result) => {
+                cloudinary.v2.uploader.upload(`public/${path}`, (error, result) => {
+                    db.games.uploadGames(request.body, result.url, request.cookies['userId'], (error, result) => {
 
-                    if(error){
-                        console.log("error in uploading: ", error.message);
-                        response.status(500).render('error/error500');
-                    }
+                        if(error){
+                            console.log("error in uploading: ", error.message);
+                            response.status(500).render('error/error500');
+                        }
 
-                    response.redirect('/games/' + result);
+                        response.redirect('/games/' + result);
+                    });
                 });
             });
         } else  {
@@ -138,16 +140,17 @@ module.exports = (db) => {
 
                 let path = /dp/ + picture.name;
 
-                db.games.edit(request.body, path, request.params.id, (error) => {
+                cloudinary.v2.uploader.upload(`public/${path}`, (error, result) => {
+                    db.games.edit(request.body, result.url, request.params.id, (error) => {
 
-                    if(error) {
-                        console.log("error looking for values:", error.message);
-                        response.status(500).render('error/error500');
-                    }
+                        if(error) {
+                            console.log("error looking for values:", error.message);
+                            response.status(500).render('error/error500');
+                        }
 
-                    response.redirect('/games/' + request.params.id);
+                        response.redirect('/games/' + request.params.id);
+                    });
                 });
-
             });
 
         } else {

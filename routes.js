@@ -1,8 +1,8 @@
-module.exports = (app,db) => {
+module.exports = (app,db, cloudinary) => {
 
-    const general = require('./controllers/general')(db);
-    const games = require('./controllers/games')(db);
-    const users = require('./controllers/users')(db);
+    const general = require('./controllers/general')(db, cloudinary);
+    const games = require('./controllers/games')(db, cloudinary);
+    const users = require('./controllers/users')(db, cloudinary);
 
     /*=============================
     =          games              =

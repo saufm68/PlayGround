@@ -1,7 +1,7 @@
 const sha256 = require('js-sha256');
 const SALT = 'Project 2, Lets go.';
 
-module.exports = (db) => {
+module.exports = (db, cloudinary) => {
 
     const registerForm = (request, response) => {
 
@@ -10,14 +10,14 @@ module.exports = (db) => {
 
     const register = (request, response) => {
 
-        db.general.register(request.body, (error, result) => {
+        db.general.register(request.body, (error, result, check) => {
 
             if (error) {
                 console.log("error in registering:", error.message);
                 response.status(500).render('error/error500');
             }
 
-            if(!result) {
+            if(!check) {
                 response.cookie('loginStatus', sha256(SALT + result.username + 'loggedin'));
                 response.cookie('userId', result.id);
                 response.cookie('username', result.username);
@@ -123,16 +123,6 @@ module.exports = (db) => {
         } else if(request.query.topic === 'name') {
 
             searchDb(request.query.show,'title', request.query.show);
-
-        } else if(request.query.topic === 'rating') {
-
-            if(isNaN(request.query.show)) {
-                alert('Rating should be a number');
-            } else {
-
-                searchDb(`Games With Rating = ${request.query.show}`,'rating', request.query.show);
-
-            }
 
         } else {
 

@@ -13,7 +13,7 @@ class Login extends React.Component {
 
         return(
 
-            <Structure title='Login'>
+            <Structure>
                 <fieldset>
                     <legend>LOGIN</legend>
                     {nope}

@@ -49,7 +49,7 @@ class EditForm extends React.Component {
                                 </div>
                             </div>
                             <input type='hidden' name='dt' value={date} />
-                            <input type='hidden' name='displayimage' value='/dp/defaultpic.png' />
+                            <input type='hidden' name='displayimage' value={image} />
                             <input className='btn btn-outline-success btn-block mt-2' type='submit' value='Update' />
                         </form>
                     </div>

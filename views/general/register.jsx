@@ -13,14 +13,16 @@ class Register extends React.Component {
 
         return(
 
-            <Structure title='Register'>
+            <Structure>
                 <fieldset>
-                    <legend>Register</legend>
+                    <legend>REGISTER</legend>
                     {nope}
-                    <form method='POST' action='/register'>
-                        <h3>Username:</h3>
+                    <form className="register-form" method='POST' action='/register'>
+                        <h3 className="register-header">Username:</h3>
                         <input className='input' type='text' name='username' required autoComplete='off' />
-                        <h3>Password:</h3>
+                        <h3 className="register-header">Age:</h3>
+                        <input className='input' type='number' name='age' required autoComplete='off' />
+                        <h3 className="register-header">Password:</h3>
                         <input className='input' type='password' name='password' required /><br/>
                         <input className='submit' type='submit' value='Submit' />
                     </form>

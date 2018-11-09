@@ -42,6 +42,7 @@ class EditForm extends React.Component {
                                     <textarea className='bg-dark neon-green form-control longText' name='biography' rows="5" defaultValue={this.props.user.biography}></textarea>
                                 </div>
                             </div>
+                            <input type='hidden' name='displayimage' value={image} />
                             <input className='btn btn-outline-success btn-lg btn-block' type='submit' value='Update' />
                         </form>
                     </div>

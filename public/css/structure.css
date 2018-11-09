@@ -1,96 +1,93 @@
 body {
-
 	margin: 0;
 	padding: 0;
-	background-color: #db9035;
-
-
+	background-color: black;
 }
 
 fieldset {
-
 	width: 600px;
 	height: 550px;
-	border: 5px solid black;
+	border: 5px solid #00ff7f;
 	margin: auto;
 	text-align: center;
 	font-size: 25px;
-	background-color: white;
+	background-color: black;
 	position: relative;
-	margin-top: 18vh;
-
+	margin-top: 5vh;
 }
 
 legend {
-
 	padding: 15px;
-	background-color: black;
-	color: white;
+	background-color: #00ff7f;
+	color: black;
 	text-align: left;
 	font-size: 30px;
-
+	font-weight: 700;
 }
 
 .link {
-
 	position: absolute;
 	bottom: 40px;
 	right: 170px;
 }
 
 form {
-
 	margin-top: 60px;
 	text-align: left;
 	margin-left: 20px;
-
 }
 
 h3 {
-
 	font-size: 40px;
 	margin-bottom: 15px;
 	margin-top: 33px;
-
+	color: #00ff7f;
 }
 
-.input {
-
+.input, .input:focus  {
 	width: 90%;
 	height: 30px;
 	font-size: 30px;
-	border: 3px solid black;
-
+	border: 3px solid #00ff7f;
+	color: #00ff7f;
+	background-color: rgb(52,58,64);
 }
 
 .submit {
-
 	padding: 10px;
 	font-size: 20px;
 	font-weight: 600;
-	border: 3px solid black;
+	border: 3px solid #00ff7f;
+	background-color: black;
+	color: #00ff7f;
 	margin-top: 40px;
-
 }
 
 .nope {
-
 	position: absolute;
 	top: 80px;
 	left: 150px;
 	color: red;
-
 }
 
 .nope-long {
-
 	position: absolute;
 	top: 80px;
 	left: 120px;
 	color: red;
-
 }
 
+a.link {
+	color: red;
+}
+
+.register-form {
+	margin-top: 0;
+}
+
+.register-header {
+	margin-top: 10px;
+}
 
 
 

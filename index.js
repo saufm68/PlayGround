@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
+const cloudinary = require('cloudinary');
 const db = require('./db');
 
 //Initialize express app
@@ -16,6 +18,13 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+//configure cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+})
+
 //Set up file-upload
 app.use(fileUpload());
 //To allow to link to public folder
@@ -29,7 +38,7 @@ app.engine('jsx', reactEngine);
 
 
 //Import Routes
-require('./routes')(app, db);
+require('./routes')(app, db, cloudinary);
 
 //Socket.io fro real time messaging
 io.on('connection', function(socket){
