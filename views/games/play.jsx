@@ -9,6 +9,7 @@ class Play extends React.Component {
 
             <Default cookie={this.props.cookie}>
                 <embed className="border-all-neon" src={this.props.link} />
+                <script type="text/javascript" src='/js/scrolllock.js'></script>
             </Default>
     )};
 };

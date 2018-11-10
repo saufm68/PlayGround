@@ -34,7 +34,7 @@ class Game extends React.Component {
         }
 
         if (this.props.game.pro === true) {
-            var admin = <a href={this.props.game.link}>Click To Purchase</a>
+            var admin = <a href={this.props.game.link}>Click To Purchase/Download</a>
             var category = <a href="/search?show=pro">Professional</a>
         } else {
             if (this.props.game.gamemaker == true) {
