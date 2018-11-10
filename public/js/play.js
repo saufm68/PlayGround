@@ -7,6 +7,13 @@ var enemyMovements = [];
 var playerChoice;
 var enemyChoice;
 
+const startGame = document.getElementById('start-gamemaker-play');
+startGame.addEventListener('click', () => {
+    const instruction = document.getElementById('instructions');
+    instruction.parentNode.removeChild(instruction);
+    reCreateBoard();
+});
+
 function reCreateBoard() {
 
     const ajaxUrl = '/game-maker/play/json';
@@ -19,7 +26,6 @@ function reCreateBoard() {
       jsGrid = JSON.parse(info.map);
       playerChoice = info.player_function;
       enemyChoice = info.enemy_function;
-      console.log(jsGrid);
 
       var container = document.getElementsByTagName('main')[0];
       var script = document.getElementsByTagName('script')[0];
@@ -96,29 +102,24 @@ function reCreateBoard() {
     request.open('GET', ajaxUrl);
 
     request.send();
-
 };
 
-reCreateBoard();
-
-
-//finding the currnent co-ordinates of the the player
+//finding the currnent co-ordinates of the player
 function plottingPlayer(Y, X) {
 
     var mapGridValue = "#r-" + Y + " #c-" + X;
     var mapGrid = document.querySelector(mapGridValue);
     var player = document.getElementById('player')
     mapGrid.appendChild(player);
-
 };
 
+//finding the currnent co-ordinates of the enemy
 function plottingEnemy(enemyId, Y, X) {
 
     var enemyGridValue = "#r-" + Y + " #c-" + X;
     var enemyGrid = document.querySelector(enemyGridValue);
     const enemy = document.getElementById(enemyId[3])
     enemyGrid.appendChild(enemy)
-
 };
 
 //getting the value of the key pressed and moving the character to the specified direction
@@ -393,7 +394,6 @@ function randomness(number) {
     var randomNo = Math.floor(Math.random() * number);
 
     return randomNo;
-
 };
 
 function enemyBehaviour(enemyId) {
@@ -725,7 +725,6 @@ var gameOver = function() {
     document.getElementById("restart").addEventListener("click", () => {
         location.reload()
     });
-
 };
 
 var win = function() {
@@ -755,7 +754,4 @@ var win = function() {
     document.getElementById("play-again").addEventListener("click", () => {
         location.reload()
     });
-
 };
-
-
