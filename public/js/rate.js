@@ -63,7 +63,7 @@ function ajaxComment(comment, postId, userId) {
         detailLink.innerHTML = comment.username + ' - ' + comment.dt_simplified;
         commentDetails.appendChild(detailLink);
         var commentMessage = document.createElement('p');
-        commentMessage.classList.add('d-inline-block', 'my-1', 'neon-green');
+        commentMessage.classList.add('d-inline-block', 'my-1', 'neon-green', 'specific-comment');
         commentMessage.innerHTML = comment.message;
         newComment.appendChild(commentDetails);
         newComment.appendChild(commentMessage);

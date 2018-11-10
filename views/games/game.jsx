@@ -113,7 +113,9 @@ class Game extends React.Component {
                                 {deleteButton}
                                 {editButton}
                             </div>
-                            <p className="neon-green">{this.props.game.summary}</p>
+                            <div className="long-content">
+                                <p className="neon-green">{this.props.game.summary}</p>
+                            </div>
                         </div>
                     </div>
                     <div className="col-7">

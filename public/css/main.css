@@ -60,6 +60,12 @@
 
 .summary {
 	height: 300px;
+	word-wrap: break-word;
+}
+
+.long-content {
+	height: 90%;
+	overflow-y: scroll;
 }
 
 .comments-container {
@@ -72,6 +78,11 @@
 	word-wrap: break-word;
 	width: 100%;
 	height: 79%;
+}
+
+.specific-comment {
+	word-wrap: break-word;
+	max-width: 100%;
 }
 
 .comments-text, .submit-comments {
@@ -134,6 +145,12 @@
 
 .profile-delete:hover {
 	text-decoration: underline;
+}
+
+.profile-bio {
+	height: 180px;
+	overflow-y: scroll;
+	word-wrap: break-word;
 }
 
 /*==================================

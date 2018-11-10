@@ -39,7 +39,7 @@ class EditForm extends React.Component {
                             <div className="form-row">
                                 <div className="form-group col">
                                     <h6 className='neon-green'>Description:</h6>
-                                    <textarea className='bg-dark neon-green form-control longText' name='biography' rows="5" defaultValue={this.props.user.biography}></textarea>
+                                    <textarea className='bg-dark neon-green form-control longText' name='biography' rows="5" maxLength="230" defaultValue={this.props.user.biography}></textarea>
                                 </div>
                             </div>
                             <input type='hidden' name='displayimage' value={image} />
