@@ -67,14 +67,13 @@ class Create extends React.Component {
                     <div className="col-12 text-center">
                         <h3 className="neon-green">Title:</h3>
                         <input className="bg-dark form-control neon-green longText" id='title' type='text' name='title' form="create-form" required autoComplete="off" />
-                        <h3 className="neon-green">Summary:</h3>
-                        <textarea className="bg-dark form-control neon-green longText" id='summary' name='summary' placeholder='Enter a short summary' form="create-form" required></textarea>
-                        <input className="btn btn-outline-success btn-block mt-3" type='submit' value='Create Stage' form="create-form" />
+                        <h3 className="neon-green mt-2">Summary:</h3>
+                        <textarea className="bg-dark form-control neon-green longText" id='summary' name='summary' placeholder='Enter a short summary. Best to put which functions was chosen for both enemy behaviours and player behaviours.' form="create-form" required></textarea>
+                        <input className="btn btn-outline-success btn-block mt-4" type='submit' value='Create Stage' form="create-form" />
                     </div>
                 </div>
                 <script type="text/javascript" src='/js/creator.js'></script>
             </Default>
-
     )};
 };
 
