@@ -3,29 +3,29 @@
 ==================================*/
 
 .wrapper {
-	width: 100%;
-	height: 200px;
-	overflow: auto;
-	white-space: nowrap;
+  width: 100%;
+  height: 200px;
+  overflow: auto;
+  white-space: nowrap;
 }
 
 .leaderboard {
-	height: 34%;
+  height: 34%;
 }
 
 .forum {
-	height: 63%;
+  height: 63%;
 }
 
 .forum-list {
-	overflow-y: scroll;
-	word-wrap: break-word;
-	width: 100%;
-	height: 87%;
+  overflow-y: scroll;
+  word-wrap: break-word;
+  width: 100%;
+  height: 87%;
 }
 
 .forum-form {
-	border-radius: 0;
+  border-radius: 0;
 }
 
 /*==================================
@@ -33,64 +33,67 @@
 ==================================*/
 
 .full-wrapper {
-	width: 100%;
-	min-height: 60vh;
+  width: 100%;
+  min-height: 60vh;
 }
 
 /*==================================
            	SELECTED GAME
 ==================================*/
 
-.info, .tags-container {
-	width: 50%;
-	height: 150px;
+.info,
+.tags-container {
+  width: 50%;
+  height: 150px;
 }
 
 #rating-input {
-	width: 145px;
+  width: 145px;
 }
 
 .game-delete {
-	background-color: black;
-	padding: 0;
-	border: none;
-	color: red;
-	cursor: pointer;
+  background-color: black;
+  padding: 0;
+  border: none;
+  color: red;
+  cursor: pointer;
 }
 
 .summary {
-	height: 300px;
-	word-wrap: break-word;
+  height: 300px;
+  word-wrap: break-word;
 }
 
 .long-content {
-	height: 90%;
-	overflow-y: scroll;
+  height: 90%;
+  overflow-y: scroll;
 }
 
 .comments-container {
-	width: 100%;
-	height: 300px;
+  width: 100%;
+  height: 300px;
 }
 
 .comments-list {
-	overflow-y: scroll;
-	word-wrap: break-word;
-	width: 100%;
-	height: 79%;
+  overflow-y: scroll;
+  word-wrap: break-word;
+  width: 100%;
+  height: 79%;
 }
 
 .specific-comment {
-	word-wrap: break-word;
-	max-width: 100%;
+  word-wrap: break-word;
+  max-width: 100%;
 }
 
-.comments-text, .submit-comments {
-	border-radius: 0;
+.comments-text,
+.submit-comments {
+  border-radius: 0;
 }
 
-.comments-text:focus, #rating-input:focus {
-	color: #00ff7f;
+.comments-text:focus,
+#rating-input:focus {
+  color: #00ff7f;
 }
 
 /*==================================
@@ -98,32 +101,34 @@
 ==================================*/
 
 .custom-file-label::after {
-	color: #28a745;
+  color: #28a745;
   background-color: black;
   border-color: #28a745;
 }
 
 .display-pic {
-	width: 380px;
+  width: 380px;
 }
 
 .longText:focus {
-	color: #00ff7f;
+  color: #00ff7f;
 }
 
 .tags-holder {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
-#pro-radio, #amatuer-radio {
-	display: none;
+#pro-radio,
+#amatuer-radio {
+  display: none;
 }
 
-#amatuer-container h3, #amatuer-container div {
-	border: 2px solid black;
-	background-color: #00ff7f;
-	color: black;
+#amatuer-container h3,
+#amatuer-container div {
+  border: 2px solid black;
+  background-color: #00ff7f;
+  color: black;
 }
 
 /*==================================
@@ -131,26 +136,26 @@
 ==================================*/
 
 .game-list-container {
-	width: 100%;
-	min-height: 300px;
+  width: 100%;
+  min-height: 300px;
 }
 
 .profile-delete {
-	background-color: rgb(52,58,64);
-	padding: 0;
-	border: none;
-	color: red;
-	cursor: pointer;
+  background-color: rgb(52, 58, 64);
+  padding: 0;
+  border: none;
+  color: red;
+  cursor: pointer;
 }
 
 .profile-delete:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
 .profile-bio {
-	height: 180px;
-	overflow-y: scroll;
-	word-wrap: break-word;
+  height: 180px;
+  overflow-y: scroll;
+  word-wrap: break-word;
 }
 
 /*==================================
@@ -158,9 +163,9 @@
 ==================================*/
 
 embed {
-	width: 100%;
-	height: 97vh;
-	padding: 10px;
+  width: 100%;
+  height: 97vh;
+  padding: 10px;
 }
 
 /*==================================
@@ -168,87 +173,71 @@ embed {
 ==================================*/
 
 .createCol {
-	width: 40px;
-	height: 30px;
-	border: 1px solid #00ff7f;
+  width: 40px;
+  height: 30px;
+  border: 1px solid #00ff7f;
 }
 
 table {
-	background-color: black;
-	border-spacing: 0;
+  background-color: black;
+  border-spacing: 0;
 }
 
 .character {
-	height: 26px;
-	width: 36px;
+  height: 26px;
+  width: 36px;
 }
 
 .holder {
-	height: 32px;
-	width: 42px;
+  height: 32px;
+  width: 42px;
 }
 
 #gameContainer-play {
-	margin: auto;
+  margin: auto;
 }
 
 .createCol-play {
-	width: 50px;
-	height: 40px;
-	border: 1px solid #00ff7f;
-	position: relative;
-	border-spacing: 0;
+  width: 50px;
+  height: 40px;
+  border: 1px solid #00ff7f;
+  position: relative;
+  border-spacing: 0;
 }
 
 .character-play {
-	height: 36px;
-	width: 46px;
+  height: 36px;
+  width: 46px;
 }
 
 .enemy-behaviour {
-	position: absolute;
-	top: 0;
+  position: absolute;
+  top: 0;
 }
 
 .blank-container {
-	background-color: black;
-	border: 2px solid #00ff7f;
-	width: 750px;
-	height: 600px;
-	margin: auto;
-	text-align: center;
+  background-color: black;
+  border: 2px solid #00ff7f;
+  width: 750px;
+  height: 600px;
+  margin: auto;
+  text-align: center;
 }
 
 .game-text {
-	font-size: 70px;
-	text-align: center;
-	margin-top: 250px;
-	font-family: 'Alfa Slab One', cursive;
-	color: #00ff7f;
+  font-size: 70px;
+  text-align: center;
+  margin-top: 250px;
+  font-family: "Alfa Slab One", cursive;
+  color: #00ff7f;
 }
 
 #play-again {
-	margin-top: 20px;
-	font-weight: 800;
+  margin-top: 20px;
+  font-weight: 800;
 }
 
 #instructions {
-	width: 751px;
-	height: 601px;
+  width: 751px;
+  height: 601px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
