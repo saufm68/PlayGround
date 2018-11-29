@@ -104,15 +104,15 @@ class Home extends React.Component {
 
     return (
       <Default cookie={this.props.cookie}>
-        <div className="row">
-          <div className="col-8">
+        <div className="row spacer">
+          <div className="col-12 col-md-8 padding-l-xtra">
             <div className="border-bottom-neon mb-2">
               <h4 className="neon-green d-inline-block mb-0">AMATEUR GAMES</h4>
               <a className="neon-green float-right" href="/search?show=amateur">
                 View All
               </a>
             </div>
-            <div className="wrapper mb-2">{amateur}</div>
+            <div className="wrapper mb-4">{amateur}</div>
             <div className="border-bottom-neon mb-2">
               <h4 className="neon-green d-inline-block mb-0">GAME MAKER</h4>
               <a
@@ -122,16 +122,16 @@ class Home extends React.Component {
                 View All
               </a>
             </div>
-            <div className="wrapper mb-3">{gamemaker}</div>
+            <div className="wrapper mb-4">{gamemaker}</div>
           </div>
-          <div className="col-4 border-left-neon">
+          <div className="col-12 col-md-4 border-left-neon padding-l-xtra">
             <div className="leaderboard border-all-neon text-center">
               <h3 className="neon-green border-bottom-neon mt-1 mb-3 pb-2">
                 LeaderBoard
               </h3>
               {leaderboard}
             </div>
-            <div className="forum border-all-neon mt-2">
+            <div className="forum border-all-neon my-3">
               <div id="forum-list" className="forum-list bg-dark p-2" />
               <form id="forum-form" className="forum-form">
                 {user}

@@ -116,14 +116,14 @@ class Game extends React.Component {
     return (
       <Default cookie={this.props.cookie}>
         <div className="row">
-          <div className="col-5 img-container">
+          <div className="col-12 col-md-5 img-container">
             <img
               src={this.props.game.displayimage}
               width="320px"
               height="300px"
             />
           </div>
-          <div className="col-7">
+          <div className="col-12 col-md-7 padding-l-xtra">
             <div
               className="card bg-dark border-all-neon"
               style={{ width: 100 + "%", height: 210 + "px" }}
@@ -157,13 +157,15 @@ class Game extends React.Component {
               </div>
             </div>
             <div className="score-container mt-3 rounded border-all-neon p-2">
-              <h1 className="neon-green d-inline-block mx-2">Score:</h1>
-              <h1 className="neon-green d-inline-block" id="score">
+              <h1 className="neon-green d-inline-block mx-2 score-mobile">
+                Score:
+              </h1>
+              <h1 className="neon-green d-inline-block score-mobile" id="score">
                 {this.props.game.rating}
               </h1>
               <form
                 id="rating-form"
-                className="d-inline-block float-right mt-2"
+                className="d-inline-block float-right mt-2 rate-mobile"
                 method="POST"
               >
                 <div className="input-group">
@@ -182,8 +184,8 @@ class Game extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row mt-4">
-          <div className="col-5">
+        <div className="row mt-4 mobile-margin">
+          <div className="col-12 col-md-5 padding-l-xtra">
             <div className="summary border-all-neon p-3 rounded">
               <div className="summary-head border-bottom-neon mb-2">
                 <h5 className="neon-green d-inline-block mb-1">Summary</h5>
@@ -195,7 +197,7 @@ class Game extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-7">
+          <div className="col-12 col-md-7 padding-l-xtra mobile-margin">
             <div className="comments-container border-all-neon">
               <div className="comments-list bg-dark p-2" id="allComments">
                 {comments}

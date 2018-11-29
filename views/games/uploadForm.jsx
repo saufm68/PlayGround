@@ -9,8 +9,13 @@ class UploadForm extends React.Component {
 
     let tags = this.props.tags.map(element => {
       return (
-        <div className="d-inline-block" key={element.id}>
-          <input type="checkbox" name="tag" value={element.id} />
+        <div className="d-inline-block mr-3" key={element.id}>
+          <input
+            type="checkbox"
+            name="tag"
+            form="upload-form"
+            value={element.id}
+          />
           <h6 className="neon-green d-inline-block ml-1">{element.tag}</h6>
         </div>
       );
@@ -19,20 +24,20 @@ class UploadForm extends React.Component {
     return (
       <Default cookie={this.props.cookie}>
         <div className="row mb-3">
-          <div className="col">
+          <div className="col m-l-xtra">
             <h4 className="neon-green border-bottom-neon">UPLOAD GAME</h4>
           </div>
         </div>
         <div className="row">
-          <div className="col-6">
+          <div className="col-12 col-md-6 img-container m-l-xtra">
             <img
               id="initial-pic"
               src="/dp/defaultpic.png"
-              width="380px"
-              height="360px"
+              width="320px"
+              height="300px"
             />
           </div>
-          <div className="col-6">
+          <div className="col-12 col-md-6 padding-l-xtra">
             <div className="custom-file">
               <input
                 className="custom-file-input neon-green"
@@ -50,7 +55,7 @@ class UploadForm extends React.Component {
                 Choose display picture
               </label>
             </div>
-            <h6 className="neon-green mt-3 mb-2">Title:</h6>
+            <h6 className="neon-green mt-3 mb-2 mobile-center">Title:</h6>
             <input
               className="bg-dark form-control neon-green longText"
               type="text"
@@ -60,15 +65,7 @@ class UploadForm extends React.Component {
               required
               autoComplete="off"
             />
-            <h6 className="neon-green mt-3 mb-2">Summary:</h6>
-            <textarea
-              className="bg-dark form-control neon-green longText"
-              name="summary"
-              placeholder="Enter A Short Summary Of The Game"
-              rows="4"
-              form="upload-form"
-            />
-            <h6 className="neon-green mt-3 mb-2">Link:</h6>
+            <h6 className="neon-green mt-3 mb-2 mobile-center">Link:</h6>
             <input
               className="bg-dark form-control neon-green longText"
               type="text"
@@ -78,9 +75,11 @@ class UploadForm extends React.Component {
               required
               autoComplete="off"
             />
+            <h6 className="neon-green mt-3 mobile-center">Tags:</h6>
+            <div className="tags-holder">{tags}</div>
           </div>
         </div>
-        <div className="row mt-3">
+        <div className="row mt-3 no-margin-top">
           <div className="col">
             <form
               id="upload-form"
@@ -96,10 +95,19 @@ class UploadForm extends React.Component {
                 name="displayimage"
                 value="/dp/defaultpic.png"
               />
-              <h5 className="neon-green text-center mb-3">Tags</h5>
-              <div className="tags-holder">{tags}</div>
+
+              <h5 className="neon-green text-center mt-2 no-margin-top">
+                Summary:
+              </h5>
+              <textarea
+                className="bg-dark form-control neon-green longText mb-4 m-l-xtra"
+                name="summary"
+                placeholder="Enter A Short Summary Of The Game"
+                rows="4"
+                form="upload-form"
+              />
               <input
-                className="btn btn-outline-success btn-block"
+                className="btn btn-outline-success btn-block m-l-xtra"
                 type="submit"
                 value="Upload"
               />

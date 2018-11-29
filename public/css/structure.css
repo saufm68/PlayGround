@@ -31,7 +31,8 @@ h1 {
   font-weight: 900;
 }
 
-form {
+form,
+.links-container {
   width: 80%;
 }
 
@@ -44,20 +45,13 @@ input:focus {
   background-color: rgb(52, 58, 64);
 }
 
-.links-container {
-  width: 80%;
-}
-
-a {
+a,
+.nope {
   color: red;
 }
 
 a:hover {
   color: maroon;
-}
-
-.nope {
-  color: red;
 }
 
 @media screen and (max-width: 700px) {

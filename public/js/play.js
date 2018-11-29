@@ -605,7 +605,7 @@ var gameOver = function() {
   text.classList.add("game-text");
   blank.appendChild(text);
   blank.appendChild(restart);
-  document.getElementById("restart").addEventListener("click", () => {
+  restart.addEventListener("click", () => {
     location.reload();
   });
 };
@@ -633,7 +633,7 @@ var win = function() {
   text.classList.add("game-text");
   blank.appendChild(text);
   blank.appendChild(restart);
-  document.getElementById("play-again").addEventListener("click", () => {
+  restart.addEventListener("click", () => {
     location.reload();
   });
 };

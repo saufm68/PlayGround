@@ -115,8 +115,10 @@
 }
 
 .tags-holder {
+  width: 100%;
+  height: 110px;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 #pro-radio,
@@ -240,4 +242,87 @@ table {
 #instructions {
   width: 751px;
   height: 601px;
+}
+
+@media screen and (max-width: 767px) {
+  .img-container {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  .score-mobile {
+    font-size: 1.76rem;
+    margin-bottom: 3px;
+  }
+
+  .rate-mobile {
+    margin-top: 0 !important;
+  }
+
+  .mobile-margin {
+    margin-top: 15px !important;
+  }
+
+  #instructions {
+    width: 98%;
+    height: 406px;
+  }
+
+  .mobile-heading {
+    font-size: 25px;
+  }
+
+  .mobile-instruction {
+    font-size: 12px;
+  }
+
+  #gameContainer-play {
+    margin-left: 12px;
+    padding: 0;
+  }
+
+  .createCol-play {
+    height: 27px;
+  }
+
+  .holder {
+    height: 30px;
+    width: 30px;
+  }
+
+  .character {
+    height: 22px;
+    width: 22px;
+  }
+
+  .character-play {
+    height: 22px;
+    width: 22px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+
+  .blank-container {
+    width: 98%;
+    height: 406px;
+    margin-left: 12px;
+  }
+
+  .game-text {
+    margin-top: 150px;
+    font-size: 40px;
+  }
+
+  .mobile-center {
+    text-align: center;
+  }
+
+  .tags-holder {
+    justify-content: center;
+  }
+
+  .no-margin-top {
+    margin-top: 0 !important;
+  }
 }

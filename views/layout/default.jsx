@@ -44,11 +44,43 @@ class Default extends React.Component {
           </div>
         </div>
       );
+      var loginMobile = (
+        <div className="d-inline-block md-show">
+          <form
+            className="d-inline-block md-show"
+            id="logout"
+            method="POST"
+            action="/logout"
+          >
+            <input
+              className="btn bg-dark border-all-neon neon-green p-1 mr-2 md-show"
+              type="submit"
+              value="Logout"
+            />
+          </form>
+          <a
+            className="btn bg-dark border-all-neon neon-green p-2 mr-2 md-show"
+            href={profile}
+            role="button"
+          >
+            {currentUser}
+          </a>
+        </div>
+      );
     } else {
       var uploadGame;
       var login = (
         <a
           className="btn bg-dark neon-green float-right mt-2"
+          href="/login"
+          role="button"
+        >
+          Log In/Register
+        </a>
+      );
+      var loginMobile = (
+        <a
+          className="btn bg-dark border-all-neon neon-green mr-3 "
           href="/login"
           role="button"
         >
@@ -61,7 +93,7 @@ class Default extends React.Component {
       <html>
         <head>
           <meta charSet="UTF-8" />
-          {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" type="image/png" href="/dp/Pg.png" />
           <link
             href="https://fonts.googleapis.com/css?family=Alfa+Slab+One"
@@ -73,6 +105,7 @@ class Default extends React.Component {
             integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
             crossOrigin="anonymous"
           />
+
           <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -84,9 +117,9 @@ class Default extends React.Component {
           <title>PlayGround</title>
         </head>
         <body>
-          <div className="fluid-container mt-1 pb-5 body-content">
-            <div className="row">
-              <div className="col">
+          <div className="fluid-container mt-1 pb-3 body-content">
+            <div className="row md-hidden">
+              <div className="md-hidden col">
                 <h1 className="title">
                   <a href="/" className="neon-green">
                     PlayGround
@@ -96,14 +129,33 @@ class Default extends React.Component {
               <div className="col">{login}</div>
             </div>
             <div className="row">
-              <div className="col">
-                <nav className="navbar navbar-expand navbar-dark bg-dark rounded">
+              <div className="col no-padding">
+                <nav className="navbar navbar-expand-md navbar-dark bg-dark mobile-nav rounded-c">
+                  <h4 className="d-inline-block mt-2">
+                    <a href="/" className="neon-green md-show pad-l">
+                      PlayGround
+                    </a>
+                  </h4>
+                  <span>
+                    {loginMobile}
+                    <button
+                      className="navbar-toggler right-float border-all-neon p-1"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#navbarSupportedContent"
+                      aria-controls="navbarSupportedContent"
+                      aria-expanded="false"
+                      aria-label="Toggle navigation"
+                    >
+                      <span class="navbar-toggler-icon" />
+                    </button>
+                  </span>
                   <div
                     className="collapse navbar-collapse"
                     id="navbarSupportedContent"
                   >
-                    <ul className="navbar-nav mr-auto">
-                      <li className="nav-item">
+                    <ul className="navbar-nav mr-auto pad-l">
+                      <li className="nav-item dropdown">
                         <a
                           className="nav-link dropdown-toggle"
                           href="#"
@@ -208,7 +260,7 @@ class Default extends React.Component {
                       </li>
                     </ul>
                     <form
-                      className="form-inline my-2 my-lg-0"
+                      className="form-inline my-2 my-lg-0 pad-l"
                       method="GET"
                       action="/search"
                     >
@@ -217,7 +269,7 @@ class Default extends React.Component {
                         id="search-text"
                         type="text"
                         name="show"
-                        className="form-control mr-sm-2"
+                        className="form-control mr-sm-2 search-input"
                         placeholder="Search By Name"
                         aria-label="Search"
                       />
@@ -233,9 +285,6 @@ class Default extends React.Component {
               </div>
             </div>
             <main className="mt-3">{this.props.children}</main>
-          </div>
-          <div className="fluid-container">
-            <footer className="bg-dark mt-4" />
           </div>
           <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
