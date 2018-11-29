@@ -38,7 +38,7 @@ class Search extends React.Component {
         <h2 className="neon-green border-bottom-neon mb-3 m-l-xtra">
           {this.props.show}
         </h2>
-        <div className="full-wrapper m-l-xtra">{result}</div>
+        <div className="full-wrapper mobile-center m-l-xtra">{result}</div>
       </Default>
     );
   }

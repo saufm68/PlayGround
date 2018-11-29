@@ -116,7 +116,7 @@ class Game extends React.Component {
     return (
       <Default cookie={this.props.cookie}>
         <div className="row">
-          <div className="col-12 col-md-5 img-container">
+          <div className="col-12 col-md-5 img-container m-l-xtra">
             <img
               src={this.props.game.displayimage}
               width="320px"
