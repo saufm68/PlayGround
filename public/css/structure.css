@@ -1,96 +1,80 @@
 body {
-	margin: 0;
-	padding: 0;
-	background-color: black;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  background-color: black;
 }
 
-fieldset {
-	width: 600px;
-	height: 550px;
-	border: 5px solid #00ff7f;
-	margin: auto;
-	text-align: center;
-	font-size: 25px;
-	background-color: black;
-	position: relative;
-	margin-top: 5vh;
+.jumbo {
+  border-radius: 0;
+  width: 550px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  border: 3px solid #00ff7f;
 }
 
-legend {
-	padding: 15px;
-	background-color: #00ff7f;
-	color: black;
-	text-align: left;
-	font-size: 30px;
-	font-weight: 900;
+.login {
+  height: 480px;
 }
 
-.link {
-	position: absolute;
-	bottom: 40px;
-	right: 170px;
+.register {
+  height: 550px;
+}
+
+h1 {
+  color: #00ff7f;
+  font-size: 70px;
+  font-weight: 900;
 }
 
 form {
-	margin-top: 60px;
-	text-align: left;
-	margin-left: 20px;
+  width: 80%;
 }
 
-h3 {
-	font-size: 40px;
-	margin-bottom: 15px;
-	margin-top: 33px;
-	color: #00ff7f;
+input,
+input:focus {
+  width: 100%;
+  font-size: 19px;
+  border: 1px solid #00ff7f;
+  color: #00ff7f;
+  background-color: rgb(52, 58, 64);
 }
 
-.input, .input:focus  {
-	width: 90%;
-	height: 30px;
-	font-size: 30px;
-	border: 3px solid #00ff7f;
-	color: #00ff7f;
-	background-color: rgb(52,58,64);
+.links-container {
+  width: 80%;
 }
 
-.submit {
-	padding: 10px;
-	font-size: 20px;
-	font-weight: 600;
-	border: 3px solid #00ff7f;
-	background-color: black;
-	color: #00ff7f;
-	margin-top: 40px;
+a {
+  color: red;
+}
+
+a:hover {
+  color: maroon;
 }
 
 .nope {
-	position: absolute;
-	top: 80px;
-	left: 150px;
-	color: red;
+  color: red;
 }
 
-.nope-long {
-	position: absolute;
-	top: 80px;
-	left: 120px;
-	color: red;
+@media screen and (max-width: 700px) {
+  .jumbo {
+    width: 360px;
+  }
+
+  .login {
+    height: 455px;
+  }
+
+  .register {
+    height: 520px;
+  }
+
+  h1 {
+    font-size: 45px;
+    margin-top: 20px;
+  }
 }
-
-a.link {
-	color: red;
-}
-
-.register-form {
-	margin-top: 40px;
-}
-
-.register-header {
-	margin-top: 10px;
-}
-
-
-
-
-
-

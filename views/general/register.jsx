@@ -1,35 +1,64 @@
-const React = require('react');
-const Structure = require('../layout/structure');
+const React = require("react");
+const Structure = require("../layout/structure");
 
 class Register extends React.Component {
+  render() {
+    let nope;
 
-    render() {
+    if (this.props.check === "true") {
+      nope = <div className="nope">The Username Has Already Been Taken</div>;
+    }
 
-        let nope;
-
-        if (this.props.check === 'true') {
-            nope = <div className='nope-long'>The Username Has Already Been Taken</div>
-        }
-
-        return(
-
-            <Structure>
-                <fieldset>
-                    <legend>REGISTER</legend>
-                    {nope}
-                    <form className="register-form" method='POST' action='/register'>
-                        <h3 className="register-header">Username:</h3>
-                        <input className='input' type='text' name='username' required autoComplete='off' />
-                        <h3 className="register-header">Age:</h3>
-                        <input className='input' type='number' name='age' required autoComplete='off' />
-                        <h3 className="register-header">Password:</h3>
-                        <input className='input' type='password' name='password' required /><br/>
-                        <input className='submit' type='submit' value='Submit' />
-                    </form>
-                    <a href='/login' className='link'>Already Have An Account?</a>
-                </fieldset>
-            </Structure>
-    )};
-};
+    return (
+      <Structure>
+        <div className="jumbotron text-center jumbo register">
+          <h1 className="mb-3">PlayGround</h1>
+          {nope}
+          <form className="mx-auto" method="POST" action="/register">
+            <input
+              className="input mt-4"
+              type="text"
+              name="username"
+              placeholder=" Username"
+              required
+              autoComplete="off"
+            />
+            <br />
+            <input
+              className="input mt-4"
+              type="number"
+              name="age"
+              placeholder=" Age"
+              required
+              autoComplete="off"
+            />
+            <br />
+            <input
+              className="input my-4"
+              type="password"
+              name="password"
+              placeholder=" Password"
+              required
+            />
+            <br />
+            <input
+              className="btn btn-block mb-5"
+              type="submit"
+              value="Register"
+            />
+          </form>
+          <div className="links-container mx-auto">
+            <a href="/" className="link float-left">
+              Back to home
+            </a>
+            <a href="/login" className="link float-right">
+              Already Have An Account?
+            </a>
+          </div>
+        </div>
+      </Structure>
+    );
+  }
+}
 
 module.exports = Register;
