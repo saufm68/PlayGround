@@ -14,14 +14,14 @@
 }
 
 .forum {
-  height: 63%;
+  height: 319px;
 }
 
 .forum-list {
   overflow-y: scroll;
   word-wrap: break-word;
   width: 100%;
-  height: 87%;
+  height: 81%;
 }
 
 .forum-form {
@@ -78,7 +78,7 @@
   overflow-y: scroll;
   word-wrap: break-word;
   width: 100%;
-  height: 79%;
+  height: 80%;
 }
 
 .specific-comment {

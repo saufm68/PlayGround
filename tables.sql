@@ -26,12 +26,10 @@ CREATE TABLE IF NOT EXISTS posts (
 	author_id INTEGER,
 	dt TEXT,
 	rating INTEGER,
-	pro BOOLEAN,
 	gameMaker BOOLEAN,
 	map TEXT,
 	player_function TEXT,
 	enemy_function TEXT
-
 );
 
 CREATE TABLE IF NOT EXISTS comments (
