@@ -19,7 +19,7 @@ class EditForm extends React.Component {
         </div>
         <div className="row">
           <div className="col-12 col-md-6 img-container m-l-xtra">
-            <img id="initial-pic" src={image} width="320px" height="300px" />
+            <img id="initial-pic" src={image} className="image" />
           </div>
           <div className="col-12 col-md-6 padding-l-xtra">
             <form

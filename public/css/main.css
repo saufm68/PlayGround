@@ -133,6 +133,11 @@
   color: black;
 }
 
+.image {
+  width: 380px;
+  height: 330px;
+}
+
 /*==================================
            	PROFILE PAGE
 ==================================*/
@@ -324,5 +329,10 @@ table {
 
   .no-margin-top {
     margin-top: 0 !important;
+  }
+
+  .image {
+    width: 320px;
+    height: 300px;
   }
 }
