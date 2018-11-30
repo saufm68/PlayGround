@@ -46,7 +46,7 @@ class Game extends React.Component {
       var category = <a href="/search?show=gamemaker">Gamemaker</a>;
     } else {
       var playLink = `/play/${this.props.game.id}`;
-      var category = <a href="/search?show=amatuer">Amatuer</a>;
+      var category = <a href="/search?show=amateur">Amateur</a>;
     }
 
     if (this.props.cookie.loginStatus === this.props.cookie.check) {
