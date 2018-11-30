@@ -119,7 +119,7 @@ class Game extends React.Component {
           <div className="col-12 col-md-5 img-container m-l-xtra">
             <img
               src={this.props.game.displayimage}
-              width="320px"
+              className="game-img"
               height="300px"
             />
           </div>

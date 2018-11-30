@@ -96,6 +96,10 @@
   color: #00ff7f;
 }
 
+.game-img {
+  width: 100%;
+}
+
 /*==================================
           EDIT/UPLOAD
 ==================================*/
@@ -334,5 +338,9 @@ table {
   .image {
     width: 320px;
     height: 300px;
+  }
+
+  .game-img {
+    width: 320px;
   }
 }

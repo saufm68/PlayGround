@@ -10,6 +10,30 @@ class EditForm extends React.Component {
     let image = this.props.post.displayimage;
     let editLink = `/games/${this.props.currentPost}?_method=PUT`;
 
+    if (this.props.post.gamemaker === true) {
+      var link = (
+        <input
+          className="bg-dark form-control neon-green longText"
+          type="text"
+          name="link"
+          placeholder="-"
+          readOnly
+          autoComplete="off"
+        />
+      );
+    } else {
+      var link = (
+        <input
+          className="bg-dark form-control neon-green longText"
+          type="text"
+          name="link"
+          defaultValue={this.props.post.link}
+          required
+          autoComplete="off"
+        />
+      );
+    }
+
     return (
       <Default cookie={this.props.cookie}>
         <div className="row mb-3">
@@ -60,14 +84,7 @@ class EditForm extends React.Component {
               <div className="form-row mt-1">
                 <div className="col">
                   <h6 className="neon-green">Link:</h6>
-                  <input
-                    className="bg-dark form-control neon-green longText"
-                    type="text"
-                    name="link"
-                    defaultValue={this.props.post.link}
-                    required
-                    autoComplete="off"
-                  />
+                  {link}
                 </div>
               </div>
               <div className="form-row mt-1">
