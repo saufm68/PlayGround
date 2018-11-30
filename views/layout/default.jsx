@@ -147,7 +147,7 @@ class Default extends React.Component {
                       aria-expanded="false"
                       aria-label="Toggle navigation"
                     >
-                      <span class="navbar-toggler-icon" />
+                      <span className="navbar-toggler-icon" />
                     </button>
                   </span>
                   <div
