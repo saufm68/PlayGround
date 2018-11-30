@@ -80,7 +80,7 @@ class Default extends React.Component {
       );
       var loginMobile = (
         <a
-          className="btn bg-dark border-all-neon neon-green mr-3 "
+          className="btn bg-dark border-all-neon neon-green mr-3 md-show"
           href="/login"
           role="button"
         >
